@@ -1,0 +1,14 @@
+export declare const PORT: number;
+export declare const DATABASE_URL: string;
+export declare const DATABASE_USER: string;
+export declare const DATABASE_PASSWORD: string;
+export declare const DATABASE_NAME: string;
+export declare const DATABASE_HOST: string;
+export declare const DATABASE_PORT: number;
+export declare const JWT_ACCESS_SECRET_KEY: string;
+export declare const JWT_REFRESH_SECRET_KEY: string;
+export declare const JWT_REFRESH_EXPIRES_DAYS = 14;
+export declare const JWT_ACCESS_KEY_EXPIRES_IN = "1h";
+export declare const JWT_REFRESH_KEY_EXPIRES_IN = "14d";
+export declare const GOOGLE_CLIENT_ID: string;
+export declare const SERVER_URL: string;

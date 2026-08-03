@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SERVER_URL = exports.GOOGLE_CLIENT_ID = exports.JWT_REFRESH_KEY_EXPIRES_IN = exports.JWT_ACCESS_KEY_EXPIRES_IN = exports.JWT_REFRESH_EXPIRES_DAYS = exports.JWT_REFRESH_SECRET_KEY = exports.JWT_ACCESS_SECRET_KEY = exports.DATABASE_PORT = exports.DATABASE_HOST = exports.DATABASE_NAME = exports.DATABASE_PASSWORD = exports.DATABASE_USER = exports.DATABASE_URL = exports.PORT = void 0;
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+exports.PORT = Number(process.env.PORT) || 5000;
+exports.DATABASE_URL = process.env.DATABASE_URL || "mysql://root:@127.0.0.1:3306/naukri_resume";
+exports.DATABASE_USER = process.env.DATABASE_USER || "root";
+exports.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || "password";
+exports.DATABASE_NAME = process.env.DATABASE_NAME || "naukri_resume";
+exports.DATABASE_HOST = process.env.DATABASE_HOST || "127.0.0.1";
+exports.DATABASE_PORT = Number(process.env.DATABASE_PORT) || 3306;
+exports.JWT_ACCESS_SECRET_KEY = process.env.JWT_ACCESS_SECRET_KEY || "your_access_secret";
+exports.JWT_REFRESH_SECRET_KEY = process.env.JWT_REFRESH_SECRET_KEY || "your_refresh_secret";
+exports.JWT_REFRESH_EXPIRES_DAYS = 14;
+exports.JWT_ACCESS_KEY_EXPIRES_IN = "1h";
+exports.JWT_REFRESH_KEY_EXPIRES_IN = `${exports.JWT_REFRESH_EXPIRES_DAYS}d`;
+exports.GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "your_google_client_id";
+exports.SERVER_URL = process.env.SERVER_URL || "http://localhost:3000";
+//# sourceMappingURL=environment.config.js.map
