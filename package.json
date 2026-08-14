@@ -7,6 +7,9 @@
     "build": "tsc && cp -r generated dist/generated",
     "start": "node dist/src/index.js"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,15 +24,20 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "google-auth-library": "^11.0.0",
+    "html-to-docx": "^1.8.0",
     "jsonwebtoken": "^9.0.3",
-    "mariadb": "^3.5.3"
+    "mariadb": "^3.5.3",
+    "multer": "^2.2.0",
+    "puppeteer": "^25.5.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/html-to-docx": "^1.8.1",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
     "@types/node": "^26.1.2",
     "nodemon": "^3.1.14",
     "prisma": "^7.9.1",

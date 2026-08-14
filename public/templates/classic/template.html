@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Classic Resume</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 18px;
+        }
+
+        .header_left {
+            flex: 1;
+        }
+
+        .header_left h1 {
+            font-size: 34px;
+            font-weight: 700;
+            color: #333;
+            line-height: 1;
+        }
+
+        .header_right {
+            text-align: right;
+            font-size: 13px;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        .header_right div {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header_right i {
+            width: 14px;
+            font-size: 12px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            margin-bottom: 18px;
+        }
+
+        .section {
+            margin-top: 18px;
+        }
+
+        .section_title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .section_title i {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .summary {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .education_item,
+        .experience_item {
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+            margin-bottom: 18px;
+        }
+
+        .left {
+            flex: 1;
+        }
+
+        .left h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .left h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .meta {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .right {
+            min-width: 180px;
+            text-align: right;
+        }
+
+        .location {
+            font-size: 12px;
+            color: #8a8a8a;
+            font-style: italic;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+
+        .experience_item ul {
+            margin-left: 18px;
+            margin-top: 6px;
+        }
+
+        .experience_item li {
+            font-size: 13px;
+            color: #444;
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skills span {
+            display: inline-block;
+            padding: 5px 12px;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px;
+            background: #fafafa;
+            font-size: 12px;
+            color: #444;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <!-- Header -->
+
+        <div class="header">
+            <div class="header_left">
+                <h1>{{name}}</h1>
+            </div>
+
+            <div class="header_right">{{contact}}</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Summary -->
+
+        <div class="section">
+            <div class="section_title">
+                <i class="fa-solid fa-user"></i>
+                <span>Summary</span>
+            </div>
+
+            {{summary}}
+        </div>
+
+        <!-- Education -->
+
+        <div class="section">
+            <div class="section_title">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Education</span>
+            </div>
+
+            {{education}}
+        </div>
+
+        <!-- Experience -->
+
+        <div class="section">
+            <div class="section_title">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>Experience</span>
+            </div>
+
+            {{experience}}
+        </div>
+
+        <!-- Skills -->
+
+        <div class="section">
+            <div class="section_title">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Skills</span>
+            </div>
+
+            {{skills}}
+        </div>
+    </div>
+</body>
+
+</html>

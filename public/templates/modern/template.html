@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Modern Resume</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      font,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td {
+        background: transparent;
+        border: 0;
+        font-size: 100%;
+        margin: 0;
+        outline: 0;
+        padding: 0;
+        vertical-align: baseline;
+        text-rendering: optimizeLegibility;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
+      }
+
+      .resume {
+        position: relative;
+        width: 794px;
+        min-height: 1110px;
+        margin: auto;
+        background: #fff;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+      }
+
+      .resume::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200px;
+        height: 150px;
+        background: #9bd0bc;
+        clip-path: polygon(0 0, 86% 0, 0 25%);
+      }
+
+      .header {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 35px 35px 20px;
+      }
+
+      .header_left {
+        flex: 1;
+      }
+
+      .header_left h1 {
+        font-size: 34px;
+        color: #222;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+      }
+
+      .designation {
+        margin-top: 6px;
+        color: #45b79b;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .header_right {
+        font-size: 12px;
+        color: #666;
+        line-height: 1.9;
+        text-align: right;
+      }
+
+      .header_right div {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .header_right i {
+        color: #45b79b;
+        width: 14px;
+      }
+
+      .summary {
+        background: #48b899;
+        color: #fff;
+        padding: 18px 35px;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .content {
+        display: flex;
+      }
+
+      .left {
+        width: 68%;
+        padding: 30px 35px;
+      }
+
+      .right {
+        width: 32%;
+        padding: 30px 30px 30px 0;
+      }
+
+      .section {
+        margin-bottom: 38px;
+      }
+
+      .section:last-child {
+        margin-bottom: 0;
+      }
+
+      .section_title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        color: #333;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+      }
+
+      .section_title::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #45b79b;
+        flex-shrink: 0;
+      }
+
+      .timeline {
+        position: relative;
+      }
+
+      .timeline_item {
+        position: relative;
+        margin-bottom: 15px;
+      }
+
+      .timeline_item:last-child {
+        margin-bottom: 0;
+      }
+
+      .date {
+        height: 20px;
+        font-size: 12px;
+        background: #2cbcad;
+        border-radius: 2px;
+        color: #fff;
+        line-height: 1.4;
+        padding: 2px 6px 1px;
+        margin-bottom: 10px;
+      }
+      .company {
+        font-size: 18px;
+        font-weight: 700;
+        color: #222;
+      }
+      .position {
+        margin-top: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #45b79b;
+      }
+
+      .location {
+        margin-top: 4px;
+        color: #777;
+        font-size: 12px;
+      }
+
+      .description {
+        margin-top: 12px;
+        color: #555;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+
+      .description ul {
+        padding-left: 18px;
+      }
+
+      .description li {
+        margin-bottom: 6px;
+      }
+
+      .school {
+        font-size: 17px;
+        font-weight: 700;
+        color: #222;
+      }
+
+      .degree {
+        margin-top: 5px;
+        color: #45b79b;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .grade {
+        margin-top: 6px;
+        color: #666;
+        font-size: 13px;
+      }
+
+      .sidebar_section {
+        margin-bottom: 38px;
+      }
+
+      .skill {
+        color: #2f6d5d;
+        padding: 7px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      ul.skills {
+        padding-left: 18px;
+      }
+
+      .language {
+        margin-bottom: 18px;
+      }
+
+      .language_name {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .language_bar {
+        height: 7px;
+        background: #e5e5e5;
+        border-radius: 30px;
+        overflow: hidden;
+      }
+
+      .language_fill {
+        height: 100%;
+        background: #45b79b;
+      }
+
+      .certification {
+        margin-bottom: 18px;
+      }
+
+      .certification h4 {
+        font-size: 13px;
+        color: #333;
+        margin-bottom: 4px;
+      }
+
+      .certification p {
+        font-size: 12px;
+        color: #666;
+        line-height: 1.6;
+      }
+      .timeline {
+        padding-left: 20px;
+      }
+      .timeline_item .date {
+        position: absolute;
+        top: 10px;
+        right: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="resume">
+      <div class="header">
+        <div class="header_left">
+          <h1>{{name}}</h1>
+        </div>
+
+        <div class="header_right">{{contact}}</div>
+      </div>
+
+      <div class="summary">{{summary}}</div>
+
+      <div class="content">
+        <!-- Left Column -->
+        <div class="left">
+          <div class="timeline-section section">
+            <div class="section_title">Experience</div>
+
+            <div class="timeline">{{experience}}</div>
+          </div>
+
+          <div class="timeline-section section">
+            <div class="section_title">Education</div>
+
+            <div class="timeline">{{education}}</div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right">
+          <div class="sidebar_section">
+            <div class="section_title">Skills</div>
+
+            <ul class="skills">
+              {{skills}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

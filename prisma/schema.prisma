@@ -8,16 +8,28 @@ datasource db {
 }
 
 model user {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    @unique(map: "User_email_key")
-  password  String?
-  phone     String?   @db.VarChar(20)
-  googleId  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique(map: "User_email_key")
+  password     String?
+  phone        String?  @db.VarChar(20)
+  googleId     String?
+  summary      String?  @db.Text
+  profilePhoto String?
+  country      String?
+  state        String?
+  city         String?
+  zipCode      String?
+  linkedin     String?
+  github       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
 
-  session   session[]
+  session          session[]
+  resume_builder   resume_builder[]
+  user_education   user_education[]
+  user_experience  user_experience[]
+  user_skills      user_skills[]
 }
 
 model session {
@@ -27,6 +39,83 @@ model session {
   expiresAt    DateTime @db.DateTime(0)
   createdAt    DateTime @default(now()) @db.DateTime(0)
   user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "userId")
+}
+
+model resume_templates {
+  id          Int      @id @default(autoincrement())
+  name        String
+  templateKey String   @unique
+  preview     String?
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  resume_builder resume_builder[]
+}
+
+model resume_builder {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  templateId Int
+  name       String   @default("My Resume")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user             user             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume_templates resume_templates @relation(fields: [templateId], references: [id])
+
+  @@index([userId], map: "userId")
+  @@index([templateId], map: "templateId")
+}
+
+model user_education {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  school       String
+  degree       String
+  educationLevel String?
+  startDate    DateTime?
+  endDate      DateTime?
+  isCurrent    Boolean   @default(false)
+  gpa          String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "userId")
+}
+
+model user_experience {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  company     String
+  role        String
+  location    String?
+  employmentType String?
+  startDate   DateTime?
+  endDate     DateTime?
+  isCurrent   Boolean   @default(false)
+  description String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "userId")
+}
+
+model user_skills {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  name      String
+  level     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId], map: "userId")
 }

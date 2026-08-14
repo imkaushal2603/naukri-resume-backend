@@ -1,8 +1,9 @@
-import { Request, Response } from "express";
+import { RequestHandler, Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { verifyGoogleToken } from "../../helpers/google.helper";
 import jwt from "jsonwebtoken";
-import { findUserByEmail, createUser, createSession, deleteSessionByRefreshToken } from "../../services/user.service";
+import { verifyGoogleToken } from "../../helpers/google.helper";
+import { AuthRequest } from "../../types/auth.types";
+import { findUserByEmail, createUser, createSession, deleteSessionByRefreshToken, findSessionByRefreshToken, findUserById, getMeService } from "../../services/auth/auth.service";
 import { JWT_ACCESS_SECRET_KEY, JWT_REFRESH_SECRET_KEY } from "../../config/environment.config";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -162,6 +163,31 @@ export const googleLogin = async (req: Request, res: Response) => {
     }
 };
 
+export const getMe: RequestHandler = async (req: AuthRequest, res: Response) => {
+    try {
+        const userId = Number(req.user?.userId);
+
+        if (!userId || isNaN(userId)) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized: Invalid or missing user token",
+            });
+        }
+
+        const user = await getMeService(userId);
+
+        return res.status(200).json({
+            success: true,
+            user,
+        });
+    } catch (error: any) {
+        return res.status(400).json({
+            success: false,
+            message: error.message || "Failed to retrieve user profile",
+        });
+    }
+};
+
 export const logout = async (req: Request, res: Response) => {
     try {
         const refreshToken = req.cookies?.refreshToken;
@@ -180,5 +206,50 @@ export const logout = async (req: Request, res: Response) => {
     } catch (error) {
         console.error("LOGOUT ERROR:", error);
         return res.status(500).json({ message: "Failed to logout", error });
+    }
+};
+
+export const refreshToken = async (req: Request, res: Response) => {
+    try {
+        const token = req.cookies?.refreshToken;
+
+        if (!token) {
+            return res.status(401).json({ message: "No refresh token provided" });
+        }
+
+        let decoded: { id: number };
+        try {
+            decoded = jwt.verify(token, JWT_REFRESH_SECRET_KEY) as { id: number };
+        } catch (err) {
+            return res.status(401).json({ message: "Invalid or expired refresh token" });
+        }
+
+        const session = await findSessionByRefreshToken(token);
+        if (!session) {
+            return res.status(401).json({ message: "Session not found. Please log in again." });
+        }
+
+        if (new Date(session.expiresAt) < new Date()) {
+            return res.status(401).json({ message: "Refresh token expired. Please log in again." });
+        }
+
+        const user = await findUserById(decoded.id);
+        if (!user) {
+            return res.status(401).json({ message: "User not found" });
+        }
+
+        const newAccessToken = jwt.sign(
+            { id: user.id, email: user.email },
+            JWT_ACCESS_SECRET_KEY,
+            { expiresIn: "1h" }
+        );
+
+        return res.status(200).json({
+            message: "Access token refreshed",
+            accessToken: newAccessToken,
+        });
+    } catch (error) {
+        console.error("REFRESH TOKEN ERROR:", error);
+        return res.status(500).json({ message: "Server error", error });
     }
 };

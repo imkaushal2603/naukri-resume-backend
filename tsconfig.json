@@ -10,8 +10,9 @@
     "sourceMap": true,
     "declaration": true,
     "moduleDetection": "force",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "types": ["node"]
   },
-  "include": ["src/**/*", "generated/**/*"],
+  "include": ["src/**/*", "generated/**/*", "prisma/**/*"],
   "exclude": ["node_modules", "dist"]
 }
