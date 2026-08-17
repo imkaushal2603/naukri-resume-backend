@@ -1,16 +1,6 @@
 import { escapeHtml, nl2br } from "../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../src/helpers/templates/template.helper";
 
-const formatMonthYear = (date: Date | string | null | undefined): { month: string; year: string } => {
-    if (!date) return { month: "", year: "" };
-    const d = new Date(date);
-    if (isNaN(d.getTime())) return { month: "", year: "" };
-    return {
-        month: d.toLocaleString("en-US", { month: "short" }),
-        year: String(d.getFullYear())
-    };
-};
-
 export const renderMinimal = (resume: any): string => {
     let html = loadTemplate("minimal");
 
@@ -49,9 +39,6 @@ export const renderMinimal = (resume: any): string => {
     <div class="timeline">
 
         ${resume.candidate_education.map((edu: any) => {
-            const start = formatMonthYear(edu.startDate);
-            const end = formatMonthYear(edu.endDate);
-
             return `
 <div class="timeline-item">
 
@@ -61,22 +48,22 @@ export const renderMinimal = (resume: any): string => {
 
         <div class="timeline-date">
 
-    ${start.year}
+    ${escapeHtml(String(edu.startYear ?? ""))}
 
     -
 
-    ${edu.isCurrent
+    ${edu.currentlyStudying
                     ? "Present"
-                    : escapeHtml(end.year)}
+                    : escapeHtml(String(edu.passingYear ?? ""))}
 
 </div>
 
-        <div class="title">${escapeHtml(edu.degree)}</div>
+        <div class="title">${escapeHtml(String(edu.courseDegree ?? ""))}</div>
 
-        <div class="sub-title">${escapeHtml(edu.school)}</div>
+        <div class="sub-title">${escapeHtml(String(edu.instituteName ?? ""))}</div>
 
-        ${edu.fieldOfStudy
-                    ? `<div>${escapeHtml(edu.fieldOfStudy)}</div>`
+        ${edu.educationLevel
+                    ? `<div>${escapeHtml(String(edu.educationLevel))}</div>`
                     : ""}
 
     </div>
@@ -102,9 +89,7 @@ export const renderMinimal = (resume: any): string => {
     <div class="timeline">
 
         ${resume.candidate_experience.map((exp: any) => {
-            const start = formatMonthYear(exp.startDate);
-            const end = formatMonthYear(exp.endDate);
-            const isPresent = exp.isCurrent || !exp.endDate;
+            const isPresent = exp.currentlyWorking || !exp.endYear;
 
             return `
 
@@ -116,21 +101,21 @@ export const renderMinimal = (resume: any): string => {
 
         <div class="timeline-date">
 
-            ${start.month} ${start.year}
+            ${escapeHtml(String(exp.startMonth ?? ""))} ${escapeHtml(String(exp.startYear ?? ""))}
 
             -
 
             ${isPresent
                     ? "Present"
-                    : `${end.month} ${end.year}`}
+                    : `${escapeHtml(String(exp.endMonth ?? ""))} ${escapeHtml(String(exp.endYear ?? ""))}`}
 
         </div>
 
-        <div class="title">${escapeHtml(exp.role)}</div>
+        <div class="title">${escapeHtml(String(exp.jobTitle ?? ""))}</div>
 
         <div class="sub-title">
 
-            ${escapeHtml(exp.company)}
+            ${escapeHtml(String(exp.companyName ?? ""))}
 
             ${exp.location ? ` | ${escapeHtml(exp.location)}` : ""}
 
@@ -199,7 +184,7 @@ export const renderMinimal = (resume: any): string => {
 
     <ul>
         ${resume.candidate_skills
-            .map((skill: any) => `<li>${escapeHtml(skill.name)}</li>`)
+            .map((skill: any) => `<li>${escapeHtml(String(skill.skillName ?? ""))}</li>`)
             .join("")}
     </ul>
 
@@ -209,4 +194,4 @@ export const renderMinimal = (resume: any): string => {
     html = replace(html, "skills", skills);
 
     return html;
-}
+};

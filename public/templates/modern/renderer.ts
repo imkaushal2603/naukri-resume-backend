@@ -1,32 +1,15 @@
 import { escapeHtml, nl2br } from "../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../src/helpers/templates/template.helper";
 
-const formatMonthYear = (date: Date | string | null | undefined): { month: string; year: string } => {
-    if (!date) return { month: "", year: "" };
-    const d = new Date(date);
-    if (isNaN(d.getTime())) return { month: "", year: "" };
-    return {
-        month: d.toLocaleString("en-US", { month: "short" }),
-        year: String(d.getFullYear())
-    };
-};
-
 export const renderModern = (resume: any): string => {
 
     let html = loadTemplate("modern");
 
-    const fullName = [
-        resume.firstName,
-        resume.lastName
-    ]
+    const fullName = [resume.firstName, resume.lastName]
         .filter(Boolean)
         .join(" ");
 
-    html = replace(
-        html,
-        "name",
-        escapeHtml(fullName)
-    );
+    html = replace(html, "name", escapeHtml(fullName));
 
     const contact: string[] = [];
 
@@ -64,12 +47,7 @@ export const renderModern = (resume: any): string => {
 `);
     }
 
-
-    const address = [
-        resume.city,
-        resume.state,
-        resume.country
-    ]
+    const address = [resume.city, resume.state, resume.country]
         .filter(Boolean)
         .join(", ");
 
@@ -82,27 +60,19 @@ export const renderModern = (resume: any): string => {
 `);
     }
 
-    html = replace(
-        html,
-        "contact",
-        contact.join("")
-    );
+    html = replace(html, "contact", contact.join(""));
 
     const summary = resume.resume_builder?.summary
         ? `<p>${nl2br(resume.resume_builder.summary)}</p>`
         : "";
 
-    html = replace(
-        html,
-        "summary",
-        summary
-    );
+    html = replace(html, "summary", summary);
+
+    /* Experience */
 
     const experience = resume.candidate_experience?.length
         ? resume.candidate_experience.map((exp: any) => {
-            const start = formatMonthYear(exp.startDate);
-            const end = formatMonthYear(exp.endDate);
-            const isPresent = exp.isCurrent || !exp.endDate;
+            const isPresent = exp.currentlyWorking || !exp.endYear;
 
             return `
 
@@ -111,41 +81,36 @@ export const renderModern = (resume: any): string => {
     <div class="timeline_item_info">
 
         <div class="company">
-            ${escapeHtml(exp.company)}
+            ${escapeHtml(String(exp.companyName ?? ""))}
         </div>
 
         <div class="position">
-            ${escapeHtml(exp.role)}
+            ${escapeHtml(String(exp.jobTitle ?? ""))}
         </div>
 
         ${exp.location
-                ? `
+                    ? `
 <div class="location">
-    ${escapeHtml(exp.location)}
+    ${escapeHtml(String(exp.location))}
 </div>
 `
-                : ""
-            }
+                    : ""}
 
-
-${exp.description
-                ? `<div class="description">${nl2br(exp.description)}</div>`
-                : ""}
-
-
+        ${exp.description
+                    ? `<div class="description">${nl2br(exp.description)}</div>`
+                    : ""}
 
     </div>
 
     <span class="date">
 
-        ${start.month} ${start.year}
+        ${escapeHtml(String(exp.startMonth ?? ""))} ${escapeHtml(String(exp.startYear ?? ""))}
 
         -
 
         ${isPresent
-                ? "Present"
-                : `${end.month} ${end.year}`
-            }
+                    ? "Present"
+                    : `${escapeHtml(String(exp.endMonth ?? ""))} ${escapeHtml(String(exp.endYear ?? ""))}`}
 
     </span>
 
@@ -155,17 +120,12 @@ ${exp.description
         }).join("")
         : "";
 
-    html = replace(
-        html,
-        "experience",
-        experience
-    );
+    html = replace(html, "experience", experience);
+
+    /* Education */
 
     const education = resume.candidate_education?.length
         ? resume.candidate_education.map((edu: any) => {
-            const start = formatMonthYear(edu.startDate);
-            const end = formatMonthYear(edu.endDate);
-
             return `
 
 <div class="timeline_item">
@@ -173,43 +133,40 @@ ${exp.description
     <div class="timeline_item_info">
 
         <div class="school">
-            ${escapeHtml(edu.school)}
+            ${escapeHtml(String(edu.instituteName ?? ""))}
         </div>
 
         <div class="degree">
-            ${escapeHtml(edu.degree)}
+            ${escapeHtml(String(edu.courseDegree ?? ""))}
         </div>
 
-        ${edu.fieldOfStudy
-                ? `
+        ${edu.educationLevel
+                    ? `
 <div class="location">
-    ${escapeHtml(edu.fieldOfStudy)}
+    ${escapeHtml(String(edu.educationLevel))}
 </div>
 `
-                : ""
-            }
+                    : ""}
 
-        ${edu.gpa
-                ? `
+        ${edu.grade
+                    ? `
 <div class="grade">
-    Grade: ${escapeHtml(edu.gpa)}
+    Grade: ${escapeHtml(String(edu.grade))}
 </div>
 `
-                : ""
-            }
+                    : ""}
 
     </div>
 
     <span class="date">
 
-        ${start.year}
+        ${escapeHtml(String(edu.startYear ?? ""))}
 
         -
 
-        ${edu.isCurrent
-                ? "Present"
-                : escapeHtml(end.year)
-            }
+        ${edu.currentlyStudying
+                    ? "Present"
+                    : escapeHtml(String(edu.passingYear ?? ""))}
 
     </span>
 
@@ -219,27 +176,21 @@ ${exp.description
         }).join("")
         : "";
 
-    html = replace(
-        html,
-        "education",
-        education
-    );
+    html = replace(html, "education", education);
+
+    /* Skills */
 
     const skills = resume.candidate_skills?.length
         ? resume.candidate_skills
             .map((skill: any) => `
 <li class="skill">
-    ${escapeHtml(skill.name)}
+    ${escapeHtml(String(skill.skillName ?? ""))}
 </li>
 `)
             .join("")
         : "";
 
-    html = replace(
-        html,
-        "skills",
-        skills
-    );
+    html = replace(html, "skills", skills);
 
     return html;
 };

@@ -139,13 +139,8 @@ export const downloadResumeController = async (req: AuthRequest, res: Response) 
 // --- Basic Info Controllers ---
 export const getBasicInfo: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const userId = Number(req.user?.userId);
-
-        if (!userId || isNaN(userId)) {
-            return res.status(401).json({ success: false, message: "Unauthorized or invalid user ID" });
-        }
-
-        const info = await ResumeService.getBasicInfoService(userId);
+        const resumeId = Number(req.params.resumeId);
+        const info = await ResumeService.getBasicInfoService(req.user!.userId, resumeId);
         return res.status(200).json({ success: true, basicInfo: info });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -154,14 +149,9 @@ export const getBasicInfo: RequestHandler = async (req: AuthRequest, res) => {
 
 export const updateBasicInfo: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const userId = Number(req.user?.userId);
-        if (!userId || isNaN(userId)) {
-            return res.status(401).json({ success: false, message: "Unauthorized" });
-        }
-
+        const resumeId = Number(req.params.resumeId);
         const photoPath = req.file ? `/uploads/${req.file.filename}` : undefined;
-        const info = await ResumeService.updateBasicInfoService(userId, req.body, photoPath);
-
+        const info = await ResumeService.updateBasicInfoService(req.user!.userId, resumeId, req.body, photoPath);
         return res.status(200).json({ success: true, basicInfo: info });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -171,7 +161,8 @@ export const updateBasicInfo: RequestHandler = async (req: AuthRequest, res) => 
 // --- Education Controllers ---
 export const getEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const list = await ResumeService.getEducationList(req.user!.userId);
+        const resumeId = Number(req.params.resumeId);
+        const list = await ResumeService.getEducationList(req.user!.userId, resumeId);
         return res.status(200).json({ success: true, education: list });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -180,7 +171,8 @@ export const getEducation: RequestHandler = async (req: AuthRequest, res) => {
 
 export const addEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const record = await ResumeService.addEducation(req.user!.userId, req.body);
+        const resumeId = Number(req.params.resumeId);
+        const record = await ResumeService.addEducation(req.user!.userId, resumeId, req.body);
         return res.status(201).json({ success: true, education: record });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -189,11 +181,8 @@ export const addEducation: RequestHandler = async (req: AuthRequest, res) => {
 
 export const updateEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const record = await ResumeService.updateEducation(
-            req.user!.userId,
-            Number(req.params.id),
-            req.body
-        );
+        const resumeId = Number(req.params.resumeId);
+        const record = await ResumeService.updateEducation(req.user!.userId, resumeId, Number(req.params.id), req.body);
         return res.status(200).json({ success: true, education: record });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -202,10 +191,8 @@ export const updateEducation: RequestHandler = async (req: AuthRequest, res) => 
 
 export const deleteEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const result = await ResumeService.deleteEducation(
-            req.user!.userId,
-            Number(req.params.id)
-        );
+        const resumeId = Number(req.params.resumeId);
+        const result = await ResumeService.deleteEducation(req.user!.userId, resumeId, Number(req.params.id));
         return res.status(200).json({ success: true, ...result });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -215,7 +202,8 @@ export const deleteEducation: RequestHandler = async (req: AuthRequest, res) => 
 // --- Experience Controllers ---
 export const getExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const list = await ResumeService.getExperienceList(req.user!.userId);
+        const resumeId = Number(req.params.resumeId);
+        const list = await ResumeService.getExperienceList(req.user!.userId, resumeId);
         return res.status(200).json({ success: true, experience: list });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -224,7 +212,8 @@ export const getExperience: RequestHandler = async (req: AuthRequest, res) => {
 
 export const addExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const record = await ResumeService.addExperience(req.user!.userId, req.body);
+        const resumeId = Number(req.params.resumeId);
+        const record = await ResumeService.addExperience(req.user!.userId, resumeId, req.body);
         return res.status(201).json({ success: true, experience: record });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -233,8 +222,10 @@ export const addExperience: RequestHandler = async (req: AuthRequest, res) => {
 
 export const updateExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
+        const resumeId = Number(req.params.resumeId);
         const record = await ResumeService.updateExperience(
             req.user!.userId,
+            resumeId,
             Number(req.params.id),
             req.body
         );
@@ -246,8 +237,10 @@ export const updateExperience: RequestHandler = async (req: AuthRequest, res) =>
 
 export const deleteExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
+        const resumeId = Number(req.params.resumeId);
         const result = await ResumeService.deleteExperience(
             req.user!.userId,
+            resumeId,
             Number(req.params.id)
         );
         return res.status(200).json({ success: true, ...result });
@@ -256,11 +249,11 @@ export const deleteExperience: RequestHandler = async (req: AuthRequest, res) =>
     }
 };
 
-
-// Skills
+// --- Skills Controllers ---
 export const getSkills: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const list = await ResumeService.getSkillsList(req.user!.userId);
+        const resumeId = Number(req.params.resumeId);
+        const list = await ResumeService.getSkillsList(req.user!.userId, resumeId);
         return res.status(200).json({ success: true, skills: list });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -269,7 +262,13 @@ export const getSkills: RequestHandler = async (req: AuthRequest, res) => {
 
 export const addSkill: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const skill = await ResumeService.addSkill(req.user!.userId, req.body.name, req.body.level);
+        const resumeId = Number(req.params.resumeId);
+        const skill = await ResumeService.addSkill(
+            req.user!.userId,
+            resumeId,
+            req.body.name,
+            req.body.level
+        );
         return res.status(201).json({ success: true, skill });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
@@ -278,15 +277,19 @@ export const addSkill: RequestHandler = async (req: AuthRequest, res) => {
 
 export const deleteSkill: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const result = await ResumeService.deleteSkill(req.user!.userId, Number(req.params.id));
+        const resumeId = Number(req.params.resumeId);
+        const result = await ResumeService.deleteSkill(
+            req.user!.userId,
+            resumeId,
+            Number(req.params.id)
+        );
         return res.status(200).json({ success: true, ...result });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
     }
 };
 
-
-// Summary
+// --- Summary Controllers ---
 export const getSummary: RequestHandler = async (req: AuthRequest, res) => {
     try {
         const resumeId = Number(req.params.resumeId);
@@ -307,17 +310,17 @@ export const updateSummary: RequestHandler = async (req: AuthRequest, res) => {
     }
 };
 
-
 // --- Progress Controller ---
 export const getResumeProgress: RequestHandler = async (req: AuthRequest, res: Response) => {
     try {
         const userId = Number(req.user?.userId);
+        const resumeId = Number(req.params.resumeId);
 
         if (!userId || isNaN(userId)) {
             return res.status(401).json({ success: false, message: "Unauthorized or invalid user ID" });
         }
 
-        const progress = await ResumeService.getResumeProgressService(userId);
+        const progress = await ResumeService.getResumeProgressService(userId, resumeId);
         return res.status(200).json({ success: true, ...progress });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });

@@ -17,271 +17,199 @@ export const getAllResumesService = async (userId: number) => {
         where: { userId },
         include: {
             resume_templates: {
-                select: {
-                    id: true,
-                    name: true,
-                    templateKey: true,
-                    preview: true,
-                },
+                select: { id: true, name: true, templateKey: true, preview: true },
             },
         },
         orderBy: { updatedAt: "desc" },
     });
 };
 
-// 3. Get a Single Resume draft + User profile data
+// 3. Get a Single Resume draft — now self-contained, no separate user lookup needed
 export const getResumeByIdService = async (userId: number, resumeId: number) => {
     const resume = await prisma.resume_builder.findFirst({
         where: { id: resumeId, userId },
         include: {
             resume_templates: true,
+            resume_education: true,
+            resume_experience: true,
+            resume_skills: true,
         },
     });
 
     if (!resume) throw new Error("Resume draft not found.");
 
-    const userData = await prisma.user.findUnique({
-        where: { id: userId },
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            phone: true,
-            summary: true,
-            profilePhoto: true,
-            city: true,
-            state: true,
-            country: true,
-            linkedin: true,
-            github: true,
-            user_education: true,
-            user_experience: true,
-            user_skills: true,
-        },
-    });
-
-    return {
-        ...resume,
-        user: userData,
-    };
+    return resume;
 };
 
-// 4. Create a new Resume (allows multiple creations)
+// 4. Create a new Resume — seed with account defaults from user
 const MAX_RESUMES_PER_USER = 15;
 
 export const createResumeBuilderService = async (
     userId: number,
     data: { templateId: number | string; name?: string }
 ) => {
-    const resumeCount = await prisma.resume_builder.count({
-        where: { userId },
-    });
+    const resumeCount = await prisma.resume_builder.count({ where: { userId } });
 
     if (resumeCount >= MAX_RESUMES_PER_USER) {
         throw new Error(`You can only create up to ${MAX_RESUMES_PER_USER} resumes.`);
     }
 
-    const template = await prisma.resume_templates.findFirst({
-        where: {
-            id: Number(data.templateId),
-            status: true,
-        },
-    });
-
-    if (!template) {
-        throw new Error("Invalid or inactive template selected.");
+    let templateIdToUse = data.templateId ? Number(data.templateId) : null;
+    if (!templateIdToUse) {
+        const defaultTemplate = await prisma.resume_templates.findFirst({
+            where: { status: true },
+            orderBy: { id: "asc" },
+        });
+        if (!defaultTemplate) throw new Error("No active resume templates found.");
+        templateIdToUse = defaultTemplate.id;
     }
+
+    const account = await prisma.user.findUnique({ where: { id: userId } });
 
     return prisma.resume_builder.create({
         data: {
             userId,
-            templateId: template.id,
+            templateId: templateIdToUse,
             name: data.name || `My Resume ${resumeCount + 1}`,
+            // Prefill with account defaults, editable per-resume afterward
+            fullName: account?.name || "",
+            email: account?.email || "",
+            phone: account?.phone || "",
         },
     });
 };
 
-// 5. Update a specific resume by resumeId
+// 5. Update a specific resume (template/name)
 export const updateResumeBuilderService = async (
     userId: number,
     resumeId: number,
     data: { templateId?: number | string; name?: string }
 ) => {
-    const resume = await prisma.resume_builder.findFirst({
-        where: { id: resumeId, userId },
-    });
-
-    if (!resume) {
-        throw new Error("Resume draft not found.");
-    }
+    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+    if (!resume) throw new Error("Resume draft not found.");
 
     const updateData: any = {};
     if (data.name) updateData.name = data.name;
 
     if (data.templateId) {
         const template = await prisma.resume_templates.findFirst({
-            where: {
-                id: Number(data.templateId),
-                status: true,
-            },
+            where: { id: Number(data.templateId), status: true },
         });
-
-        if (!template) {
-            throw new Error("Template not found.");
-        }
-
+        if (!template) throw new Error("Template not found.");
         updateData.templateId = Number(data.templateId);
     }
 
-    return prisma.resume_builder.update({
-        where: { id: resumeId },
-        data: updateData,
-    });
+    return prisma.resume_builder.update({ where: { id: resumeId }, data: updateData });
 };
 
-// 6. Delete a specific resume by resumeId
+// 6. Delete a specific resume — cascades automatically now
 export const removeResumeBuilderService = async (userId: number, resumeId: number) => {
-    const resume = await prisma.resume_builder.findFirst({
-        where: { id: resumeId, userId },
-    });
+    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+    if (!resume) throw new Error("Resume draft not found.");
 
-    if (!resume) {
-        throw new Error("Resume draft not found.");
-    }
-
-    await prisma.resume_builder.delete({
-        where: { id: resumeId },
-    });
-
+    await prisma.resume_builder.delete({ where: { id: resumeId } });
     return { message: "Resume draft deleted successfully." };
 };
 
-// 7. Preview a specific resume by resumeId
+// 7. Preview
 export const previewResumeService = async (userId: number, resumeId: number) => {
-    const resumeData = await getResumeByIdService(userId, resumeId);
-
-    const templateKey = resumeData.resume_templates?.templateKey || "classic";
+    const resume = await getResumeByIdService(userId, resumeId);
+    const templateKey = resume.resume_templates?.templateKey || "classic";
 
     const renderData = {
-        firstName: resumeData.user?.name?.split(" ")[0] || "",
-        lastName: resumeData.user?.name?.split(" ").slice(1).join(" ") || "",
-        email: resumeData.user?.email,
-        phone: resumeData.user?.phone,
-        photoUrl: resumeData.user?.profilePhoto || "",
-        city: resumeData.user?.city,
-        state: resumeData.user?.state,
-        country: resumeData.user?.country,
-        linkedin: resumeData.user?.linkedin,
-        github: resumeData.user?.github,
-        resume_builder: { summary: resumeData.user?.summary },
-        candidate_education: (resumeData.user?.user_education || []).map((e: any) => ({
+        firstName: resume.fullName?.split(" ")[0] || "",
+        lastName: resume.fullName?.split(" ").slice(1).join(" ") || "",
+        email: resume.email,
+        phone: resume.phone,
+        photoUrl: resume.profilePhoto || "",
+        city: resume.city,
+        state: resume.state,
+        country: resume.country,
+        linkedin: resume.linkedin,
+        github: resume.github,
+        resume_builder: { summary: resume.summary },
+        candidate_education: (resume.resume_education || []).map((e: any) => ({
             instituteName: e.school,
             courseDegree: e.degree,
             educationLevel: e.educationLevel,
-            startYear: e.startDate ? new Date(e.startDate).getFullYear() : "",
-            passingYear: e.endDate ? new Date(e.endDate).getFullYear() : "",
+            startYear: e.startDate ? String(new Date(e.startDate).getFullYear()) : "",
+            passingYear: e.endDate ? String(new Date(e.endDate).getFullYear()) : "",
             currentlyStudying: e.isCurrent,
             grade: e.gpa,
         })),
-        candidate_experience: (resumeData.user?.user_experience || []).map((e: any) => ({
+        candidate_experience: (resume.resume_experience || []).map((e: any) => ({
             companyName: e.company,
             jobTitle: e.role,
             location: e.location,
             employmentType: e.employmentType,
             startMonth: e.startDate ? new Date(e.startDate).toLocaleString("default", { month: "short" }) : "",
-            startYear: e.startDate ? new Date(e.startDate).getFullYear() : "",
+            startYear: e.startDate ? String(new Date(e.startDate).getFullYear()) : "",
             endMonth: e.endDate ? new Date(e.endDate).toLocaleString("default", { month: "short" }) : "",
-            endYear: e.endDate ? new Date(e.endDate).getFullYear() : "",
+            endYear: e.endDate ? String(new Date(e.endDate).getFullYear()) : "",
             description: e.description,
+            currentlyWorking: e.isCurrent,
         })),
-        candidate_skills: (resumeData.user?.user_skills || []).map((s: any) => ({
-            skillName: s.name,
-        })),
+        candidate_skills: (resume.resume_skills || []).map((s: any) => ({ skillName: s.name })),
     };
 
     const html = renderResumeTemplate(templateKey, renderData);
-
-    return {
-        html,
-        resumeName: resumeData.name || "Untitled Resume",
-    };
+    return { html, resumeName: resume.name || "Untitled Resume" };
 };
 
-// 8. Download a specific resume by resumeId
-export const downloadResumeService = async (
-    userId: number,
-    resumeId: number,
-    format: string = "pdf"
-) => {
+// 8. Download
+export const downloadResumeService = async (userId: number, resumeId: number, format: string = "pdf") => {
     const { html } = await previewResumeService(userId, resumeId);
 
     if (format === "docx") {
-        const docxBuffer = await HTMLtoDOCX(html, null, {
-            table: { row: { cantSplit: true } },
-            footer: true,
-            pageNumber: true,
-        });
-        return docxBuffer;
+        return HTMLtoDOCX(html, null, { table: { row: { cantSplit: true } }, footer: true, pageNumber: true });
     }
 
-    const browser = await puppeteer.launch({
-        headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-
+    const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
     try {
         const page = await browser.newPage();
         await page.setContent(html, { waitUntil: "load" });
-
-        const pdfBuffer = await page.pdf({
+        return await page.pdf({
             format: "A4",
             printBackground: true,
-            margin: {
-                top: "0px",
-                right: "0px",
-                bottom: "0px",
-                left: "0px",
-            },
+            margin: { top: "0px", right: "0px", bottom: "0px", left: "0px" },
         });
-
-        return pdfBuffer;
     } finally {
         await browser.close();
     }
 };
 
-// --- Basic Info Services ---
-export const getBasicInfoService = async (userId: number) => {
-    return prisma.user.findUnique({
-        where: { id: userId },
+// --- Basic Info — now scoped to resumeId ---
+export const getBasicInfoService = async (userId: number, resumeId: number) => {
+    if (!resumeId || Number.isNaN(resumeId)) throw new Error("Invalid resume ID.");
+    const resume = await prisma.resume_builder.findFirst({
+        where: { id: resumeId, userId },
         select: {
-            id: true,
-            name: true,
-            email: true,
-            phone: true,
-            profilePhoto: true,
-            country: true,
-            state: true,
-            city: true,
-            zipCode: true,
-            linkedin: true,
-            github: true,
+            id: true, fullName: true, email: true, phone: true, profilePhoto: true,
+            country: true, state: true, city: true, zipCode: true, linkedin: true, github: true,
         },
     });
+    if (!resume) throw new Error("Resume draft not found.");
+    return resume;
 };
 
-export const updateBasicInfoService = async (userId: number, data: any, profilePhotoPath?: string) => {
-    const requiredFields = ["name", "phone", "country", "state", "city"];
-    const missing = requiredFields.filter((field) => !data[field]?.toString().trim());
+export const updateBasicInfoService = async (
+    userId: number,
+    resumeId: number,
+    data: any,
+    profilePhotoPath?: string
+) => {
+    const requiredFields = ["fullName", "phone", "country", "state", "city"];
+    const missing = requiredFields.filter((f) => !data[f]?.toString().trim());
+    if (missing.length > 0) throw new Error(`Missing required fields: ${missing.join(", ")}`);
 
-    if (missing.length > 0) {
-        throw new Error(`Missing required fields: ${missing.join(", ")}`);
-    }
+    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+    if (!resume) throw new Error("Resume draft not found.");
 
-    return prisma.user.update({
-        where: { id: userId },
+    return prisma.resume_builder.update({
+        where: { id: resumeId },
         data: {
-            name: data.name,
+            fullName: data.fullName,
+            email: data.email,
             phone: data.phone,
             country: data.country,
             state: data.state,
@@ -294,18 +222,17 @@ export const updateBasicInfoService = async (userId: number, data: any, profileP
     });
 };
 
-// --- Education Services ---
-export const getEducationList = async (userId: number) => {
-    return prisma.user_education.findMany({
-        where: { userId },
-        orderBy: { startDate: "desc" },
-    });
+// --- Education — scoped to resumeId ---
+export const getEducationList = async (userId: number, resumeId: number) => {
+    await assertResumeOwnership(userId, resumeId);
+    return prisma.resume_education.findMany({ where: { resumeId }, orderBy: { startDate: "desc" } });
 };
 
-export const addEducation = async (userId: number, data: any) => {
-    return prisma.user_education.create({
+export const addEducation = async (userId: number, resumeId: number, data: any) => {
+    await assertResumeOwnership(userId, resumeId);
+    return prisma.resume_education.create({
         data: {
-            userId,
+            resumeId,
             school: data.school,
             degree: data.degree,
             educationLevel: data.educationLevel,
@@ -317,11 +244,12 @@ export const addEducation = async (userId: number, data: any) => {
     });
 };
 
-export const updateEducation = async (userId: number, id: number, data: any) => {
-    const existing = await prisma.user_education.findFirst({ where: { id, userId } });
+export const updateEducation = async (userId: number, resumeId: number, id: number, data: any) => {
+    await assertResumeOwnership(userId, resumeId);
+    const existing = await prisma.resume_education.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Education record not found");
 
-    return prisma.user_education.update({
+    return prisma.resume_education.update({
         where: { id },
         data: {
             school: data.school,
@@ -335,26 +263,26 @@ export const updateEducation = async (userId: number, id: number, data: any) => 
     });
 };
 
-export const deleteEducation = async (userId: number, id: number) => {
-    const existing = await prisma.user_education.findFirst({ where: { id, userId } });
+export const deleteEducation = async (userId: number, resumeId: number, id: number) => {
+    await assertResumeOwnership(userId, resumeId);
+    const existing = await prisma.resume_education.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Education record not found");
 
-    await prisma.user_education.delete({ where: { id } });
+    await prisma.resume_education.delete({ where: { id } });
     return { message: "Education deleted successfully" };
 };
 
-// --- Experience Services ---
-export const getExperienceList = async (userId: number) => {
-    return prisma.user_experience.findMany({
-        where: { userId },
-        orderBy: { startDate: "desc" },
-    });
+// --- Experience — scoped to resumeId ---
+export const getExperienceList = async (userId: number, resumeId: number) => {
+    await assertResumeOwnership(userId, resumeId);
+    return prisma.resume_experience.findMany({ where: { resumeId }, orderBy: { startDate: "desc" } });
 };
 
-export const addExperience = async (userId: number, data: any) => {
-    return prisma.user_experience.create({
+export const addExperience = async (userId: number, resumeId: number, data: any) => {
+    await assertResumeOwnership(userId, resumeId);
+    return prisma.resume_experience.create({
         data: {
-            userId,
+            resumeId,
             company: data.company,
             role: data.role,
             location: data.location,
@@ -367,11 +295,12 @@ export const addExperience = async (userId: number, data: any) => {
     });
 };
 
-export const updateExperience = async (userId: number, id: number, data: any) => {
-    const existing = await prisma.user_experience.findFirst({ where: { id, userId } });
+export const updateExperience = async (userId: number, resumeId: number, id: number, data: any) => {
+    await assertResumeOwnership(userId, resumeId);
+    const existing = await prisma.resume_experience.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Experience record not found");
 
-    return prisma.user_experience.update({
+    return prisma.resume_experience.update({
         where: { id },
         data: {
             company: data.company,
@@ -386,61 +315,47 @@ export const updateExperience = async (userId: number, id: number, data: any) =>
     });
 };
 
-export const deleteExperience = async (userId: number, id: number) => {
-    const existing = await prisma.user_experience.findFirst({ where: { id, userId } });
+export const deleteExperience = async (userId: number, resumeId: number, id: number) => {
+    await assertResumeOwnership(userId, resumeId);
+    const existing = await prisma.resume_experience.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Experience record not found");
 
-    await prisma.user_experience.delete({ where: { id } });
+    await prisma.resume_experience.delete({ where: { id } });
     return { message: "Experience deleted successfully" };
 };
 
-
-// Skills
-export const getSkillsList = async (userId: number) => {
-    return prisma.user_skills.findMany({
-        where: { userId },
-        orderBy: { id: "asc" },
-    });
+// --- Skills — scoped to resumeId ---
+export const getSkillsList = async (userId: number, resumeId: number) => {
+    await assertResumeOwnership(userId, resumeId);
+    return prisma.resume_skills.findMany({ where: { resumeId }, orderBy: { id: "asc" } });
 };
 
-export const addSkill = async (userId: number, name: string, level?: string) => {
-    const existing = await prisma.user_skills.findFirst({
-        where: { userId, name: { equals: name } },
-    });
+export const addSkill = async (userId: number, resumeId: number, name: string, level?: string) => {
+    await assertResumeOwnership(userId, resumeId);
+    const existing = await prisma.resume_skills.findFirst({ where: { resumeId, name: { equals: name } } });
     if (existing) throw new Error("Skill already added");
 
-    return prisma.user_skills.create({
-        data: { userId, name, level },
-    });
+    return prisma.resume_skills.create({ data: { resumeId, name, level } });
 };
 
-export const deleteSkill = async (userId: number, id: number) => {
-    const existing = await prisma.user_skills.findFirst({ where: { id, userId } });
+export const deleteSkill = async (userId: number, resumeId: number, id: number) => {
+    await assertResumeOwnership(userId, resumeId);
+    const existing = await prisma.resume_skills.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Skill not found");
 
-    await prisma.user_skills.delete({ where: { id } });
+    await prisma.resume_skills.delete({ where: { id } });
     return { message: "Skill deleted successfully" };
 };
 
-
-// Summary
+// --- Summary — scoped to resumeId ---
 export const getSummaryService = async (userId: number, resumeId: number) => {
     const resume = await prisma.resume_builder.findFirst({
         where: { id: resumeId, userId },
-        select: { name: true },
+        select: { name: true, summary: true },
     });
-
     if (!resume) throw new Error("Resume draft not found.");
 
-    const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: { summary: true },
-    });
-
-    return {
-        resumeName: resume.name,
-        summary: user?.summary || "",
-    };
+    return { resumeName: resume.name, summary: resume.summary || "" };
 };
 
 export const updateSummaryService = async (
@@ -448,63 +363,48 @@ export const updateSummaryService = async (
     resumeId: number,
     data: { resumeName?: string; summary?: string }
 ) => {
-    await prisma.user.update({
-        where: { id: userId },
-        data: { summary: data.summary },
-    });
+    await assertResumeOwnership(userId, resumeId);
 
-    if (data.resumeName !== undefined) {
-        const resume = await prisma.resume_builder.findFirst({
-            where: { id: resumeId, userId },
-        });
-        if (resume) {
-            await prisma.resume_builder.update({
-                where: { id: resumeId },
-                data: { name: data.resumeName },
-            });
-        }
-    }
-
-    return getSummaryService(userId, resumeId);
+    return prisma.resume_builder.update({
+        where: { id: resumeId },
+        data: {
+            summary: data.summary,
+            ...(data.resumeName !== undefined && { name: data.resumeName }),
+        },
+    }).then(() => getSummaryService(userId, resumeId));
 };
 
-
-// --- Progress Service ---
-export const getResumeProgressService = async (userId: number) => {
-    const user = await prisma.user.findUnique({
-        where: { id: userId },
+// --- Progress — now per-resume ---
+export const getResumeProgressService = async (userId: number, resumeId: number) => {
+    const resume = await prisma.resume_builder.findFirst({
+        where: { id: resumeId, userId },
         select: {
-            name: true,
-            phone: true,
-            country: true,
-            city: true,
-            summary: true,
-            user_education: { select: { id: true }, take: 1 },
-            user_experience: { select: { id: true }, take: 1 },
-            user_skills: { select: { id: true }, take: 1 },
+            fullName: true, phone: true, country: true, city: true, summary: true,
+            resume_education: { select: { id: true }, take: 1 },
+            resume_experience: { select: { id: true }, take: 1 },
+            resume_skills: { select: { id: true }, take: 1 },
         },
     });
 
-    if (!user) {
-        throw new Error("User not found");
-    }
+    if (!resume) throw new Error("Resume draft not found.");
 
     const sections = {
-        basicInfo: Boolean(user.name && user.phone && user.country && user.city),
-        education: user.user_education.length > 0,
-        experience: user.user_experience.length > 0,
-        skills: user.user_skills.length > 0,
-        summary: Boolean(user.summary && user.summary.trim().length > 10),
+        basicInfo: Boolean(resume.fullName && resume.phone && resume.country && resume.city),
+        education: resume.resume_education.length > 0,
+        experience: resume.resume_experience.length > 0,
+        skills: resume.resume_skills.length > 0,
+        summary: Boolean(resume.summary && resume.summary.trim().length > 10),
     };
 
     const totalSections = Object.keys(sections).length;
     const completedCount = Object.values(sections).filter(Boolean).length;
     const progressPercentage = Math.round((completedCount / totalSections) * 100);
 
-    return {
-        sections,
-        completedCount,
-        totalSections,
-        progressPercentage,
-    };
+    return { sections, completedCount, totalSections, progressPercentage };
 };
+
+// Helper — confirm the resume belongs to this user before touching child records
+async function assertResumeOwnership(userId: number, resumeId: number) {
+    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+    if (!resume) throw new Error("Resume draft not found or access denied.");
+}

@@ -35,7 +35,6 @@ export const getMeService = async (userId: number) => {
       name: true,
       email: true,
       phone: true,
-      profilePhoto: true,
       createdAt: true,
     },
   });
