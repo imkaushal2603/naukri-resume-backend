@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/uploads", express.static(path.join(process.cwd(), "/uploads")));
-app.use("/templates", express.static(path.join(process.cwd(), "public/templates")));
+app.use("/api/templates", express.static(path.join(process.cwd(), "public/templates")));
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

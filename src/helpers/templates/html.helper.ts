@@ -1,6 +1,6 @@
-export const escapeHtml = (str: string): string => {
-    if (!str) return "";
-    return str
+export const escapeHtml = (str: unknown): string => {
+    if (str === null || str === undefined) return "";
+    return String(str)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -8,7 +8,7 @@ export const escapeHtml = (str: string): string => {
         .replace(/'/g, "&#039;");
 };
 
-export const nl2br = (str: string): string => {
-    if (!str) return "";
+export const nl2br = (str: unknown): string => {
+    if (str === null || str === undefined) return "";
     return escapeHtml(str).replace(/\n/g, "<br/>");
 };
