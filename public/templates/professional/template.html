@@ -1,343 +1,343 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Professional Resume</title>
-    <style>
-      @page {
-        size: A4;
-        margin: 0;
-      }
 
-      * {
-        box-sizing: border-box;
-      }
-      html,
-      body,
-      div,
-      span,
-      applet,
-      object,
-      iframe,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      p,
-      blockquote,
-      pre,
-      a,
-      abbr,
-      acronym,
-      address,
-      big,
-      cite,
-      code,
-      del,
-      dfn,
-      em,
-      font,
-      img,
-      ins,
-      kbd,
-      q,
-      s,
-      samp,
-      small,
-      strike,
-      strong,
-      sub,
-      sup,
-      tt,
-      var,
-      b,
-      u,
-      i,
-      center,
-      dl,
-      dt,
-      dd,
-      ol,
-      ul,
-      li,
-      fieldset,
-      form,
-      label,
-      legend,
-      table,
-      caption,
-      tbody,
-      tfoot,
-      thead,
-      tr,
-      th,
-      td {
-        background: transparent;
-        border: 0;
-        font-size: 100%;
-        margin: 0;
-        outline: 0;
-        padding: 0;
-        vertical-align: baseline;
-        text-rendering: optimizeLegibility;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Resume</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
 
-      body {
-        margin: 0;
-        font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      .resume_page {
-        width: 794px;
-        min-height: 1110px;
-        margin: auto;
-         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
-        margin-top: 10px;
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        padding: 20px;
-      }
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    font,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td {
+      background: transparent;
+      border: 0;
+      font-size: 100%;
+      margin: 0;
+      outline: 0;
+      padding: 0;
+      vertical-align: baseline;
+      text-rendering: optimizeLegibility;
+    }
 
-      .resume_header {
-        display: flex;
-        align-items: center;
-        gap: 25px;
-        color: #1f4e78;
-        padding: 20px 5px;
-      }
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
+    }
 
-      .profile_image {
-        width: 150px;
-        height: 150px;
-        flex-shrink: 0;
-        border-radius: 10px;
-        overflow: hidden;
-        border: 4px solid rgba(255, 255, 255, 0.35);
-      }
+    .resume_page {
+      width: 794px;
+      min-height: 1110px;
+      margin: auto;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 25px;
+      border: 1px solid #0456FF1A;
+    }
 
-      .profile_image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
+    .resume_header {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      color: #1f4e78;
+      padding: 20px 5px;
+    }
 
-      .profile_info {
-        flex: 1;
-      }
+    .profile_image {
+      width: 150px;
+      height: 150px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 4px solid rgba(255, 255, 255, 0.35);
+    }
 
-      .profile_info h1 {
-        font-size: 34px;
-        font-weight: 400;
-        line-height: 1.2;
-        margin-bottom: 8px;
-      }
+    .profile_image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-      .profile_info p {
-        font-size: 17px;
-        font-weight: 400;
-      }
+    .profile_info {
+      flex: 1;
+    }
 
-      .contact_bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        padding: 12px 25px;
-        background: #c7d9ef;
-        border-bottom: 1px solid #d9dfe6;
-        font-size: 13px;
-        color: #444;
-      }
+    .profile_info h1 {
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
 
-      .resume_section {
-        margin-top: 24px;
-      }
+    .profile_info p {
+      font-size: 17px;
+      font-weight: 400;
+    }
 
-      .resume_section h2 {
-        font-size: 20px;
-        color: #5f91bd;
-        text-transform: uppercase;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-      }
+    .contact_bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 12px 25px;
+      background: #c7d9ef;
+      border-bottom: 1px solid #d9dfe6;
+      font-size: 13px;
+      color: #444;
+    }
 
-      .section_line {
-        width: 100%;
-        height: 2px;
-        background: #5f91bd;
-        margin-bottom: 16px;
-      }
+    .resume_section {
+      margin-top: 24px;
+    }
 
-      .resume_section > p {
-        text-align: justify;
-        color: #555;
-        line-height: 1.8;
-      }
+    .resume_section h2 {
+      font-size: 20px;
+      color: #5f91bd;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
 
-      .education_item {
-        display: flex;
-        justify-content: space-between;
-        gap: 25px;
-        margin-bottom: 20px;
-      }
+    .section_line {
+      width: 100%;
+      height: 2px;
+      background: #5f91bd;
+      margin-bottom: 16px;
+    }
 
-      .education_left {
-        flex: 1;
-      }
+    .resume_section>p {
+      text-align: justify;
+      color: #555;
+      line-height: 1.8;
+    }
 
-      .education_left h3 {
-        font-size: 18px;
-        color: #5f91bd;
-        margin-bottom: 5px;
-      }
+    .education_item {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 20px;
+    }
 
-      .education_left h4 {
-        font-size: 15px;
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
+    .education_left {
+      flex: 1;
+    }
 
-      .education_left p {
-        font-size: 13px;
-        color: #666;
-      }
+    .education_left h3 {
+      font-size: 18px;
+      color: #5f91bd;
+      margin-bottom: 5px;
+    }
 
-      .experience_item {
-        display: flex;
-        justify-content: space-between;
-        gap: 25px;
-        margin-bottom: 25px;
-      }
+    .education_left h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
 
-      .experience_left {
-        flex: 1;
-      }
+    .education_left p {
+      font-size: 13px;
+      color: #666;
+    }
 
-      .experience_left h3 {
-        font-size: 18px;
-        color: #5f91bd;
-        margin-bottom: 5px;
-      }
+    .experience_item {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
 
-      .experience_left h4 {
-        font-size: 15px;
-        margin-bottom: 4px;
-      }
+    .experience_left {
+      flex: 1;
+    }
 
-      .location {
-        font-size: 13px;
-        color: #666;
-        margin-bottom: 10px;
-      }
+    .experience_left h3 {
+      font-size: 18px;
+      color: #5f91bd;
+      margin-bottom: 5px;
+    }
 
-      .experience_left ul {
-        margin-left: 18px;
-      }
+    .experience_left h4 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
 
-      .experience_left li {
-        margin-bottom: 6px;
-        line-height: 1.7;
-        color: #555;
-      }
+    .location {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+    }
 
-      .date_badge {
-        display: inline-block;
-        padding: 6px 16px;
-        background: #1f4e78;
-        color: #fff;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        white-space: nowrap;
-      }
+    .experience_left ul {
+      margin-left: 18px;
+    }
 
-      .skills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
+    .experience_left li {
+      margin-bottom: 6px;
+      line-height: 1.7;
+      color: #555;
+    }
 
-      .skills span {
-        display: inline-block;
-        padding: 8px 15px;
-        border: 1px solid #cfd8e3;
-        border-radius: 10px;
-        background: #fff;
-        color: #5f91bd;
-        font-size: 13px;
-        font-weight: 500;
-      }
+    .date_badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: #1f4e78;
+      color: #fff;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
 
-      img {
-        display: block;
-        max-width: 100%;
-      }
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-      ul {
-        padding-left: 18px;
-      }
+    .skills span {
+      display: inline-block;
+      padding: 8px 15px;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      background: #fff;
+      color: #5f91bd;
+      font-size: 13px;
+      font-weight: 500;
+    }
 
-    </style>
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    ul {
+      padding-left: 18px;
+    }
+  </style>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <body>
-    <div class="resume_page">
-      <div class="resume_header {{headerClass}}">
-        {{photo}}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+</head>
 
-        <div class="profile_info">
-          <h1>{{name}}</h1>
-        </div>
+<body>
+  <div class="resume_page">
+    <div class="resume_header {{headerClass}}">
+      {{photo}}
+
+      <div class="profile_info">
+        <h1>{{name}}</h1>
       </div>
-
-      <div class="contact_bar">{{contact}}</div>
-
-      <section class="resume_section">
-        <h2>Professional Summary</h2>
-
-        <div class="section_line"></div>
-
-        {{summary}}
-      </section>
-
-      <section class="resume_section">
-        <h2>Education</h2>
-
-        <div class="section_line"></div>
-
-        {{education}}
-      </section>
-
-      <section class="resume_section">
-        <h2>Experience</h2>
-
-        <div class="section_line"></div>
-
-        {{experience}}
-      </section>
-
-      <section class="resume_section">
-        <h2>Skills</h2>
-
-        <div class="section_line"></div>
-
-        <div class="skills">{{skills}}</div>
-      </section>
     </div>
-  </body>
+
+    <div class="contact_bar">{{contact}}</div>
+
+    <section class="resume_section">
+      <h2>Professional Summary</h2>
+
+      <div class="section_line"></div>
+
+      {{summary}}
+    </section>
+
+    <section class="resume_section">
+      <h2>Education</h2>
+
+      <div class="section_line"></div>
+
+      {{education}}
+    </section>
+
+    <section class="resume_section">
+      <h2>Experience</h2>
+
+      <div class="section_line"></div>
+
+      {{experience}}
+    </section>
+
+    <section class="resume_section">
+      <h2>Skills</h2>
+
+      <div class="section_line"></div>
+
+      <div class="skills">{{skills}}</div>
+    </section>
+  </div>
+</body>
+
 </html>

@@ -13,14 +13,39 @@ export const getTemplatesService = async () => {
 
 // 2. Get ALL Resumes for a specific user
 export const getAllResumesService = async (userId: number) => {
-    return prisma.resume_builder.findMany({
+    const resumes = await prisma.resume_builder.findMany({
         where: { userId },
         include: {
             resume_templates: {
                 select: { id: true, name: true, templateKey: true, preview: true },
             },
+            resume_education: { select: { id: true }, take: 1 },
+            resume_experience: { select: { id: true }, take: 1 },
+            resume_skills: { select: { id: true }, take: 1 },
         },
         orderBy: { updatedAt: "desc" },
+    });
+
+    return resumes.map((resume) => {
+        const sections = {
+            basicInfo: Boolean(resume.fullName && resume.phone && resume.country && resume.city),
+            education: resume.resume_education.length > 0,
+            experience: resume.resume_experience.length > 0,
+            skills: resume.resume_skills.length > 0,
+            summary: Boolean(resume.summary && resume.summary.trim().length > 10),
+        };
+
+        const totalSections = Object.keys(sections).length;
+        const completedCount = Object.values(sections).filter(Boolean).length;
+        const progressPercentage = Math.round((completedCount / totalSections) * 100);
+
+        const { resume_education, resume_experience, resume_skills, ...rest } = resume;
+
+        return {
+            ...rest,
+            progressPercentage,
+            isDraft: progressPercentage < 100,
+        };
     });
 };
 

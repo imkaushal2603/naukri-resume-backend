@@ -1,292 +1,295 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
 
-    <title>Minimal Resume</title>
-    <style>
-      @page {
-        size: A4;
-        margin: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
-      * {
-        box-sizing: border-box;
-      }
-      html,
-      body,
-      div,
-      span,
-      applet,
-      object,
-      iframe,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      p,
-      blockquote,
-      pre,
-      a,
-      abbr,
-      acronym,
-      address,
-      big,
-      cite,
-      code,
-      del,
-      dfn,
-      em,
-      font,
-      img,
-      ins,
-      kbd,
-      q,
-      s,
-      samp,
-      small,
-      strike,
-      strong,
-      sub,
-      sup,
-      tt,
-      var,
-      b,
-      u,
-      i,
-      center,
-      dl,
-      dt,
-      dd,
-      ol,
-      ul,
-      li,
-      fieldset,
-      form,
-      label,
-      legend,
-      table,
-      caption,
-      tbody,
-      tfoot,
-      thead,
-      tr,
-      th,
-      td {
-        background: transparent;
-        border: 0;
-        font-size: 100%;
-        margin: 0;
-        outline: 0;
-        padding: 0;
-        vertical-align: baseline;
-        text-rendering: optimizeLegibility;
-      }
+  <title>Minimal Resume</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
 
-      body {
-        margin: 0;
-        font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      .page {
-        width: 794px;
-        min-height: 1110px;
-        margin: auto;
-        margin-top: 10px;
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-direction: column;
-      }
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    font,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td {
+      background: transparent;
+      border: 0;
+      font-size: 100%;
+      margin: 0;
+      outline: 0;
+      padding: 0;
+      vertical-align: baseline;
+      text-rendering: optimizeLegibility;
+    }
 
-      .header {
-        background-color: #8e8e8e;
-        padding: 40px;
-        text-align: center;
-      }
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
+    }
 
-      .header h1 {
-        margin: 0;
-        font-family: "Poppins", sans-serif;
-        font-size: 48px;
-        color: #ffffff;
-        font-weight: 700;
-        line-height: 1.1;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-      }
+    .page {
+      width: 794px;
+      min-height: 1110px;
+      margin: auto;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 25px;
+      border: 1px solid #0456FF1A;
+      display: flex;
+      flex-direction: column;
+    }
 
-      .header p {
-        margin: 10px 0 0;
-        font-family: "Poppins", sans-serif;
-        font-size: 20px;
-        font-weight: 500;
-        color: #ffffff;
-        margin-top: 4px;
-      }
+    .header {
+      background-color: #8e8e8e;
+      padding: 40px;
+      text-align: center;
+    }
 
-      .main {
-        display: grid;
-        grid-template-columns: 62% 38%;
-        flex: 1;
-      }
+    .header h1 {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      font-size: 48px;
+      color: #ffffff;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
 
-      .left {
-        padding: 28px 32px;
-        border-right: 1px solid #ddd;
-      }
+    .header p {
+      margin: 10px 0 0;
+      font-family: "Poppins", sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #ffffff;
+      margin-top: 4px;
+    }
 
-      .right {
-        padding: 28px;
-        background: #fafafa;
-      }
+    .main {
+      display: grid;
+      grid-template-columns: 62% 38%;
+      flex: 1;
+    }
 
-      .main-title {
-        font-size: 22px;
-        color: #333;
-        font-family: "Poppins", sans-serif;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 10px;
-      }
+    .left {
+      padding: 28px 32px;
+      border-right: 1px solid #ddd;
+    }
 
-      .main-section {
-        line-height: 1.8;
-        color: #333;
-        font-size: 15px;
-        margin-bottom: 20px;
-      }
+    .right {
+      padding: 28px;
+      background: #fafafa;
+    }
 
-      .timeline {
-        position: relative;
-      }
+    .main-title {
+      font-size: 22px;
+      color: #333;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
 
-      .timeline-item {
-        position: relative;
-        padding-left: 40px;
-        padding-bottom: 20px;
-      }
+    .main-section {
+      line-height: 1.8;
+      color: #333;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
 
-      .timeline-item:before {
-        content: "";
-        position: absolute;
-        left: 5px;
-        top: 0;
-        width: 3px;
-        height: 100%;
-        background-color: #dbdbdb;
-      }
-      .timeline-item:first-child::before {
-        top: 5px;
-      }
+    .timeline {
+      position: relative;
+    }
 
-      .timeline-dot {
-        position: absolute;
-        left: -1px;
-        top: 5px;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        background-color: #dbdbdb;
-        border: 3px solid #fff;
-      }
+    .timeline-item {
+      position: relative;
+      padding-left: 40px;
+      padding-bottom: 20px;
+    }
 
-      .timeline-date {
-        font-size: 13px;
-        color: #333;
-        font-weight: 600;
-        margin-bottom: 2px;
-      }
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background-color: #dbdbdb;
+    }
 
-      .title {
-        font-family: "Poppins", sans-serif;
-        font-size: 16px;
-        color: #333;
-        font-weight: 600;
-      }
+    .timeline-item:first-child::before {
+      top: 5px;
+    }
 
-      .sub-title {
-        font-size: 15px;
-        color: #333;
-        font-weight: 400;
-        padding-right: 4px;
-      }
+    .timeline-dot {
+      position: absolute;
+      left: -1px;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #dbdbdb;
+      border: 3px solid #fff;
+    }
 
-      .description {
-        margin-top: 8px;
-      }
-      .description ul {
-        list-style-position: outside;
-        padding-left: 20px;
-        font-size: 14px;
-      }
-      .description li:not(:last-child) {
-        margin-bottom: 5px;
-      }
+    .timeline-date {
+      font-size: 13px;
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
 
-      .side h3 {
-        font-size: 24px;
-        margin: 0 0 12px;
-      }
+    .title {
+      font-family: "Poppins", sans-serif;
+      font-size: 16px;
+      color: #333;
+      font-weight: 600;
+    }
 
-      .contact div {
-        margin: 10px 0;
-        font-size: 14px;
-      }
+    .sub-title {
+      font-size: 15px;
+      color: #333;
+      font-weight: 400;
+      padding-right: 4px;
+    }
 
-      .side ul {
-        margin: 0;
-        padding-left: 18px;
-      }
+    .description {
+      margin-top: 8px;
+    }
 
-      .side li {
-        margin: 8px 0;
-        font-size: 14px;
-      }
+    .description ul {
+      list-style-position: outside;
+      padding-left: 20px;
+      font-size: 14px;
+    }
 
-      .lang {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
+    .description li:not(:last-child) {
+      margin-bottom: 5px;
+    }
 
-      .pill {
-        padding: 5px 12px;
-        background: #e7e7e7;
-        border-radius: 20px;
-        font-size: 12px;
-      }
-    </style>
-  </head>
+    .side h3 {
+      font-size: 24px;
+      margin: 0 0 12px;
+    }
 
-  <body>
-    <div class="page">
-      <div class="header">
-        <h1>{{name}}</h1>
+    .contact div {
+      margin: 10px 0;
+      font-size: 14px;
+    }
 
-        <p>{{position}}</p>
-      </div>
+    .side ul {
+      margin: 0;
+      padding-left: 18px;
+    }
 
-      <div class="main">
-        <div class="left">{{summary}} {{education}} {{experience}}</div>
+    .side li {
+      margin: 8px 0;
+      font-size: 14px;
+    }
 
-        <div class="right">{{contact}} {{skills}}</div>
-      </div>
+    .lang {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 5px 12px;
+      background: #e7e7e7;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="header">
+      <h1>{{name}}</h1>
+
+      <p>{{position}}</p>
     </div>
-  </body>
+
+    <div class="main">
+      <div class="left">{{summary}} {{education}} {{experience}}</div>
+
+      <div class="right">{{contact}} {{skills}}</div>
+    </div>
+  </div>
+</body>
+
 </html>
