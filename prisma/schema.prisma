@@ -8,17 +8,16 @@ datasource db {
 }
 
 model user {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique(map: "User_email_key")
-  password  String?
-  phone     String?  @db.VarChar(20)
-  googleId  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  session        session[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  email          String           @unique(map: "User_email_key")
+  password       String?
+  phone          String?          @db.VarChar(20)
+  googleId       String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now()) @updatedAt
   resume_builder resume_builder[]
+  session        session[]
 }
 
 model session {
@@ -33,41 +32,36 @@ model session {
 }
 
 model resume_templates {
-  id          Int      @id @default(autoincrement())
-  name        String
-  templateKey String   @unique
-  preview     String?
-  status      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
+  id             Int              @id @default(autoincrement())
+  name           String
+  templateKey    String           @unique
+  preview        String?
+  status         Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   resume_builder resume_builder[]
 }
 
 model resume_builder {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  templateId Int
-  name       String   @default("My Resume")
-
-  // Basic Info — now per-resume, not per-user
-  fullName     String?
-  email        String?
-  phone        String?
-  profilePhoto String?
-  country      String?
-  state        String?
-  city         String?
-  zipCode      String?
-  linkedin     String?
-  github       String?
-  summary      String?  @db.Text
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user              user                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                Int                 @id @default(autoincrement())
+  userId            Int
+  templateId        Int
+  name              String              @default("My Resume")
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  city              String?
+  country           String?
+  email             String?
+  fullName          String?
+  github            String?
+  linkedin          String?
+  phone             String?
+  profilePhoto      String?
+  state             String?
+  summary           String?             @db.Text
+  zipCode           String?
   resume_templates  resume_templates    @relation(fields: [templateId], references: [id])
+  user              user                @relation(fields: [userId], references: [id], onDelete: Cascade)
   resume_education  resume_education[]
   resume_experience resume_experience[]
   resume_skills     resume_skills[]
@@ -77,25 +71,24 @@ model resume_builder {
 }
 
 model resume_education {
-  id             Int       @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   resumeId       Int
   school         String
   degree         String
   educationLevel String?
   startDate      DateTime?
   endDate        DateTime?
-  isCurrent      Boolean   @default(false)
+  isCurrent      Boolean        @default(false)
   gpa            String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   resume_builder resume_builder @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId], map: "resumeId")
 }
 
 model resume_experience {
-  id             Int       @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   resumeId       Int
   company        String
   role           String
@@ -103,24 +96,22 @@ model resume_experience {
   employmentType String?
   startDate      DateTime?
   endDate        DateTime?
-  isCurrent      Boolean   @default(false)
-  description    String?   @db.Text
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-
+  isCurrent      Boolean        @default(false)
+  description    String?        @db.Text
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   resume_builder resume_builder @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId], map: "resumeId")
 }
 
 model resume_skills {
-  id        Int      @id @default(autoincrement())
-  resumeId  Int
-  name      String
-  level     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id             Int            @id @default(autoincrement())
+  resumeId       Int
+  name           String
+  level          String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   resume_builder resume_builder @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId], map: "resumeId")
