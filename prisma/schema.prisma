@@ -60,6 +60,8 @@ model resume_builder {
   state             String?
   summary           String?             @db.Text
   zipCode           String?
+  previewImage      String?
+
   resume_templates  resume_templates    @relation(fields: [templateId], references: [id])
   user              user                @relation(fields: [userId], references: [id], onDelete: Cascade)
   resume_education  resume_education[]

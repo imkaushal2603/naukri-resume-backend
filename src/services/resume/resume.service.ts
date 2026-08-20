@@ -2,6 +2,10 @@ import { prisma } from "../../config/database.config";
 import { renderResumeTemplate } from "../../helpers/templates/renderer.helper";
 import puppeteer from "puppeteer";
 import HTMLtoDOCX from "html-to-docx";
+import path from "path";
+import fs from "fs";
+
+const PREVIEW_DIR = path.join(process.cwd(), "uploads", "previews");
 
 // 1. Get Templates
 export const getTemplatesService = async () => {
@@ -203,7 +207,45 @@ export const downloadResumeService = async (userId: number, resumeId: number, fo
     }
 };
 
-// --- Basic Info — now scoped to resumeId ---
+export const generateResumeThumbnailService = async (userId: number, resumeId: number) => {
+    const { html } = await previewResumeService(userId, resumeId);
+
+    if (!fs.existsSync(PREVIEW_DIR)) {
+        fs.mkdirSync(PREVIEW_DIR, { recursive: true });
+    }
+
+    const fileName = `resume-${resumeId}-${Date.now()}.png`;
+    const filePath = path.join(PREVIEW_DIR, fileName);
+
+    const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+    try {
+        const page = await browser.newPage();
+        await page.setViewport({ width: 397, height: 562, deviceScaleFactor: 1 });
+        await page.setContent(html, { waitUntil: "load" });
+        await page.screenshot({ path: filePath, type: "jpeg", quality: 70 });
+    } finally {
+        await browser.close();
+    }
+
+    const publicPath = `/uploads/previews/${fileName}`;
+
+    const existing = await prisma.resume_builder.findUnique({
+        where: { id: resumeId },
+        select: { previewImage: true },
+    });
+    if (existing?.previewImage) {
+        fs.unlink(path.join(process.cwd(), existing.previewImage), () => { });
+    }
+
+    await prisma.resume_builder.update({
+        where: { id: resumeId },
+        data: { previewImage: publicPath },
+    });
+
+    return publicPath;
+};
+
+// --- Basic Info ---
 export const getBasicInfoService = async (userId: number, resumeId: number) => {
     if (!resumeId || Number.isNaN(resumeId)) throw new Error("Invalid resume ID.");
     const resume = await prisma.resume_builder.findFirst({
@@ -297,7 +339,7 @@ export const deleteEducation = async (userId: number, resumeId: number, id: numb
     return { message: "Education deleted successfully" };
 };
 
-// --- Experience — scoped to resumeId ---
+// --- Experience ---
 export const getExperienceList = async (userId: number, resumeId: number) => {
     await assertResumeOwnership(userId, resumeId);
     return prisma.resume_experience.findMany({ where: { resumeId }, orderBy: { startDate: "desc" } });
@@ -349,7 +391,7 @@ export const deleteExperience = async (userId: number, resumeId: number, id: num
     return { message: "Experience deleted successfully" };
 };
 
-// --- Skills — scoped to resumeId ---
+// --- Skills ---
 export const getSkillsList = async (userId: number, resumeId: number) => {
     await assertResumeOwnership(userId, resumeId);
     return prisma.resume_skills.findMany({ where: { resumeId }, orderBy: { id: "asc" } });
@@ -372,7 +414,7 @@ export const deleteSkill = async (userId: number, resumeId: number, id: number) 
     return { message: "Skill deleted successfully" };
 };
 
-// --- Summary — scoped to resumeId ---
+// --- Summary ---
 export const getSummaryService = async (userId: number, resumeId: number) => {
     const resume = await prisma.resume_builder.findFirst({
         where: { id: resumeId, userId },
@@ -399,7 +441,7 @@ export const updateSummaryService = async (
     }).then(() => getSummaryService(userId, resumeId));
 };
 
-// --- Progress — now per-resume ---
+// --- Progress ---
 export const getResumeProgressService = async (userId: number, resumeId: number) => {
     const resume = await prisma.resume_builder.findFirst({
         where: { id: resumeId, userId },

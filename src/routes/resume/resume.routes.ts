@@ -17,6 +17,8 @@ router.delete("/builder/:resumeId", ResumeController.removeResumeBuilder);
 router.get("/builder/:resumeId/preview", ResumeController.previewResume);
 router.get("/builder/:resumeId/download", ResumeController.downloadResumeController);
 
+router.post("/builder/:resumeId/thumbnail", ResumeController.regenerateThumbnail);
+
 router.get("/builder/:resumeId/basic-info", ResumeController.getBasicInfo);
 router.put("/builder/:resumeId/basic-info", uploadProfilePhoto.single("profilePhoto"), ResumeController.updateBasicInfo);
 
