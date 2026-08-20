@@ -50,7 +50,6 @@ model resume_builder {
   templateId Int
   name       String   @default("My Resume")
 
-  // Basic Info — now per-resume, not per-user
   fullName     String?
   email        String?
   phone        String?
@@ -62,6 +61,7 @@ model resume_builder {
   linkedin     String?
   github       String?
   summary      String?  @db.Text
+  previewImage String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

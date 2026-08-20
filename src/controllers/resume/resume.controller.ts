@@ -136,6 +136,16 @@ export const downloadResumeController = async (req: AuthRequest, res: Response) 
     }
 };
 
+export const regenerateThumbnail: RequestHandler = async (req: AuthRequest, res) => {
+    try {
+        const resumeId = Number(req.params.resumeId);
+        const previewImage = await ResumeService.generateResumeThumbnailService(req.user!.userId, resumeId);
+        return res.status(200).json({ success: true, previewImage });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
 // --- Basic Info Controllers ---
 export const getBasicInfo: RequestHandler = async (req: AuthRequest, res) => {
     try {
