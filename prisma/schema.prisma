@@ -49,7 +49,6 @@ model resume_builder {
   userId     Int
   templateId Int
   name       String   @default("My Resume")
-
   fullName     String?
   email        String?
   phone        String?
@@ -62,7 +61,6 @@ model resume_builder {
   github       String?
   summary      String?  @db.Text
   previewImage String?
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
