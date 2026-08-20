@@ -37,10 +37,28 @@ const templates = [
     },
 ];
 
+const membershipPlans = [
+    {
+        name: "Weekly",
+        price: 499,
+        durationDays: 7,
+        status: true,
+    },
+    {
+        name: "Annual",
+        price: 1195,
+        durationDays: 365,
+        status: true,
+    },
+];
+
 async function main() {
+    // Seed resume templates
     for (const t of templates) {
         await prisma.resume_templates.upsert({
-            where: { templateKey: t.templateKey },
+            where: {
+                templateKey: t.templateKey,
+            },
             update: {
                 name: t.name,
                 preview: t.preview,
@@ -49,12 +67,40 @@ async function main() {
             create: t,
         });
     }
+
+    // Seed membership plans
+    for (const plan of membershipPlans) {
+        const existingPlan = await prisma.membership_plan.findFirst({
+            where: {
+                name: plan.name,
+            },
+        });
+
+        if (existingPlan) {
+            await prisma.membership_plan.update({
+                where: {
+                    id: existingPlan.id,
+                },
+                data: {
+                    price: plan.price,
+                    durationDays: plan.durationDays,
+                    status: plan.status,
+                },
+            });
+        } else {
+            await prisma.membership_plan.create({
+                data: plan,
+            });
+        }
+    }
 }
 
 main()
-    .then(() => prisma.$disconnect())
-    .catch((e) => {
+    .then(async () => {
+        await prisma.$disconnect();
+    })
+    .catch(async (e) => {
         console.error(e);
-        prisma.$disconnect();
+        await prisma.$disconnect();
         process.exit(1);
     });
