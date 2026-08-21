@@ -3,17 +3,25 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { verifyGoogleToken } from "../../helpers/google.helper";
 import { AuthRequest } from "../../types/auth.types";
-import { findUserByEmail, createUser, createSession, deleteSessionByRefreshToken, findSessionByRefreshToken, findUserById, getMeService } from "../../services/auth/auth.service";
+import { findUserByEmail, createUser, createSession, deleteSessionByRefreshToken, findSessionByRefreshToken, findUserById, getMeService, createPasswordResetToken, resetPasswordWithToken } from "../../services/auth/auth.service";
 import { JWT_ACCESS_SECRET_KEY, JWT_REFRESH_SECRET_KEY } from "../../config/environment.config";
+import { sendResetPasswordEmail } from "../../config/nodemailer.config";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+const PHONE_REGEX = /^(?:\+91|0)?[6-9]\d{9}$/;
 
 export const register = async (req: Request, res: Response) => {
     try {
         const { name, email, password, phone } = req.body;
 
-        if (!name || !email || !password) {
-            return res.status(400).json({ message: "Name, email, and password are required" });
+        if (!name || !email || !password || !phone) {
+            return res.status(400).json({ message: "Name, email, phone and password are required" });
+        }
+
+        if (!PHONE_REGEX.test(phone.trim())) {
+            return res.status(400).json({
+                message: "Please enter a valid 10-digit Indian phone number.",
+            });
         }
 
         if (!PASSWORD_REGEX.test(password)) {
@@ -185,6 +193,50 @@ export const getMe: RequestHandler = async (req: AuthRequest, res: Response) => 
             success: false,
             message: error.message || "Failed to retrieve user profile",
         });
+    }
+};
+
+export const forgotPassword = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ message: "Email is required" });
+
+        const rawToken = await createPasswordResetToken(email);
+
+        if (rawToken) {
+            const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+            const resetLink = `${frontendUrl}/reset-password?token=${rawToken}`;
+            await sendResetPasswordEmail(email, resetLink);
+        }
+
+        return res.status(200).json({
+            message: "If an account exists, a reset link has been sent.",
+        });
+    } catch (error) {
+        console.error("FORGOT PASSWORD ERROR:", error);
+        return res.status(500).json({ message: "Failed to send reset email" });
+    }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+    try {
+        const { token, newPassword } = req.body;
+        if (!token || !newPassword) {
+            return res.status(400).json({ message: "Token and new password are required" });
+        }
+
+        if (!PASSWORD_REGEX.test(newPassword)) {
+            return res.status(400).json({
+                message: "Password must be at least 8 characters long and contain at least one uppercase, lowercase letter, and number.",
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await resetPasswordWithToken(token, hashedPassword);
+
+        return res.status(200).json({ message: "Password updated successfully" });
+    } catch (error: any) {
+        return res.status(400).json({ message: error.message || "Failed to reset password" });
     }
 };
 
