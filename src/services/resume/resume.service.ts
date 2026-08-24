@@ -214,7 +214,7 @@ export const generateResumeThumbnailService = async (userId: number, resumeId: n
         fs.mkdirSync(PREVIEW_DIR, { recursive: true });
     }
 
-    const fileName = `resume-${resumeId}-${Date.now()}.png`;
+    const fileName = `resume-${resumeId}-${Date.now()}.jpg`;
     const filePath = path.join(PREVIEW_DIR, fileName);
 
     const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
@@ -222,7 +222,8 @@ export const generateResumeThumbnailService = async (userId: number, resumeId: n
         const page = await browser.newPage();
         await page.setViewport({ width: 397, height: 562, deviceScaleFactor: 1 });
         await page.setContent(html, { waitUntil: "load" });
-        await page.screenshot({ path: filePath, type: "jpeg", quality: 70 });
+        await page.evaluateHandle('document.fonts.ready');
+        await page.screenshot({ path: filePath, type: "jpeg", quality: 70, fullPage: true });
     } finally {
         await browser.close();
     }
@@ -234,7 +235,10 @@ export const generateResumeThumbnailService = async (userId: number, resumeId: n
         select: { previewImage: true },
     });
     if (existing?.previewImage) {
-        fs.unlink(path.join(process.cwd(), existing.previewImage), () => { });
+        const oldFilePath = path.join(process.cwd(), existing.previewImage);
+        if (fs.existsSync(oldFilePath)) {
+            fs.unlink(oldFilePath, () => { });
+        }
     }
 
     await prisma.resume_builder.update({
