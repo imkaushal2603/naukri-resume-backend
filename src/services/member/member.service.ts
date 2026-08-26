@@ -17,10 +17,7 @@ export const getMemberStatusService = async (userId: number) => {
     });
 
     if (!membership) {
-        return {
-            status: null,
-            resumeLimit: 15,
-        };
+        return null;
     }
 
     return {
