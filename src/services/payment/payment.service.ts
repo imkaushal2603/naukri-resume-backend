@@ -105,8 +105,6 @@ const activateMembershipService = async (paymentId: number) => {
     });
 };
 export const handlePaymentWebhookService = async (req: any) => {
-    console.log(req.body?.data)
-
     const orderId = req.body?.data?.order?.order_id;
 
     const paymentStatus = req.body?.data?.payment?.payment_status;

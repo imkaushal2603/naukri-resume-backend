@@ -128,12 +128,13 @@ model membership_plan {
   name         String
   price        Decimal  @db.Decimal(10, 2)
   durationDays Int
+  resumeLimit  Int      @default(15)
   status       Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   payments    payment[]
-memberships membership[]
+  memberships membership[]
 }
 
 

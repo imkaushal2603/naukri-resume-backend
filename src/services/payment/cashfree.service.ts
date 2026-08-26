@@ -1,5 +1,5 @@
 import { cashfree } from "../../config/cashfree.config";
-import { SERVER_URL } from "../../../src/config/environment.config";
+import { FRONTEND_URL } from "../../../src/config/environment.config";
 
 interface CreateCashfreeOrderParams {
     orderId: string;
@@ -31,7 +31,7 @@ export const createCashfreeOrder = async ({
         },
 
         order_meta: {
-            return_url: `${SERVER_URL}/payment/success?order_id=${orderId}`,
+            return_url: `${FRONTEND_URL}/payment/success?order_id=${orderId}`,
         },
     });
 

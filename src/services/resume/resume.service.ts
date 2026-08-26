@@ -17,20 +17,23 @@ export const getTemplatesService = async () => {
 
 // 2. Get ALL Resumes for a specific user
 export const getAllResumesService = async (userId: number) => {
-    const resumes = await prisma.resume_builder.findMany({
-        where: { userId },
-        include: {
-            resume_templates: {
-                select: { id: true, name: true, templateKey: true, preview: true },
+    const [resumes, maxResumes] = await Promise.all([
+        prisma.resume_builder.findMany({
+            where: { userId },
+            include: {
+                resume_templates: {
+                    select: { id: true, name: true, templateKey: true, preview: true },
+                },
+                resume_education: { select: { id: true }, take: 1 },
+                resume_experience: { select: { id: true }, take: 1 },
+                resume_skills: { select: { id: true }, take: 1 },
             },
-            resume_education: { select: { id: true }, take: 1 },
-            resume_experience: { select: { id: true }, take: 1 },
-            resume_skills: { select: { id: true }, take: 1 },
-        },
-        orderBy: { updatedAt: "desc" },
-    });
+            orderBy: { updatedAt: "desc" },
+        }),
+        getActiveUserResumeLimit(userId),
+    ]);
 
-    return resumes.map((resume) => {
+    const formattedResumes = resumes.map((resume) => {
         const sections = {
             basicInfo: Boolean(resume.fullName && resume.phone && resume.country && resume.city),
             education: resume.resume_education.length > 0,
@@ -51,6 +54,11 @@ export const getAllResumesService = async (userId: number) => {
             isDraft: progressPercentage < 100,
         };
     });
+
+    return {
+        resumes: formattedResumes,
+        maxResumes,
+    };
 };
 
 // 3. Get a Single Resume draft — now self-contained, no separate user lookup needed
@@ -71,16 +79,15 @@ export const getResumeByIdService = async (userId: number, resumeId: number) => 
 };
 
 // 4. Create a new Resume — seed with account defaults from user
-const MAX_RESUMES_PER_USER = 15;
-
 export const createResumeBuilderService = async (
     userId: number,
     data: { templateId: number | string; name?: string }
 ) => {
     const resumeCount = await prisma.resume_builder.count({ where: { userId } });
+    const maxResumes = await getActiveUserResumeLimit(userId);
 
-    if (resumeCount >= MAX_RESUMES_PER_USER) {
-        throw new Error(`You can only create up to ${MAX_RESUMES_PER_USER} resumes.`);
+    if (resumeCount >= maxResumes) {
+        throw new Error(`You have reached your limit of ${maxResumes} resumes.`);
     }
 
     let templateIdToUse = data.templateId ? Number(data.templateId) : null;
@@ -100,7 +107,6 @@ export const createResumeBuilderService = async (
             userId,
             templateId: templateIdToUse,
             name: data.name || `My Resume ${resumeCount + 1}`,
-            // Prefill with account defaults, editable per-resume afterward
             fullName: account?.name || "",
             email: account?.email || "",
             phone: account?.phone || "",
@@ -187,6 +193,18 @@ export const previewResumeService = async (userId: number, resumeId: number) => 
 
 // 8. Download
 export const downloadResumeService = async (userId: number, resumeId: number, format: string = "pdf") => {
+    const activeMembership = await prisma.membership.findFirst({
+        where: {
+            userId,
+            status: "ACTIVE",
+            endDate: { gt: new Date() },
+        },
+    });
+
+    if (!activeMembership) {
+        throw new Error("Please upgrade your plan to download resumes.");
+    }
+
     const { html } = await previewResumeService(userId, resumeId);
 
     if (format === "docx") {
@@ -479,3 +497,19 @@ async function assertResumeOwnership(userId: number, resumeId: number) {
     const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
     if (!resume) throw new Error("Resume draft not found or access denied.");
 }
+
+export const getActiveUserResumeLimit = async (userId: number): Promise<number> => {
+    const activeMembership = await prisma.membership.findFirst({
+        where: {
+            userId,
+            status: "ACTIVE",
+            endDate: { gt: new Date() },
+        },
+        include: {
+            membership_plan: true,
+        },
+        orderBy: { createdAt: "desc" },
+    });
+
+    return activeMembership?.membership_plan?.resumeLimit ?? 15;
+};

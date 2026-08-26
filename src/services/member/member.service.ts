@@ -5,6 +5,8 @@ export const getMemberStatusService = async (userId: number) => {
     const membership = await prisma.membership.findFirst({
         where: {
             userId,
+            status: "ACTIVE",
+            endDate: { gt: new Date() },
         },
         orderBy: {
             createdAt: "desc",
@@ -15,7 +17,10 @@ export const getMemberStatusService = async (userId: number) => {
     });
 
     if (!membership) {
-        throw new Error("Membership not found");
+        return {
+            status: null,
+            resumeLimit: 15,
+        };
     }
 
     return {
@@ -24,5 +29,6 @@ export const getMemberStatusService = async (userId: number) => {
         plan: membership.membership_plan,
         startDate: membership.startDate,
         endDate: membership.endDate,
+        resumeLimit: membership.membership_plan?.resumeLimit ?? 15,
     };
 };

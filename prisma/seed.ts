@@ -40,20 +40,21 @@ const templates = [
 const membershipPlans = [
     {
         name: "Weekly",
-        price: 499,
+        price: 199,
         durationDays: 7,
+        resumeLimit: 15,
         status: true,
     },
     {
         name: "Annual",
         price: 1195,
         durationDays: 365,
+        resumeLimit: 15,
         status: true,
     },
 ];
 
 async function main() {
-    // Seed resume templates
     for (const t of templates) {
         await prisma.resume_templates.upsert({
             where: {
@@ -68,7 +69,6 @@ async function main() {
         });
     }
 
-    // Seed membership plans
     for (const plan of membershipPlans) {
         const existingPlan = await prisma.membership_plan.findFirst({
             where: {

@@ -15,4 +15,5 @@ export const JWT_REFRESH_EXPIRES_DAYS = 14;
 export const JWT_ACCESS_KEY_EXPIRES_IN = "1h";
 export const JWT_REFRESH_KEY_EXPIRES_IN = `${JWT_REFRESH_EXPIRES_DAYS}d`;
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "your_google_client_id";
-export const SERVER_URL = process.env.SERVER_URL || "http://localhost:3000";
+export const SERVER_URL = process.env.SERVER_URL || "http://localhost:5000";
+export const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
