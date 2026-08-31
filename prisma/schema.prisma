@@ -41,8 +41,11 @@ model resume_templates {
   templateKey    String           @unique
   preview        String?
   status         Boolean          @default(true)
+  tier           String           @default("free")
+  categories     Json?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
+
   resume_builder resume_builder[]
 }
 

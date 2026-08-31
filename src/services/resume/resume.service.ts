@@ -8,10 +8,20 @@ import fs from "fs";
 const PREVIEW_DIR = path.join(process.cwd(), "uploads", "previews");
 
 // 1. Get Templates
-export const getTemplatesService = async () => {
-    return prisma.resume_templates.findMany({
-        where: { status: true },
+export const getTemplatesService = async (filters?: { tier?: string; category?: string }) => {
+    const templates = await prisma.resume_templates.findMany({
+        where: {
+            status: true,
+            ...(filters?.tier && { tier: filters.tier }),
+        },
         orderBy: { id: "asc" },
+    });
+
+    if (!filters?.category) return templates;
+
+    return templates.filter((t) => {
+        const cats = Array.isArray(t.categories) ? (t.categories as string[]) : [];
+        return cats.includes(filters.category!);
     });
 };
 
@@ -131,6 +141,16 @@ export const updateResumeBuilderService = async (
             where: { id: Number(data.templateId), status: true },
         });
         if (!template) throw new Error("Template not found.");
+
+        if (template.tier === "paid") {
+            const activeMembership = await prisma.membership.findFirst({
+                where: { userId, status: "ACTIVE", endDate: { gt: new Date() } },
+            });
+            if (!activeMembership) {
+                throw new Error("This is a premium template. Please upgrade your plan to use it.");
+            }
+        }
+
         updateData.templateId = Number(data.templateId);
     }
 
@@ -482,7 +502,7 @@ export const getResumeProgressService = async (userId: number, resumeId: number)
         education: resume.resume_education.length > 0,
         experience: resume.resume_experience.length > 0,
         skills: resume.resume_skills.length > 0,
-        summary: Boolean(resume.summary && resume.summary.trim().length > 10),
+        summary: Boolean(resume.summary?.trim()),
     };
 
     const totalSections = Object.keys(sections).length;

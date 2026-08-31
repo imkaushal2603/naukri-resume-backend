@@ -8,6 +8,7 @@ interface CreateCashfreeOrderParams {
     customerName: string;
     customerEmail: string;
     customerPhone: string;
+    returnPath: string;
 }
 
 export const createCashfreeOrder = async ({
@@ -17,6 +18,7 @@ export const createCashfreeOrder = async ({
     customerName,
     customerEmail,
     customerPhone,
+    returnPath,
 }: CreateCashfreeOrderParams) => {
     const response = await cashfree.PGCreateOrder({
         order_id: orderId,
@@ -31,7 +33,7 @@ export const createCashfreeOrder = async ({
         },
 
         order_meta: {
-            return_url: `${FRONTEND_URL}/payment/success?order_id=${orderId}`,
+            return_url: `${FRONTEND_URL}/payment/success?order_id=${orderId}&redirect=${encodeURIComponent(returnPath)}`,
         },
     });
 

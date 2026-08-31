@@ -16,24 +16,32 @@ const templates = [
         templateKey: "classic",
         preview: "/templates/classic/classic.png",
         status: true,
+        tier: "free",
+        categories: ["modern"],
     },
     {
         name: "Professional",
         templateKey: "professional",
         preview: "/templates/professional/professional.png",
         status: true,
+        tier: "paid",
+        categories: ["premium", "with-image"],
     },
     {
         name: "Modern",
         templateKey: "modern",
         preview: "/templates/modern/modern.png",
         status: true,
+        tier: "paid",
+        categories: ["premium", "modern"],
     },
     {
         name: "Minimal",
         templateKey: "minimal",
         preview: "/templates/minimal/minimal.png",
         status: true,
+        tier: "free",
+        categories: ["modern"],
     },
 ];
 
@@ -64,6 +72,8 @@ async function main() {
                 name: t.name,
                 preview: t.preview,
                 status: t.status,
+                tier: t.tier,
+                categories: t.categories,
             },
             create: t,
         });

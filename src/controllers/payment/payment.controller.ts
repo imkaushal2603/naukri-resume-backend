@@ -14,7 +14,7 @@ export const createPaymentOrder = async (req: AuthRequest, res: Response) => {
             });
         }
 
-        const { planId } = req.body as CreatePaymentOrderRequest;
+        const { planId, returnPath } = req.body as CreatePaymentOrderRequest;
 
         if (!planId) {
             return res.status(400).json({
@@ -23,8 +23,7 @@ export const createPaymentOrder = async (req: AuthRequest, res: Response) => {
             });
         }
 
-        const result = await createPaymentOrderService(userId, planId);
-
+        const result = await createPaymentOrderService(userId, planId, returnPath);
 
         return res.status(200).json({
             success: true,
@@ -42,6 +41,7 @@ export const createPaymentOrder = async (req: AuthRequest, res: Response) => {
         });
     }
 };
+
 export const getPaymentStatus = async (req: AuthRequest, res: Response) => {
     try {
         const userId = req.user?.userId;

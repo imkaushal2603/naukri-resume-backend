@@ -1,7 +1,7 @@
 import { prisma } from "../../config/database.config";
 import { createCashfreeOrder } from "./cashfree.service";
 
-export const createPaymentOrderService = async (userId: number, planId: number) => {
+export const createPaymentOrderService = async (userId: number, planId: number, returnPath?: string) => {
     const user = await prisma.user.findUnique({
         where: {
             id: userId,
@@ -13,15 +13,11 @@ export const createPaymentOrderService = async (userId: number, planId: number) 
     }
 
     if (!user.phone) {
-        throw new Error(
-            "Please add your phone number before making payment"
-        );
+        throw new Error("Please add your phone number before making payment");
     }
 
     const plan = await prisma.membership_plan.findUnique({
-        where: {
-            id: planId,
-        },
+        where: { id: planId },
     });
 
     if (!plan || !plan.status) {
@@ -47,6 +43,7 @@ export const createPaymentOrderService = async (userId: number, planId: number) 
         customerName: user.name,
         customerEmail: user.email,
         customerPhone: user.phone,
+        returnPath: returnPath || "/dashboard",
     });
 
     return {

@@ -5,7 +5,11 @@ import * as ResumeService from "../../services/resume/resume.service";
 // 1. Get Templates
 export const getTemplates = async (req: AuthRequest, res: Response) => {
     try {
-        const templates = await ResumeService.getTemplatesService();
+        const { tier, category } = req.query;
+        const templates = await ResumeService.getTemplatesService({
+            tier: tier as string | undefined,
+            category: category as string | undefined,
+        });
         return res.status(200).json({ success: true, templates });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
