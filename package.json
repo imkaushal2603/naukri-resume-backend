@@ -30,6 +30,7 @@
     "mariadb": "^3.5.3",
     "multer": "^2.2.0",
     "nodemailer": "^9.0.5",
+    "openai": "^7.9.0",
     "puppeteer": "^25.5.0"
   },
   "devDependencies": {

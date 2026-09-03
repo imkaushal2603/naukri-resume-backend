@@ -35,6 +35,7 @@ router.delete("/builder/:resumeId/experience/:id", ResumeController.deleteExperi
 router.get("/builder/:resumeId/skills", ResumeController.getSkills);
 router.post("/builder/:resumeId/skills", ResumeController.addSkill);
 router.delete("/builder/:resumeId/skills/:id", ResumeController.deleteSkill);
+router.get("/builder/:resumeId/skills/suggestions", ResumeController.getSkillSuggestions);
 
 router.get("/builder/:resumeId/summary", ResumeController.getSummary);
 router.put("/builder/:resumeId/summary", ResumeController.updateSummary);

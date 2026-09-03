@@ -383,6 +383,24 @@ export const deleteSkill: RequestHandler = async (req: AuthRequest, res) => {
     }
 };
 
+export const getSkillSuggestions: RequestHandler = async (req: AuthRequest, res) => {
+    try {
+        const resumeId = Number(req.params.resumeId);
+
+        const excludeRaw = req.query.exclude as string;
+        const excludeList = excludeRaw ? excludeRaw.split(",") : [];
+
+        const result = await ResumeService.getSkillSuggestionsService(
+            req.user!.userId,
+            resumeId,
+            excludeList
+        );
+        return res.status(200).json({ success: true, ...result });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
 // --- Summary Controllers ---
 export const getSummary: RequestHandler = async (req: AuthRequest, res) => {
     try {

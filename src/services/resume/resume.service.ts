@@ -4,6 +4,9 @@ import puppeteer from "puppeteer";
 import HTMLtoDOCX from "html-to-docx";
 import path from "path";
 import fs from "fs";
+import OpenAI from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const PREVIEW_DIR = path.join(process.cwd(), "uploads", "previews");
 
@@ -454,6 +457,100 @@ export const deleteSkill = async (userId: number, resumeId: number, id: number) 
 
     await prisma.resume_skills.delete({ where: { id } });
     return { message: "Skill deleted successfully" };
+};
+
+export const getSkillSuggestionsService = async (
+    userId: number,
+    resumeId: number,
+    excludeSkills: string[] = []
+) => {
+    await assertResumeOwnership(userId, resumeId);
+
+    const primaryExperience = await prisma.resume_experience.findFirst({
+        where: { resumeId },
+        select: { role: true, description: true },
+        orderBy: [
+            { isCurrent: "desc" },
+            { endDate: "desc" },
+            { startDate: "desc" },
+            { id: "desc" },
+        ],
+    });
+
+    const primaryRole = primaryExperience?.role;
+
+    if (!primaryRole) {
+        return { role: null, suggestions: [] };
+    }
+
+    const existingSkills = await prisma.resume_skills.findMany({
+        where: { resumeId },
+        select: { name: true },
+    });
+
+    const addedSkillNames = existingSkills.map((s) => s.name.toLowerCase());
+
+    let activeExcludes = excludeSkills;
+    if (activeExcludes.length > 25) {
+        activeExcludes = [];
+    }
+
+    const ignoreSet = new Set([
+        ...addedSkillNames,
+        ...activeExcludes.map((s) => s.toLowerCase()),
+    ]);
+
+    let suggestions: string[] = [];
+
+    const fetchFromAI = async (exclusionList: string[]) => {
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            temperature: 0.8,
+            messages: [
+                {
+                    role: "system",
+                    content: `You are an elite technical recruiter and ATS optimization engine.
+Analyze the provided Target Role and Job Summary to identify its core domain (e.g., frontend, backend, UI/UX design, devops, data science, mobile development).
+
+STRICT RULES:
+1. DO NOT suggest any skill listed in the "EXCLUDE_LIST".
+2. Match the core domain strictly: Suggest ONLY hard skills, tools, software, platforms, and frameworks that directly belong to the candidate's specific job domain. Do NOT cross domains.
+3. DO NOT suggest soft skills (e.g., no "Communication", "Problem Solving", "Teamwork").
+4. Keep skill names concise (1 to 3 words max).
+5. Output format MUST be a valid JSON object with exactly 8 skills: {"skills": ["Skill 1", "Skill 2"]}`,
+                },
+                {
+                    role: "user",
+                    content: `Target Role: ${primaryRole}
+Job Summary: ${primaryExperience.description || "N/A"}
+EXCLUDE_LIST: ${JSON.stringify(exclusionList)}`,
+                },
+            ],
+            response_format: { type: "json_object" },
+        });
+
+        const parsed = JSON.parse(completion.choices[0].message.content || "{}");
+        return Array.isArray(parsed.skills) ? parsed.skills : [];
+    };
+
+    try {
+        suggestions = await fetchFromAI(Array.from(ignoreSet));
+
+        let filtered = suggestions.filter((s) => !ignoreSet.has(s.toLowerCase()));
+
+        if (filtered.length < 4) {
+            suggestions = await fetchFromAI(addedSkillNames);
+            filtered = suggestions.filter((s) => !addedSkillNames.includes(s.toLowerCase()));
+        }
+
+        return { role: primaryRole, suggestions: filtered.slice(0, 8) };
+    } catch (err: any) {
+        console.error("OpenAI Skill Suggestion Error:", err?.message || err);
+        return {
+            role: primaryRole,
+            suggestions: ["TypeScript", "Node.js", "Express", "MongoDB", "PostgreSQL", "Docker", "REST APIs", "Git"].slice(0, 8)
+        };
+    }
 };
 
 // --- Summary ---
