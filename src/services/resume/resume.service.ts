@@ -436,6 +436,66 @@ export const deleteExperience = async (userId: number, resumeId: number, id: num
     return { message: "Experience deleted successfully" };
 };
 
+export const getExperienceDescriptionSuggestionsService = async (
+    userId: number,
+    resumeId: number,
+    experienceInput: { role: string; company: string; employmentType?: string },
+    excludeBullets: string[] = []
+) => {
+    await assertResumeOwnership(userId, resumeId);
+
+    const { role, company, employmentType } = experienceInput;
+
+    if (!role?.trim()) {
+        return { bullets: [] };
+    }
+
+    let activeExcludes = excludeBullets;
+    if (activeExcludes.length > 20) {
+        activeExcludes = [];
+    }
+
+    const fetchFromAI = async (exclusionList: string[]) => {
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            temperature: 0.85,
+            messages: [
+                {
+                    role: "system",
+                    content: `You are an expert resume writer. Given a job title and company, generate realistic, achievement-oriented resume bullet points that someone in this role would plausibly have accomplished.
+
+STRICT RULES:
+1. DO NOT repeat any bullet listed in "EXCLUDE_LIST".
+2. Each bullet must start with a strong action verb (e.g., "Led", "Developed", "Optimized", "Managed").
+3. Keep each bullet under 20 words.
+4. Focus on measurable impact where plausible (percentages, time saved, team size) but do not fabricate specific company names or confidential data.
+5. Generate exactly 6 bullets, tailored to the specific role and domain (e.g., a "Sales Manager" gets sales bullets, not engineering bullets).
+6. Output format MUST be a valid JSON object: {"bullets": ["Bullet 1", "Bullet 2"]}`,
+                },
+                {
+                    role: "user",
+                    content: `Job Title: ${role}
+Company: ${company || "N/A"}
+Employment Type: ${employmentType || "N/A"}
+EXCLUDE_LIST: ${JSON.stringify(exclusionList)}`,
+                },
+            ],
+            response_format: { type: "json_object" },
+        });
+
+        const parsed = JSON.parse(completion.choices[0].message.content || "{}");
+        return Array.isArray(parsed.bullets) ? parsed.bullets : [];
+    };
+
+    try {
+        const bullets = await fetchFromAI(activeExcludes);
+        return { bullets: bullets.slice(0, 6) };
+    } catch (err: any) {
+        console.error("OpenAI Description Suggestion Error:", err?.message || err);
+        return { bullets: [] };
+    }
+};
+
 // --- Skills ---
 export const getSkillsList = async (userId: number, resumeId: number) => {
     await assertResumeOwnership(userId, resumeId);
@@ -546,10 +606,7 @@ EXCLUDE_LIST: ${JSON.stringify(exclusionList)}`,
         return { role: primaryRole, suggestions: filtered.slice(0, 8) };
     } catch (err: any) {
         console.error("OpenAI Skill Suggestion Error:", err?.message || err);
-        return {
-            role: primaryRole,
-            suggestions: ["TypeScript", "Node.js", "Express", "MongoDB", "PostgreSQL", "Docker", "REST APIs", "Git"].slice(0, 8)
-        };
+        return { role: primaryRole, suggestions: [] };
     }
 };
 
@@ -578,6 +635,70 @@ export const updateSummaryService = async (
             ...(data.resumeName !== undefined && { name: data.resumeName }),
         },
     }).then(() => getSummaryService(userId, resumeId));
+};
+
+export const getSummarySuggestionsService = async (
+    userId: number,
+    resumeId: number,
+    excludeSummaries: string[] = []
+) => {
+    await assertResumeOwnership(userId, resumeId);
+
+    const experience = await prisma.resume_experience.findMany({
+        where: { resumeId },
+        select: { role: true, company: true, description: true },
+        orderBy: [{ isCurrent: "desc" }, { endDate: "desc" }, { startDate: "desc" }],
+    });
+
+    if (experience.length === 0) {
+        return { suggestions: [] };
+    }
+
+    let activeExcludes = excludeSummaries;
+    if (activeExcludes.length > 15) {
+        activeExcludes = [];
+    }
+
+    const experienceText = experience
+        .map((e, i) => `${i + 1}. ${e.role} at ${e.company}\n${e.description || "N/A"}`)
+        .join("\n\n");
+
+    const fetchFromAI = async (exclusionList: string[]) => {
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            temperature: 0.85,
+            messages: [
+                {
+                    role: "system",
+                    content: `You are an expert resume writer. Given a candidate's full work history, write concise professional summaries for the top of their resume.
+
+STRICT RULES:
+1. Each summary must be 2-4 sentences, written in resume style (no "I").
+2. Base each summary on the candidate's actual roles and accomplishments across ALL listed experience, not just one job.
+3. DO NOT repeat any summary listed in "EXCLUDE_LIST", and avoid near-identical phrasing to it.
+4. Vary the angle across the 3 summaries (e.g., technical strengths, measurable impact, leadership/collaboration) where the experience supports it.
+5. Generate exactly 3 summaries.
+6. Output format MUST be a valid JSON object: {"summaries": ["Summary 1", "Summary 2", "Summary 3"]}`,
+                },
+                {
+                    role: "user",
+                    content: `Work History:\n${experienceText}\n\nEXCLUDE_LIST: ${JSON.stringify(exclusionList)}`,
+                },
+            ],
+            response_format: { type: "json_object" },
+        });
+
+        const parsed = JSON.parse(completion.choices[0].message.content || "{}");
+        return Array.isArray(parsed.summaries) ? parsed.summaries : [];
+    };
+
+    try {
+        const suggestions = await fetchFromAI(activeExcludes);
+        return { suggestions: suggestions.slice(0, 3) };
+    } catch (err: any) {
+        console.error("OpenAI Summary Suggestion Error:", err?.message || err);
+        return { suggestions: [] };
+    }
 };
 
 // --- Progress ---

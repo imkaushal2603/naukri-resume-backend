@@ -329,6 +329,24 @@ export const deleteExperience: RequestHandler = async (req: AuthRequest, res) =>
     }
 };
 
+export const getExperienceDescriptionSuggestions: RequestHandler = async (req: AuthRequest, res) => {
+    try {
+        const resumeId = Number(req.params.resumeId);
+        const { role, company, employmentType, excludeBullets } = req.body;
+
+        const result = await ResumeService.getExperienceDescriptionSuggestionsService(
+            req.user!.userId,
+            resumeId,
+            { role, company, employmentType },
+            excludeBullets || []
+        );
+
+        return res.status(200).json({ success: true, ...result });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
 // --- Skills Controllers ---
 export const getSkills: RequestHandler = async (req: AuthRequest, res) => {
     try {
@@ -425,6 +443,26 @@ export const updateSummary: RequestHandler = async (req: AuthRequest, res) => {
 
         const data = await ResumeService.updateSummaryService(req.user!.userId, resumeId, req.body);
         return res.status(200).json({ success: true, ...data });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+export const getSummarySuggestions: RequestHandler = async (req: AuthRequest, res) => {
+    try {
+        const resumeId = Number(req.params.resumeId);
+        if (isNaN(resumeId)) {
+            return res.status(400).json({ success: false, message: "Invalid resume ID." });
+        }
+
+        const { excludeSummaries } = req.body;
+        const result = await ResumeService.getSummarySuggestionsService(
+            req.user!.userId,
+            resumeId,
+            excludeSummaries || []
+        );
+
+        return res.status(200).json({ success: true, ...result });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
     }

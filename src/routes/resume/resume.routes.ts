@@ -31,6 +31,7 @@ router.get("/builder/:resumeId/experience", ResumeController.getExperience);
 router.post("/builder/:resumeId/experience", ResumeController.addExperience);
 router.put("/builder/:resumeId/experience/:id", ResumeController.updateExperience);
 router.delete("/builder/:resumeId/experience/:id", ResumeController.deleteExperience);
+router.post("/builder/:resumeId/experience/description-suggestions", ResumeController.getExperienceDescriptionSuggestions);
 
 router.get("/builder/:resumeId/skills", ResumeController.getSkills);
 router.post("/builder/:resumeId/skills", ResumeController.addSkill);
@@ -39,6 +40,7 @@ router.get("/builder/:resumeId/skills/suggestions", ResumeController.getSkillSug
 
 router.get("/builder/:resumeId/summary", ResumeController.getSummary);
 router.put("/builder/:resumeId/summary", ResumeController.updateSummary);
+router.post("/builder/:resumeId/summary/suggestions", ResumeController.getSummarySuggestions);
 
 router.get("/builder/:resumeId/progress", ResumeController.getResumeProgress);
 
