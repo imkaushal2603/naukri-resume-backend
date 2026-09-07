@@ -40,11 +40,11 @@ export const getAllResumes = async (req: AuthRequest, res: Response) => {
     }
 };
 
-// 3. Get Single Resume by ID
+// 3. Get Single Resume by publicId
 export const getResumeById = async (req: AuthRequest, res: Response) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -69,11 +69,11 @@ export const createResumeBuilder = async (req: AuthRequest, res: Response) => {
     }
 };
 
-// 5. Update Resume Draft by resumeId
+// 5. Update Resume Draft by publicId
 export const updateResumeBuilder = async (req: AuthRequest, res: Response) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -92,11 +92,11 @@ export const updateResumeBuilder = async (req: AuthRequest, res: Response) => {
     }
 };
 
-// 6. Delete Resume Draft by resumeId
+// 6. Delete Resume Draft by publicId
 export const removeResumeBuilder = async (req: AuthRequest, res: Response) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -107,11 +107,11 @@ export const removeResumeBuilder = async (req: AuthRequest, res: Response) => {
     }
 };
 
-// 7. Preview Resume by resumeId
+// 7. Preview Resume by publicId
 export const previewResume = async (req: AuthRequest, res: Response) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -122,11 +122,11 @@ export const previewResume = async (req: AuthRequest, res: Response) => {
     }
 };
 
-// 8. Download Resume by resumeId
+// 8. Download Resume by publicId
 export const downloadResumeController = async (req: AuthRequest, res: Response) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -156,8 +156,8 @@ export const downloadResumeController = async (req: AuthRequest, res: Response) 
 
 export const regenerateThumbnail: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -171,8 +171,8 @@ export const regenerateThumbnail: RequestHandler = async (req: AuthRequest, res)
 // --- Basic Info Controllers ---
 export const getBasicInfo: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -185,8 +185,8 @@ export const getBasicInfo: RequestHandler = async (req: AuthRequest, res) => {
 
 export const updateBasicInfo: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -201,8 +201,8 @@ export const updateBasicInfo: RequestHandler = async (req: AuthRequest, res) => 
 // --- Education Controllers ---
 export const getEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -215,8 +215,8 @@ export const getEducation: RequestHandler = async (req: AuthRequest, res) => {
 
 export const addEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -229,10 +229,10 @@ export const addEducation: RequestHandler = async (req: AuthRequest, res) => {
 
 export const updateEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
         const itemId = Number(req.params.id);
 
-        if (isNaN(resumeId) || isNaN(itemId)) {
+        if (!resumeId || isNaN(itemId)) {
             return res.status(400).json({ success: false, message: "Invalid resume or record ID." });
         }
 
@@ -245,10 +245,10 @@ export const updateEducation: RequestHandler = async (req: AuthRequest, res) => 
 
 export const deleteEducation: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
         const itemId = Number(req.params.id);
 
-        if (isNaN(resumeId) || isNaN(itemId)) {
+        if (!resumeId || isNaN(itemId)) {
             return res.status(400).json({ success: false, message: "Invalid resume or record ID." });
         }
 
@@ -262,8 +262,8 @@ export const deleteEducation: RequestHandler = async (req: AuthRequest, res) => 
 // --- Experience Controllers ---
 export const getExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -276,8 +276,8 @@ export const getExperience: RequestHandler = async (req: AuthRequest, res) => {
 
 export const addExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -290,10 +290,10 @@ export const addExperience: RequestHandler = async (req: AuthRequest, res) => {
 
 export const updateExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
         const itemId = Number(req.params.id);
 
-        if (isNaN(resumeId) || isNaN(itemId)) {
+        if (!resumeId || isNaN(itemId)) {
             return res.status(400).json({ success: false, message: "Invalid resume or record ID." });
         }
 
@@ -311,10 +311,10 @@ export const updateExperience: RequestHandler = async (req: AuthRequest, res) =>
 
 export const deleteExperience: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
         const itemId = Number(req.params.id);
 
-        if (isNaN(resumeId) || isNaN(itemId)) {
+        if (!resumeId || isNaN(itemId)) {
             return res.status(400).json({ success: false, message: "Invalid resume or record ID." });
         }
 
@@ -331,7 +331,7 @@ export const deleteExperience: RequestHandler = async (req: AuthRequest, res) =>
 
 export const getExperienceDescriptionSuggestions: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
         const { role, company, employmentType, excludeBullets } = req.body;
 
         const result = await ResumeService.getExperienceDescriptionSuggestionsService(
@@ -350,8 +350,8 @@ export const getExperienceDescriptionSuggestions: RequestHandler = async (req: A
 // --- Skills Controllers ---
 export const getSkills: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -364,8 +364,8 @@ export const getSkills: RequestHandler = async (req: AuthRequest, res) => {
 
 export const addSkill: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -383,10 +383,10 @@ export const addSkill: RequestHandler = async (req: AuthRequest, res) => {
 
 export const deleteSkill: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
         const itemId = Number(req.params.id);
 
-        if (isNaN(resumeId) || isNaN(itemId)) {
+        if (!resumeId || isNaN(itemId)) {
             return res.status(400).json({ success: false, message: "Invalid resume or record ID." });
         }
 
@@ -403,7 +403,7 @@ export const deleteSkill: RequestHandler = async (req: AuthRequest, res) => {
 
 export const getSkillSuggestions: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
 
         const excludeRaw = req.query.exclude as string;
         const excludeList = excludeRaw ? excludeRaw.split(",") : [];
@@ -422,8 +422,8 @@ export const getSkillSuggestions: RequestHandler = async (req: AuthRequest, res)
 // --- Summary Controllers ---
 export const getSummary: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -436,8 +436,8 @@ export const getSummary: RequestHandler = async (req: AuthRequest, res) => {
 
 export const updateSummary: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -450,8 +450,8 @@ export const updateSummary: RequestHandler = async (req: AuthRequest, res) => {
 
 export const getSummarySuggestions: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const resumeId = Number(req.params.resumeId);
-        if (isNaN(resumeId)) {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 
@@ -472,13 +472,13 @@ export const getSummarySuggestions: RequestHandler = async (req: AuthRequest, re
 export const getResumeProgress: RequestHandler = async (req: AuthRequest, res: Response) => {
     try {
         const userId = Number(req.user?.userId);
-        const resumeId = Number(req.params.resumeId);
+        const resumeId = req.params.resumeId as string;
 
         if (!userId || isNaN(userId)) {
             return res.status(401).json({ success: false, message: "Unauthorized or invalid user ID" });
         }
 
-        if (isNaN(resumeId)) {
+        if (!resumeId) {
             return res.status(400).json({ success: false, message: "Invalid resume ID." });
         }
 

@@ -74,10 +74,10 @@ export const getAllResumesService = async (userId: number) => {
     };
 };
 
-// 3. Get a Single Resume draft — now self-contained, no separate user lookup needed
-export const getResumeByIdService = async (userId: number, resumeId: number) => {
+// 3. Get a Single Resume draft — now looked up by publicId
+export const getResumeByIdService = async (userId: number, publicId: string) => {
     const resume = await prisma.resume_builder.findFirst({
-        where: { id: resumeId, userId },
+        where: { publicId, userId },
         include: {
             resume_templates: true,
             resume_education: true,
@@ -130,10 +130,10 @@ export const createResumeBuilderService = async (
 // 5. Update a specific resume (template/name)
 export const updateResumeBuilderService = async (
     userId: number,
-    resumeId: number,
+    publicId: string,
     data: { templateId?: number | string; name?: string }
 ) => {
-    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+    const resume = await prisma.resume_builder.findFirst({ where: { publicId, userId } });
     if (!resume) throw new Error("Resume draft not found.");
 
     const updateData: any = {};
@@ -157,21 +157,21 @@ export const updateResumeBuilderService = async (
         updateData.templateId = Number(data.templateId);
     }
 
-    return prisma.resume_builder.update({ where: { id: resumeId }, data: updateData });
+    return prisma.resume_builder.update({ where: { id: resume.id }, data: updateData });
 };
 
 // 6. Delete a specific resume — cascades automatically now
-export const removeResumeBuilderService = async (userId: number, resumeId: number) => {
-    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+export const removeResumeBuilderService = async (userId: number, publicId: string) => {
+    const resume = await prisma.resume_builder.findFirst({ where: { publicId, userId } });
     if (!resume) throw new Error("Resume draft not found.");
 
-    await prisma.resume_builder.delete({ where: { id: resumeId } });
+    await prisma.resume_builder.delete({ where: { id: resume.id } });
     return { message: "Resume draft deleted successfully." };
 };
 
 // 7. Preview
-export const previewResumeService = async (userId: number, resumeId: number) => {
-    const resume = await getResumeByIdService(userId, resumeId);
+export const previewResumeService = async (userId: number, publicId: string) => {
+    const resume = await getResumeByIdService(userId, publicId);
     const templateKey = resume.resume_templates?.templateKey || "classic";
 
     const renderData = {
@@ -215,7 +215,7 @@ export const previewResumeService = async (userId: number, resumeId: number) => 
 };
 
 // 8. Download
-export const downloadResumeService = async (userId: number, resumeId: number, format: string = "pdf") => {
+export const downloadResumeService = async (userId: number, publicId: string, format: string = "pdf") => {
     const activeMembership = await prisma.membership.findFirst({
         where: {
             userId,
@@ -228,7 +228,7 @@ export const downloadResumeService = async (userId: number, resumeId: number, fo
         throw new Error("Please upgrade your plan to download resumes.");
     }
 
-    const { html } = await previewResumeService(userId, resumeId);
+    const { html } = await previewResumeService(userId, publicId);
 
     if (format === "docx") {
         return HTMLtoDOCX(html, null, { table: { row: { cantSplit: true } }, footer: true, pageNumber: true });
@@ -248,14 +248,14 @@ export const downloadResumeService = async (userId: number, resumeId: number, fo
     }
 };
 
-export const generateResumeThumbnailService = async (userId: number, resumeId: number) => {
-    const { html } = await previewResumeService(userId, resumeId);
+export const generateResumeThumbnailService = async (userId: number, publicId: string) => {
+    const { html } = await previewResumeService(userId, publicId);
 
     if (!fs.existsSync(PREVIEW_DIR)) {
         fs.mkdirSync(PREVIEW_DIR, { recursive: true });
     }
 
-    const fileName = `resume-${resumeId}-${Date.now()}.jpg`;
+    const fileName = `resume-${publicId}-${Date.now()}.jpg`;
     const filePath = path.join(PREVIEW_DIR, fileName);
 
     const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
@@ -271,9 +271,9 @@ export const generateResumeThumbnailService = async (userId: number, resumeId: n
 
     const publicPath = `/uploads/previews/${fileName}`;
 
-    const existing = await prisma.resume_builder.findUnique({
-        where: { id: resumeId },
-        select: { previewImage: true },
+    const existing = await prisma.resume_builder.findFirst({
+        where: { publicId, userId },
+        select: { id: true, previewImage: true },
     });
     if (existing?.previewImage) {
         const oldFilePath = path.join(process.cwd(), existing.previewImage);
@@ -283,7 +283,7 @@ export const generateResumeThumbnailService = async (userId: number, resumeId: n
     }
 
     await prisma.resume_builder.update({
-        where: { id: resumeId },
+        where: { publicId },
         data: { previewImage: publicPath },
     });
 
@@ -291,10 +291,10 @@ export const generateResumeThumbnailService = async (userId: number, resumeId: n
 };
 
 // --- Basic Info ---
-export const getBasicInfoService = async (userId: number, resumeId: number) => {
-    if (!resumeId || Number.isNaN(resumeId)) throw new Error("Invalid resume ID.");
+export const getBasicInfoService = async (userId: number, publicId: string) => {
+    if (!publicId) throw new Error("Invalid resume ID.");
     const resume = await prisma.resume_builder.findFirst({
-        where: { id: resumeId, userId },
+        where: { publicId, userId },
         select: {
             id: true, fullName: true, email: true, phone: true, profilePhoto: true,
             country: true, state: true, city: true, zipCode: true, linkedin: true, github: true,
@@ -306,7 +306,7 @@ export const getBasicInfoService = async (userId: number, resumeId: number) => {
 
 export const updateBasicInfoService = async (
     userId: number,
-    resumeId: number,
+    publicId: string,
     data: any,
     profilePhotoPath?: string
 ) => {
@@ -314,11 +314,11 @@ export const updateBasicInfoService = async (
     const missing = requiredFields.filter((f) => !data[f]?.toString().trim());
     if (missing.length > 0) throw new Error(`Missing required fields: ${missing.join(", ")}`);
 
-    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+    const resume = await prisma.resume_builder.findFirst({ where: { publicId, userId } });
     if (!resume) throw new Error("Resume draft not found.");
 
     return prisma.resume_builder.update({
-        where: { id: resumeId },
+        where: { publicId },
         data: {
             fullName: data.fullName,
             email: data.email,
@@ -334,14 +334,14 @@ export const updateBasicInfoService = async (
     });
 };
 
-// --- Education — scoped to resumeId ---
-export const getEducationList = async (userId: number, resumeId: number) => {
-    await assertResumeOwnership(userId, resumeId);
+// --- Education — scoped to internal resumeId, resolved via publicId ---
+export const getEducationList = async (userId: number, publicId: string) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     return prisma.resume_education.findMany({ where: { resumeId }, orderBy: { startDate: "desc" } });
 };
 
-export const addEducation = async (userId: number, resumeId: number, data: any) => {
-    await assertResumeOwnership(userId, resumeId);
+export const addEducation = async (userId: number, publicId: string, data: any) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     return prisma.resume_education.create({
         data: {
             resumeId,
@@ -356,8 +356,8 @@ export const addEducation = async (userId: number, resumeId: number, data: any) 
     });
 };
 
-export const updateEducation = async (userId: number, resumeId: number, id: number, data: any) => {
-    await assertResumeOwnership(userId, resumeId);
+export const updateEducation = async (userId: number, publicId: string, id: number, data: any) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     const existing = await prisma.resume_education.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Education record not found");
 
@@ -375,8 +375,8 @@ export const updateEducation = async (userId: number, resumeId: number, id: numb
     });
 };
 
-export const deleteEducation = async (userId: number, resumeId: number, id: number) => {
-    await assertResumeOwnership(userId, resumeId);
+export const deleteEducation = async (userId: number, publicId: string, id: number) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     const existing = await prisma.resume_education.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Education record not found");
 
@@ -385,13 +385,13 @@ export const deleteEducation = async (userId: number, resumeId: number, id: numb
 };
 
 // --- Experience ---
-export const getExperienceList = async (userId: number, resumeId: number) => {
-    await assertResumeOwnership(userId, resumeId);
+export const getExperienceList = async (userId: number, publicId: string) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     return prisma.resume_experience.findMany({ where: { resumeId }, orderBy: { startDate: "desc" } });
 };
 
-export const addExperience = async (userId: number, resumeId: number, data: any) => {
-    await assertResumeOwnership(userId, resumeId);
+export const addExperience = async (userId: number, publicId: string, data: any) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     return prisma.resume_experience.create({
         data: {
             resumeId,
@@ -407,8 +407,8 @@ export const addExperience = async (userId: number, resumeId: number, data: any)
     });
 };
 
-export const updateExperience = async (userId: number, resumeId: number, id: number, data: any) => {
-    await assertResumeOwnership(userId, resumeId);
+export const updateExperience = async (userId: number, publicId: string, id: number, data: any) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     const existing = await prisma.resume_experience.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Experience record not found");
 
@@ -427,8 +427,8 @@ export const updateExperience = async (userId: number, resumeId: number, id: num
     });
 };
 
-export const deleteExperience = async (userId: number, resumeId: number, id: number) => {
-    await assertResumeOwnership(userId, resumeId);
+export const deleteExperience = async (userId: number, publicId: string, id: number) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     const existing = await prisma.resume_experience.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Experience record not found");
 
@@ -438,11 +438,11 @@ export const deleteExperience = async (userId: number, resumeId: number, id: num
 
 export const getExperienceDescriptionSuggestionsService = async (
     userId: number,
-    resumeId: number,
+    publicId: string,
     experienceInput: { role: string; company: string; employmentType?: string },
     excludeBullets: string[] = []
 ) => {
-    await assertResumeOwnership(userId, resumeId);
+    await assertResumeOwnership(userId, publicId);
 
     const { role, company, employmentType } = experienceInput;
 
@@ -497,21 +497,21 @@ EXCLUDE_LIST: ${JSON.stringify(exclusionList)}`,
 };
 
 // --- Skills ---
-export const getSkillsList = async (userId: number, resumeId: number) => {
-    await assertResumeOwnership(userId, resumeId);
+export const getSkillsList = async (userId: number, publicId: string) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     return prisma.resume_skills.findMany({ where: { resumeId }, orderBy: { id: "asc" } });
 };
 
-export const addSkill = async (userId: number, resumeId: number, name: string, level?: string) => {
-    await assertResumeOwnership(userId, resumeId);
+export const addSkill = async (userId: number, publicId: string, name: string, level?: string) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     const existing = await prisma.resume_skills.findFirst({ where: { resumeId, name: { equals: name } } });
     if (existing) throw new Error("Skill already added");
 
     return prisma.resume_skills.create({ data: { resumeId, name, level } });
 };
 
-export const deleteSkill = async (userId: number, resumeId: number, id: number) => {
-    await assertResumeOwnership(userId, resumeId);
+export const deleteSkill = async (userId: number, publicId: string, id: number) => {
+    const resumeId = await assertResumeOwnership(userId, publicId);
     const existing = await prisma.resume_skills.findFirst({ where: { id, resumeId } });
     if (!existing) throw new Error("Skill not found");
 
@@ -521,10 +521,10 @@ export const deleteSkill = async (userId: number, resumeId: number, id: number) 
 
 export const getSkillSuggestionsService = async (
     userId: number,
-    resumeId: number,
+    publicId: string,
     excludeSkills: string[] = []
 ) => {
-    await assertResumeOwnership(userId, resumeId);
+    const resumeId = await assertResumeOwnership(userId, publicId);
 
     const primaryExperience = await prisma.resume_experience.findFirst({
         where: { resumeId },
@@ -611,9 +611,9 @@ EXCLUDE_LIST: ${JSON.stringify(exclusionList)}`,
 };
 
 // --- Summary ---
-export const getSummaryService = async (userId: number, resumeId: number) => {
+export const getSummaryService = async (userId: number, publicId: string) => {
     const resume = await prisma.resume_builder.findFirst({
-        where: { id: resumeId, userId },
+        where: { publicId, userId },
         select: { name: true, summary: true },
     });
     if (!resume) throw new Error("Resume draft not found.");
@@ -623,26 +623,26 @@ export const getSummaryService = async (userId: number, resumeId: number) => {
 
 export const updateSummaryService = async (
     userId: number,
-    resumeId: number,
+    publicId: string,
     data: { resumeName?: string; summary?: string }
 ) => {
-    await assertResumeOwnership(userId, resumeId);
+    await assertResumeOwnership(userId, publicId);
 
     return prisma.resume_builder.update({
-        where: { id: resumeId },
+        where: { publicId },
         data: {
             summary: data.summary,
             ...(data.resumeName !== undefined && { name: data.resumeName }),
         },
-    }).then(() => getSummaryService(userId, resumeId));
+    }).then(() => getSummaryService(userId, publicId));
 };
 
 export const getSummarySuggestionsService = async (
     userId: number,
-    resumeId: number,
+    publicId: string,
     excludeSummaries: string[] = []
 ) => {
-    await assertResumeOwnership(userId, resumeId);
+    const resumeId = await assertResumeOwnership(userId, publicId);
 
     const experience = await prisma.resume_experience.findMany({
         where: { resumeId },
@@ -702,9 +702,9 @@ STRICT RULES:
 };
 
 // --- Progress ---
-export const getResumeProgressService = async (userId: number, resumeId: number) => {
+export const getResumeProgressService = async (userId: number, publicId: string) => {
     const resume = await prisma.resume_builder.findFirst({
-        where: { id: resumeId, userId },
+        where: { publicId, userId },
         select: {
             fullName: true, phone: true, country: true, city: true, summary: true,
             resume_education: { select: { id: true }, take: 1 },
@@ -730,10 +730,16 @@ export const getResumeProgressService = async (userId: number, resumeId: number)
     return { sections, completedCount, totalSections, progressPercentage };
 };
 
-// Helper — confirm the resume belongs to this user before touching child records
-async function assertResumeOwnership(userId: number, resumeId: number) {
-    const resume = await prisma.resume_builder.findFirst({ where: { id: resumeId, userId } });
+// Helper — confirm the resume belongs to this user, return the INTERNAL numeric id
+// for use against child-table foreign keys (resume_education/experience/skills all
+// still use Int resumeId columns — only resume_builder itself is looked up by publicId)
+async function assertResumeOwnership(userId: number, publicId: string): Promise<number> {
+    const resume = await prisma.resume_builder.findFirst({
+        where: { publicId, userId },
+        select: { id: true },
+    });
     if (!resume) throw new Error("Resume draft not found or access denied.");
+    return resume.id;
 }
 
 export const getActiveUserResumeLimit = async (userId: number): Promise<number> => {

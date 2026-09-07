@@ -51,6 +51,7 @@ model resume_templates {
 
 model resume_builder {
   id                Int                 @id @default(autoincrement())
+  publicId          String              @unique @default(cuid())
   userId            Int
   templateId        Int
   name              String              @default("My Resume")
