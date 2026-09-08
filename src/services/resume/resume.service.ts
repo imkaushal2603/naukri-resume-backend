@@ -5,6 +5,7 @@ import HTMLtoDOCX from "html-to-docx";
 import path from "path";
 import fs from "fs";
 import OpenAI from "openai";
+import { randomUUID } from "crypto";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -115,8 +116,11 @@ export const createResumeBuilderService = async (
 
     const account = await prisma.user.findUnique({ where: { id: userId } });
 
+    const publicId = randomUUID();
+
     return prisma.resume_builder.create({
         data: {
+            publicId,
             userId,
             templateId: templateIdToUse,
             name: data.name || `My Resume ${resumeCount + 1}`,
@@ -228,24 +232,27 @@ export const downloadResumeService = async (userId: number, publicId: string, fo
         throw new Error("Please upgrade your plan to download resumes.");
     }
 
-    const { html } = await previewResumeService(userId, publicId);
+    const { html, resumeName } = await previewResumeService(userId, publicId);
 
+    let file: Buffer | Uint8Array | ArrayBuffer;
     if (format === "docx") {
-        return HTMLtoDOCX(html, null, { table: { row: { cantSplit: true } }, footer: true, pageNumber: true });
+        file = (await HTMLtoDOCX(html, null, { table: { row: { cantSplit: true } }, footer: true, pageNumber: true })) as unknown as Buffer;
+    } else {
+        const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+        try {
+            const page = await browser.newPage();
+            await page.setContent(html, { waitUntil: "load" });
+            file = await page.pdf({
+                format: "A4",
+                printBackground: true,
+                margin: { top: "0px", right: "0px", bottom: "0px", left: "0px" },
+            });
+        } finally {
+            await browser.close();
+        }
     }
 
-    const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
-    try {
-        const page = await browser.newPage();
-        await page.setContent(html, { waitUntil: "load" });
-        return await page.pdf({
-            format: "A4",
-            printBackground: true,
-            margin: { top: "0px", right: "0px", bottom: "0px", left: "0px" },
-        });
-    } finally {
-        await browser.close();
-    }
+    return { file, resumeName };
 };
 
 export const generateResumeThumbnailService = async (userId: number, publicId: string) => {

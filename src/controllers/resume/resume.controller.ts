@@ -131,11 +131,13 @@ export const downloadResumeController = async (req: AuthRequest, res: Response) 
         }
 
         const { format = "pdf" } = req.query;
-        const file = await ResumeService.downloadResumeService(
+        const { file, resumeName } = await ResumeService.downloadResumeService(
             req.user!.userId,
             resumeId,
             format as string
         );
+
+        const safeFileName = encodeURIComponent((resumeName || "Resume").replace(/[^\w\- ]/g, "").trim() || "Resume");
 
         if (format === "docx") {
             res.setHeader(
@@ -145,7 +147,7 @@ export const downloadResumeController = async (req: AuthRequest, res: Response) 
             res.setHeader("Content-Disposition", `attachment; filename=resume_${resumeId}.docx`);
         } else {
             res.setHeader("Content-Type", "application/pdf");
-            res.setHeader("Content-Disposition", `attachment; filename=resume_${resumeId}.pdf`);
+            res.setHeader("Content-Disposition", `attachment; filename="${safeFileName}.pdf"`);
         }
 
         return res.send(file);
