@@ -255,46 +255,66 @@ export const downloadResumeService = async (userId: number, publicId: string, fo
     return { file, resumeName };
 };
 
+const thumbnailGenerationLocks = new Map<string, Promise<string>>();
+
 export const generateResumeThumbnailService = async (userId: number, publicId: string) => {
-    const { html } = await previewResumeService(userId, publicId);
-
-    if (!fs.existsSync(PREVIEW_DIR)) {
-        fs.mkdirSync(PREVIEW_DIR, { recursive: true });
+    const existing = thumbnailGenerationLocks.get(publicId);
+    if (existing) {
+        await existing.catch(() => { });
     }
 
-    const fileName = `resume-${publicId}-${Date.now()}.jpg`;
-    const filePath = path.join(PREVIEW_DIR, fileName);
+    const runGeneration = async (): Promise<string> => {
+        const { html } = await previewResumeService(userId, publicId);
 
-    const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+        if (!fs.existsSync(PREVIEW_DIR)) {
+            fs.mkdirSync(PREVIEW_DIR, { recursive: true });
+        }
+
+        const fileName = `resume-${publicId}-${Date.now()}.jpg`;
+        const filePath = path.join(PREVIEW_DIR, fileName);
+
+        const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+        try {
+            const page = await browser.newPage();
+            await page.setViewport({ width: 397, height: 562, deviceScaleFactor: 1 });
+            await page.setContent(html, { waitUntil: "load" });
+            await page.evaluateHandle('document.fonts.ready');
+            await page.screenshot({ path: filePath, type: "jpeg", quality: 70, fullPage: true });
+        } finally {
+            await browser.close();
+        }
+
+        const publicPath = `/uploads/previews/${fileName}`;
+
+        const existingRecord = await prisma.resume_builder.findFirst({
+            where: { publicId, userId },
+            select: { id: true, previewImage: true },
+        });
+        if (existingRecord?.previewImage) {
+            const oldFilePath = path.join(process.cwd(), existingRecord.previewImage);
+            if (fs.existsSync(oldFilePath)) {
+                fs.unlink(oldFilePath, () => { });
+            }
+        }
+
+        await prisma.resume_builder.update({
+            where: { publicId },
+            data: { previewImage: publicPath },
+        });
+
+        return publicPath;
+    };
+
+    const generation = runGeneration();
+    thumbnailGenerationLocks.set(publicId, generation);
+
     try {
-        const page = await browser.newPage();
-        await page.setViewport({ width: 397, height: 562, deviceScaleFactor: 1 });
-        await page.setContent(html, { waitUntil: "load" });
-        await page.evaluateHandle('document.fonts.ready');
-        await page.screenshot({ path: filePath, type: "jpeg", quality: 70, fullPage: true });
+        return await generation;
     } finally {
-        await browser.close();
-    }
-
-    const publicPath = `/uploads/previews/${fileName}`;
-
-    const existing = await prisma.resume_builder.findFirst({
-        where: { publicId, userId },
-        select: { id: true, previewImage: true },
-    });
-    if (existing?.previewImage) {
-        const oldFilePath = path.join(process.cwd(), existing.previewImage);
-        if (fs.existsSync(oldFilePath)) {
-            fs.unlink(oldFilePath, () => { });
+        if (thumbnailGenerationLocks.get(publicId) === generation) {
+            thumbnailGenerationLocks.delete(publicId);
         }
     }
-
-    await prisma.resume_builder.update({
-        where: { publicId },
-        data: { previewImage: publicPath },
-    });
-
-    return publicPath;
 };
 
 // --- Basic Info ---
