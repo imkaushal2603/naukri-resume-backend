@@ -490,3 +490,20 @@ export const getResumeProgress: RequestHandler = async (req: AuthRequest, res: R
         return res.status(400).json({ success: false, message: error.message });
     }
 };
+
+export const uploadResume: RequestHandler = async (req: AuthRequest, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "No file uploaded." });
+        }
+
+        const result = await ResumeService.uploadAndParseResumeService(req.user!.userId, {
+            buffer: req.file.buffer,
+            mimetype: req.file.mimetype,
+        });
+
+        return res.status(201).json({ success: true, ...result });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};

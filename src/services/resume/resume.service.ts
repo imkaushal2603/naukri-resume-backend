@@ -6,6 +6,9 @@ import path from "path";
 import fs from "fs";
 import OpenAI from "openai";
 import { randomUUID } from "crypto";
+const { PDFParse } = require("pdf-parse");
+import mammoth from "mammoth";
+import { ParsedResumeData } from "../../types/resume.type";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -340,6 +343,14 @@ export const updateBasicInfoService = async (
     const requiredFields = ["fullName", "phone", "country", "state", "city"];
     const missing = requiredFields.filter((f) => !data[f]?.toString().trim());
     if (missing.length > 0) throw new Error(`Missing required fields: ${missing.join(", ")}`);
+
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        throw new Error("Please enter a valid email address.");
+    }
+
+    if (data.phone && !/^[6-9]\d{9}$/.test(data.phone.replace(/[\s+]/g, "").replace(/^91/, ""))) {
+        throw new Error("Please enter a valid 10-digit Indian phone number.");
+    }
 
     const resume = await prisma.resume_builder.findFirst({ where: { publicId, userId } });
     if (!resume) throw new Error("Resume draft not found.");
@@ -783,4 +794,143 @@ export const getActiveUserResumeLimit = async (userId: number): Promise<number> 
     });
 
     return activeMembership?.membership_plan?.resumeLimit ?? 15;
+};
+
+async function extractTextFromFile(buffer: Buffer, mimetype: string): Promise<string> {
+    if (mimetype === "application/pdf") {
+        const parser = new PDFParse({ data: buffer });
+        try {
+            const result = await parser.getText();
+            return result.text;
+        } finally {
+            await parser.destroy();
+        }
+    }
+    if (mimetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        const result = await mammoth.extractRawText({ buffer });
+        return result.value;
+    }
+    throw new Error("Unsupported file type.");
+}
+
+async function extractResumeDataWithAI(resumeText: string): Promise<ParsedResumeData> {
+    const completion = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        temperature: 0.1,
+        messages: [
+            {
+                role: "system",
+                content: `You are a resume parsing engine. Extract structured data from the resume text provided.
+
+STRICT RULES:
+1. Only extract information that is actually present in the text — never invent, guess, or fabricate any value.
+2. If a field cannot be confidently found in the text, set it to null (for strings/dates) or an empty array (for lists) — never leave a field out of the JSON structure.
+3. Dates must be in "YYYY-MM-DD" format if a full date is available, or "YYYY-MM-01" if only month/year is available, or null if not determinable.
+4. isCurrent should be true only if the text explicitly indicates the position/education is ongoing (e.g. "Present", "Current").
+5. Skills should be a flat array of individual skill names/technologies, deduplicated.
+6. Summary should be the candidate's existing professional summary/objective if the resume has one, worded exactly as close to the original as reasonable; otherwise null (do not write a new one).
+7. Output ONLY a valid JSON object matching this exact structure, with no other text:
+{
+  "basicInfo": { "fullName": "", "email": "", "phone": "", "country": "", "state": "", "city": "", "zipCode": "", "linkedin": "", "github": "" },
+  "summary": "",
+  "education": [{ "school": "", "degree": "", "educationLevel": "", "startDate": "", "endDate": "", "isCurrent": false, "gpa": "" }],
+  "experience": [{ "company": "", "role": "", "location": "", "employmentType": "", "startDate": "", "endDate": "", "isCurrent": false, "description": "" }],
+  "skills": []
+}`,
+            },
+            {
+                role: "user",
+                content: `Resume text:\n\n${resumeText.slice(0, 15000)}`,
+            },
+        ],
+        response_format: { type: "json_object" },
+    });
+
+    const parsed = JSON.parse(completion.choices[0].message.content || "{}");
+    return parsed as ParsedResumeData;
+}
+
+export const uploadAndParseResumeService = async (
+    userId: number,
+    file: { buffer: Buffer; mimetype: string }
+) => {
+    const resumeCount = await prisma.resume_builder.count({ where: { userId } });
+    const maxResumes = await getActiveUserResumeLimit(userId);
+    if (resumeCount >= maxResumes) {
+        throw new Error(`You have reached your limit of ${maxResumes} resumes.`);
+    }
+
+    const resumeText = await extractTextFromFile(file.buffer, file.mimetype);
+    if (!resumeText.trim()) {
+        throw new Error("Could not extract any text from the uploaded file.");
+    }
+
+    const parsed = await extractResumeDataWithAI(resumeText);
+
+    const defaultTemplate = await prisma.resume_templates.findFirst({
+        where: { status: true },
+        orderBy: { id: "asc" },
+    });
+    if (!defaultTemplate) throw new Error("No active resume templates found.");
+
+    const publicId = randomUUID();
+
+    const resume = await prisma.resume_builder.create({
+        data: {
+            publicId,
+            userId,
+            templateId: defaultTemplate.id,
+            name: `My Resume ${resumeCount + 1}`,
+            fullName: parsed.basicInfo?.fullName || "",
+            email: parsed.basicInfo?.email || "",
+            phone: parsed.basicInfo?.phone || "",
+            country: parsed.basicInfo?.country || null,
+            state: parsed.basicInfo?.state || null,
+            city: parsed.basicInfo?.city || null,
+            zipCode: parsed.basicInfo?.zipCode || null,
+            linkedin: parsed.basicInfo?.linkedin || null,
+            github: parsed.basicInfo?.github || null,
+            summary: parsed.summary || null,
+        },
+    });
+
+    if (parsed.education?.length) {
+        await prisma.resume_education.createMany({
+            data: parsed.education.map((e) => ({
+                resumeId: resume.id,
+                school: e.school || "",
+                degree: e.degree || "",
+                educationLevel: e.educationLevel || null,
+                startDate: e.startDate ? new Date(e.startDate) : null,
+                endDate: e.endDate ? new Date(e.endDate) : null,
+                isCurrent: !!e.isCurrent,
+                gpa: e.gpa || null,
+            })),
+        });
+    }
+
+    if (parsed.experience?.length) {
+        await prisma.resume_experience.createMany({
+            data: parsed.experience.map((e) => ({
+                resumeId: resume.id,
+                company: e.company || "",
+                role: e.role || "",
+                location: e.location || null,
+                employmentType: e.employmentType || null,
+                startDate: e.startDate ? new Date(e.startDate) : null,
+                endDate: e.endDate ? new Date(e.endDate) : null,
+                isCurrent: !!e.isCurrent,
+                description: e.description || null,
+            })),
+        });
+    }
+
+    if (parsed.skills?.length) {
+        const uniqueSkills = Array.from(new Set(parsed.skills.map((s) => s.trim()).filter(Boolean)));
+        await prisma.resume_skills.createMany({
+            data: uniqueSkills.map((name) => ({ resumeId: resume.id, name })),
+        });
+    }
+
+    return { publicId };
 };

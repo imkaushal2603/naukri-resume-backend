@@ -7,7 +7,7 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-const storage = multer.diskStorage({
+const diskStorage = multer.diskStorage({
     destination: (_req, _file, cb) => {
         cb(null, uploadDir);
     },
@@ -19,13 +19,31 @@ const storage = multer.diskStorage({
 });
 
 export const uploadProfilePhoto = multer({
-    storage,
+    storage: diskStorage,
     limits: { fileSize: 1 * 1024 * 1024 },
     fileFilter: (_req, file, cb) => {
         if (file.mimetype.startsWith("image/")) {
             cb(null, true);
         } else {
             cb(new Error("Only image files are allowed"));
+        }
+    },
+});
+
+const memoryStorage = multer.memoryStorage();
+
+export const uploadResumeFile = multer({
+    storage: memoryStorage,
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+        const allowed = [
+            "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ];
+        if (allowed.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only PDF and DOCX files are supported."));
         }
     },
 });

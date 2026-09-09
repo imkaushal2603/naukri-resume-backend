@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploadProfilePhoto } from "../../middleware/upload.middleware";
+import { uploadProfilePhoto, uploadResumeFile } from "../../middleware/upload.middleware";
 import * as ResumeController from "../../controllers/resume/resume.controller";
 import { authMiddleware } from "../../middleware/auth.middleware";
 
@@ -43,5 +43,7 @@ router.put("/builder/:resumeId/summary", ResumeController.updateSummary);
 router.post("/builder/:resumeId/summary/suggestions", ResumeController.getSummarySuggestions);
 
 router.get("/builder/:resumeId/progress", ResumeController.getResumeProgress);
+
+router.post("/builder/upload", uploadResumeFile.single("resume"), ResumeController.uploadResume);
 
 export default router;
