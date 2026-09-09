@@ -121,7 +121,12 @@ export const createResumeBuilderService = async (
 
     const publicId = randomUUID();
 
-    return prisma.resume_builder.create({
+    console.log("========== CREATE RESUME SERVER ==========");
+    console.log("USER ID:", userId);
+    console.log("GENERATED NEW PUBLIC ID:", publicId);
+    console.log("==========================================");
+
+    const resume = await prisma.resume_builder.create({
         data: {
             publicId,
             userId,
@@ -132,6 +137,14 @@ export const createResumeBuilderService = async (
             phone: account?.phone || "",
         },
     });
+
+    console.log("========== RESUME CREATED ==========");
+    console.log("DB ID:", resume.id);
+    console.log("DB PUBLIC ID:", resume.publicId);
+    console.log("DB USER ID:", resume.userId);
+    console.log("====================================");
+
+    return resume;
 };
 
 // 5. Update a specific resume (template/name)
