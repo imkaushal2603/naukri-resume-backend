@@ -347,9 +347,12 @@ export const updateBasicInfoService = async (
     if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
         throw new Error("Please enter a valid email address.");
     }
-
-    if (data.phone && !/^[6-9]\d{9}$/.test(data.phone.replace(/[\s+]/g, "").replace(/^91/, ""))) {
-        throw new Error("Please enter a valid 10-digit Indian phone number.");
+    
+    if (data.phone) {
+        const digits = data.phone.replace(/[\s\-()]/g, "");
+        if (!/^\+?\d{7,15}$/.test(digits)) {
+            throw new Error("Please enter a valid phone number.");
+        }
     }
 
     const resume = await prisma.resume_builder.findFirst({ where: { publicId, userId } });
@@ -829,7 +832,8 @@ STRICT RULES:
 4. isCurrent should be true only if the text explicitly indicates the position/education is ongoing (e.g. "Present", "Current").
 5. Skills should be a flat array of individual skill names/technologies, deduplicated.
 6. Summary should be the candidate's existing professional summary/objective if the resume has one, worded exactly as close to the original as reasonable; otherwise null (do not write a new one).
-7. Output ONLY a valid JSON object matching this exact structure, with no other text:
+7. Phone numbers must contain digits only, with no spaces, dashes, parentheses, or dots — a "+" prefix for a country code is allowed if present in the source text, otherwise omit it (e.g. "+91 98765-43210" becomes "+919876543210", "98765 43210" becomes "9876543210").
+8. Output ONLY a valid JSON object matching this exact structure, with no other text:
 {
   "basicInfo": { "fullName": "", "email": "", "phone": "", "country": "", "state": "", "city": "", "zipCode": "", "linkedin": "", "github": "" },
   "summary": "",
