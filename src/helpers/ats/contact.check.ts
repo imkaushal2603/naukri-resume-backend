@@ -1,5 +1,5 @@
 import { ATSResume, ATSCheckResult, ATSIssue } from "../../types/ats.types";
-import { addIssue, hasText, isValidEmail, isValidPhone, isValidUrl } from "../../helpers/ats.helpers";
+import { addIssue, getATSRating, hasText, isValidEmail, isValidPhone, isValidUrl } from "../../helpers/ats.helpers";
 
 export function checkContact(resume: ATSResume): ATSCheckResult {
     const issues: ATSIssue[] = [];
@@ -46,5 +46,5 @@ export function checkContact(resume: ATSResume): ATSCheckResult {
         addIssue(issues, "suggestion", "Consider adding your GitHub profile.", "github");
     } else score += 5;
 
-    return { type: "contact", score, maxScore: 100, issues };
+    return { type: "contact", score, maxScore: 100, issues, rating: getATSRating(score) };
 }

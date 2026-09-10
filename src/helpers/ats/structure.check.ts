@@ -1,5 +1,5 @@
 import { ATSResume, ATSCheckResult, ATSIssue } from "../../types/ats.types";
-import { addIssue, hasText } from "../../helpers/ats.helpers";
+import { addIssue, getATSRating, hasText } from "../../helpers/ats.helpers";
 
 export function checkStructure(resume: ATSResume): ATSCheckResult {
   const issues: ATSIssue[] = [];
@@ -37,5 +37,6 @@ export function checkStructure(resume: ATSResume): ATSCheckResult {
     score: Math.min(score, 95),
     maxScore: 100,
     issues,
+    rating: getATSRating(score)
   };
 }

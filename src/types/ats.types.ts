@@ -24,6 +24,7 @@ export interface ATSCheckResult {
     score: number;
     maxScore: number;
     issues: ATSIssue[];
+    rating?: ATSRating;
 }
 
 export interface ATSResumeResult {
