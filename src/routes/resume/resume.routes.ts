@@ -43,6 +43,7 @@ router.put("/builder/:resumeId/summary", ResumeController.updateSummary);
 router.post("/builder/:resumeId/summary/suggestions", ResumeController.getSummarySuggestions);
 
 router.get("/builder/:resumeId/progress", ResumeController.getResumeProgress);
+router.get("/builder/:resumeId/ats", ResumeController.getResumeATS);
 
 router.post("/builder/upload", uploadResumeFile.single("resume"), ResumeController.uploadResume);
 

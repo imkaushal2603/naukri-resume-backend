@@ -1,6 +1,7 @@
 import { RequestHandler, Response } from "express";
 import { AuthRequest } from "../../types/auth.types";
 import * as ResumeService from "../../services/resume/resume.service";
+import { getResumeATSService } from "../../services/resume/ats.service";
 
 // 1. Get Templates
 export const getTemplates = async (req: AuthRequest, res: Response) => {
@@ -503,6 +504,20 @@ export const uploadResume: RequestHandler = async (req: AuthRequest, res) => {
         });
 
         return res.status(201).json({ success: true, ...result });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+export const getResumeATS = async (req: AuthRequest, res: Response) => {
+    try {
+        const resumeId = req.params.resumeId as string;
+        if (!resumeId) {
+            return res.status(400).json({ success: false, message: "Invalid resume ID." });
+        }
+
+        const resume = await getResumeATSService(req.user!.userId, resumeId);
+        return res.status(200).json({ success: true, resume });
     } catch (error: any) {
         return res.status(400).json({ success: false, message: error.message });
     }
