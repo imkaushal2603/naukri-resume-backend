@@ -5,7 +5,7 @@ import HTMLtoDOCX from "html-to-docx";
 import path from "path";
 import fs from "fs";
 import OpenAI from "openai";
-import { randomUUID } from "crypto";
+import { generatePublicId } from "../../helpers/generatePublicId";
 const { PDFParse } = require("pdf-parse");
 import mammoth from "mammoth";
 import { ParsedResumeData } from "../../types/resume.type";
@@ -119,7 +119,7 @@ export const createResumeBuilderService = async (
 
     const account = await prisma.user.findUnique({ where: { id: userId } });
 
-    const publicId = randomUUID();
+    const publicId = generatePublicId();
 
     return prisma.resume_builder.create({
         data: {
@@ -873,7 +873,7 @@ export const uploadAndParseResumeService = async (
     });
     if (!defaultTemplate) throw new Error("No active resume templates found.");
 
-    const publicId = randomUUID();
+    const publicId = generatePublicId();
 
     const resume = await prisma.resume_builder.create({
         data: {

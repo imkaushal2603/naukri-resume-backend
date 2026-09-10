@@ -30,6 +30,7 @@
     "mammoth": "^1.12.2",
     "mariadb": "^3.5.3",
     "multer": "^2.2.0",
+    "nanoid": "^3.3.18",
     "nodemailer": "^9.0.5",
     "openai": "^7.9.0",
     "pdf-parse": "^2.4.5",
