@@ -522,3 +522,12 @@ export const getResumeATS = async (req: AuthRequest, res: Response) => {
         return res.status(400).json({ success: false, message: error.message });
     }
 };
+
+export const getResumeLimitAddons: RequestHandler = async (req: AuthRequest, res) => {
+    try {
+        const addons = await ResumeService.getResumeLimitAddonsService(req.user!.userId);
+        return res.status(200).json({ success: true, addons });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};

@@ -62,6 +62,21 @@ const membershipPlans = [
     },
 ];
 
+const resumeLimitAddons = [
+    {
+        name: "Extend to 50 Resumes",
+        price: 299,
+        extraLimit: 35,
+        status: true,
+    },
+    {
+        name: "Extend to 100 Resumes",
+        price: 599,
+        extraLimit: 85,
+        status: true,
+    },
+];
+
 async function main() {
     for (const t of templates) {
         await prisma.resume_templates.upsert({
@@ -101,6 +116,18 @@ async function main() {
             await prisma.membership_plan.create({
                 data: plan,
             });
+        }
+    }
+
+    for (const addon of resumeLimitAddons) {
+        const existing = await prisma.resume_limit_addon.findFirst({ where: { name: addon.name } });
+        if (existing) {
+            await prisma.resume_limit_addon.update({
+                where: { id: existing.id },
+                data: { price: addon.price, extraLimit: addon.extraLimit, status: addon.status },
+            });
+        } else {
+            await prisma.resume_limit_addon.create({ data: addon });
         }
     }
 }

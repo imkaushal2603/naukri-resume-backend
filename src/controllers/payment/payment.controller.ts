@@ -1,4 +1,4 @@
-import { Request ,Response } from "express";
+import { Request, Response } from "express";
 import { AuthRequest } from "../../types/auth.types";
 import { CreatePaymentOrderRequest } from "../../types/payment.types";
 import { createPaymentOrderService, getPaymentStatusService, handlePaymentWebhookService } from "../../services/payment/payment.service";
@@ -6,38 +6,24 @@ import { createPaymentOrderService, getPaymentStatusService, handlePaymentWebhoo
 export const createPaymentOrder = async (req: AuthRequest, res: Response) => {
     try {
         const userId = req.user?.userId;
-
         if (!userId) {
-            return res.status(401).json({
-                success: false,
-                message: "Unauthorized",
-            });
+            return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
-        const { planId, returnPath } = req.body as CreatePaymentOrderRequest;
+        const { planId, addonId, returnPath } = req.body;
 
-        if (!planId) {
-            return res.status(400).json({
-                success: false,
-                message: "Plan ID is required",
-            });
+        if (!planId && !addonId) {
+            return res.status(400).json({ success: false, message: "Plan ID or Add-on ID is required" });
         }
 
-        const result = await createPaymentOrderService(userId, planId, returnPath);
+        const result = await createPaymentOrderService(userId, { planId, addonId, returnPath });
 
-        return res.status(200).json({
-            success: true,
-            ...result,
-        });
+        return res.status(200).json({ success: true, ...result });
     } catch (error) {
         console.error("Create payment order error:", error);
-
         return res.status(500).json({
             success: false,
-            message:
-                error instanceof Error
-                    ? error.message
-                    : "Failed to create payment order",
+            message: error instanceof Error ? error.message : "Failed to create payment order",
         });
     }
 };
@@ -78,9 +64,9 @@ export const getPaymentStatus = async (req: AuthRequest, res: Response) => {
     }
 };
 
-export const paymentWebhook = async (req: Request, res: Response) => {  
+export const paymentWebhook = async (req: Request, res: Response) => {
     try {
-        
+
         await handlePaymentWebhookService(req);
 
         return res.status(200).json({

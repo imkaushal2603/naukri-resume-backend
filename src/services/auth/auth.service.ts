@@ -37,6 +37,7 @@ export const getMeService = async (userId: number) => {
       email: true,
       phone: true,
       createdAt: true,
+      extraResumeLimit: true,
     },
   });
 

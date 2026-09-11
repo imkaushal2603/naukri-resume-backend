@@ -47,4 +47,6 @@ router.get("/builder/:resumeId/ats", ResumeController.getResumeATS);
 
 router.post("/builder/upload", uploadResumeFile.single("resume"), ResumeController.uploadResume);
 
+router.get("/limit-addons", ResumeController.getResumeLimitAddons);
+
 export default router;

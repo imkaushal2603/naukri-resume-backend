@@ -347,7 +347,7 @@ export const updateBasicInfoService = async (
     if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
         throw new Error("Please enter a valid email address.");
     }
-    
+
     if (data.phone) {
         const digits = data.phone.replace(/[\s\-()]/g, "");
         if (!/^\+?\d{7,15}$/.test(digits)) {
@@ -784,19 +784,17 @@ async function assertResumeOwnership(userId: number, publicId: string): Promise<
 }
 
 export const getActiveUserResumeLimit = async (userId: number): Promise<number> => {
-    const activeMembership = await prisma.membership.findFirst({
-        where: {
-            userId,
-            status: "ACTIVE",
-            endDate: { gt: new Date() },
-        },
-        include: {
-            membership_plan: true,
-        },
-        orderBy: { createdAt: "desc" },
-    });
+    const [activeMembership, user] = await Promise.all([
+        prisma.membership.findFirst({
+            where: { userId, status: "ACTIVE", endDate: { gt: new Date() } },
+            include: { membership_plan: true },
+            orderBy: { createdAt: "desc" },
+        }),
+        prisma.user.findUnique({ where: { id: userId }, select: { extraResumeLimit: true } }),
+    ]);
 
-    return activeMembership?.membership_plan?.resumeLimit ?? 15;
+    const baseLimit = activeMembership?.membership_plan?.resumeLimit ?? 15;
+    return baseLimit + (user?.extraResumeLimit ?? 0);
 };
 
 async function extractTextFromFile(buffer: Buffer, mimetype: string): Promise<string> {
@@ -937,4 +935,29 @@ export const uploadAndParseResumeService = async (
     }
 
     return { publicId };
+};
+
+export const getResumeLimitAddonsService = async (userId: number) => {
+    const [addons, user] = await Promise.all([
+        prisma.resume_limit_addon.findMany({
+            where: { status: true },
+            orderBy: { extraLimit: "asc" },
+        }),
+        prisma.user.findUnique({
+            where: { id: userId },
+            select: { extraResumeLimit: true },
+        }),
+    ]);
+
+    const currentExtra = user?.extraResumeLimit ?? 0;
+
+    return addons.map((addon) => ({
+        ...addon,
+        status:
+            currentExtra === addon.extraLimit
+                ? "current"
+                : currentExtra > addon.extraLimit
+                    ? "included"
+                    : "available",
+    }));
 };
