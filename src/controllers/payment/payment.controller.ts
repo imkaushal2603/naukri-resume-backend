@@ -1,7 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { AuthRequest } from "../../types/auth.types";
-import { CreatePaymentOrderRequest } from "../../types/payment.types";
-import { createPaymentOrderService, getPaymentStatusService, handlePaymentWebhookService } from "../../services/payment/payment.service";
+import { createPaymentOrderService, getPaymentStatusService, handlePaymentWebhookService, getMembershipPlansService } from "../../services/payment/payment.service";
 
 export const createPaymentOrder = async (req: AuthRequest, res: Response) => {
     try {
@@ -79,5 +78,14 @@ export const paymentWebhook = async (req: Request, res: Response) => {
             success: false,
             message: "Webhook processing failed",
         });
+    }
+};
+
+export const getMembershipPlans: RequestHandler = async (req: AuthRequest, res) => {
+    try {
+        const plans = await getMembershipPlansService(req.user!.userId);
+        return res.status(200).json({ success: true, plans });
+    } catch (error: any) {
+        return res.status(400).json({ success: false, message: error.message });
     }
 };

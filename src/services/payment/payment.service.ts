@@ -188,3 +188,30 @@ export const handlePaymentWebhookService = async (req: any) => {
         await activateMembershipService(updatedPayment.id);
     }
 };
+
+export const getMembershipPlansService = async (userId: number) => {
+    const [plans, activeMembership] = await Promise.all([
+        prisma.membership_plan.findMany({
+            where: { status: true },
+            orderBy: { durationDays: "asc" },
+        }),
+        prisma.membership.findFirst({
+            where: { userId, status: "ACTIVE", endDate: { gt: new Date() } },
+            include: { membership_plan: true },
+            orderBy: { createdAt: "desc" },
+        }),
+    ]);
+
+    const currentDuration = activeMembership?.membership_plan?.durationDays ?? 0;
+    const currentPlanId = activeMembership?.membershipPlanId ?? null;
+
+    return plans.map((plan) => ({
+        ...plan,
+        status:
+            currentPlanId === plan.id
+                ? "current"
+                : currentDuration > plan.durationDays
+                ? "included"
+                : "available",
+    }));
+};
