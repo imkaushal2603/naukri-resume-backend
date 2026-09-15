@@ -10,7 +10,7 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
     return { type: "experience", score: 0, maxScore: 100, issues, rating: getATSRating(0) };
   }
 
-  const baseScore = 20; // Section presence base score
+  const baseScore = 20;
   let totalItemsScore = 0;
 
   experiences.forEach((experience, index) => {
@@ -18,63 +18,56 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
     const description = experience.description?.trim() || "";
     const jobLabel = experience.role || experience.company || `Position #${index + 1}`;
 
-    // Company Name - 15 points
-    if (hasText(experience.company)) {
-      itemScore += 15;
-    } else {
-      addIssue(issues, "error", `Company name is missing for "${jobLabel}".`, "company");
-    }
+    // Company & Role checks (30 pts combined)
+    if (hasText(experience.company)) itemScore += 15;
+    else addIssue(issues, "error", `Company name is missing for "${jobLabel}".`, "company");
 
-    // Job Title - 15 points
-    if (hasText(experience.role)) {
-      itemScore += 15;
-    } else {
-      addIssue(issues, "error", `Job title is missing for "${jobLabel}".`, "role");
-    }
+    if (hasText(experience.role)) itemScore += 15;
+    else addIssue(issues, "error", `Job title is missing for "${jobLabel}".`, "role");
 
-    // Start Date - 10 points
-    if (experience.startDate) {
-      itemScore += 10;
-    } else {
-      addIssue(issues, "warning", `Start date is missing for "${jobLabel}".`, "startDate");
-    }
+    // Start & End Date checks (20 pts combined)
+    if (experience.startDate) itemScore += 10;
+    else addIssue(issues, "warning", `Start date is missing for "${jobLabel}".`, "startDate");
 
-    // End Date or Current - 10 points
-    if (experience.isCurrent || experience.endDate) {
-      itemScore += 10;
-    } else {
-      addIssue(issues, "warning", `End date is missing for "${jobLabel}".`, "endDate");
-    }
+    if (experience.isCurrent || experience.endDate) itemScore += 10;
+    else addIssue(issues, "warning", `End date is missing for "${jobLabel}".`, "endDate");
 
-    // Description & Quality - 50 points total
+    // Description Quality Checks (50 pts total)
     if (description) {
-      itemScore += 15;
+      itemScore += 15; // Presence points
 
+      // 1. Detect both newline bullets AND inline asterisks/bullets/dash points
       const bullets = description
-        .split("\n")
-        .map((line) => line.trim())
+        .split(/\n|(?=\s*[\*•\-]\s*)/)
+        .map((line) => line.replace(/^[\*•\-]\s*/, "").trim())
         .filter(Boolean);
 
-      if (bullets.length >= 3) {
+      // 2. Fallback check: count sentences if written as a paragraph
+      const sentences = description.split(/[.!?]+/).filter((s) => s.trim().length > 10);
+
+      if (bullets.length >= 3 || sentences.length >= 3) {
         itemScore += 15;
       } else {
         itemScore += 5;
         addIssue(
           issues,
           "suggestion",
-          `Add at least 3 bullet points for "${jobLabel}".`,
+          `Add at least 3 bullet points or detailed sentences for "${jobLabel}".`,
           "description"
         );
       }
 
-      if (/\d+%|\d+\+|\b\d+\s*(users|projects|employees|developers|years?|months?)\b/i.test(description)) {
+      // 3. Measurable results / Metrics check
+      const hasMetrics = /\d+%|\d+\+|\b\d+\s*(users|projects|employees|developers|years?|months?|clients?|teams?)\b/i.test(description);
+
+      if (hasMetrics) {
         itemScore += 20;
       } else {
         itemScore += 5;
         addIssue(
           issues,
           "suggestion",
-          `Add measurable results to your experience for "${jobLabel}".`,
+          `Add measurable results (e.g., %, numbers, or team size) for "${jobLabel}".`,
           "description"
         );
       }
@@ -90,11 +83,8 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
     totalItemsScore += itemScore;
   });
 
-  // Average item scores (max 80 points) + base score (20 points)
   const averageItemScore = Math.round((totalItemsScore / experiences.length) * 0.8);
-  const calculatedScore = baseScore + averageItemScore;
-
-  const finalScore = Math.min(calculatedScore, 95);
+  const finalScore = Math.min(baseScore + averageItemScore, 95);
 
   return {
     type: "experience",
