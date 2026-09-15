@@ -58,7 +58,7 @@ export async function checkWithAI(resume: ATSResume): Promise<DetailedAICheckRes
 CRITICAL AUDIT RULES:
 1. Contact & Location: Verify if full name looks like a real human name, and city/state/country are real places. Penalize fake, gibberish, or number-based names/locations (e.g. "345435"). Assign a contactScore reflecting this.
 2. Education: Verify if school/university names are real institutions. Degree must be valid. Dates must be coherent.
-3. Experience: Job titles and company names must be realistic (e.g. "trds" as company/role is strictly fake). Check if dates are realistic and descriptions are non-gibberish. ALWAYS include the job title or company name in experienceIssues (e.g., 'Add measurable results for "Senior Software Engineer"').
+3. Experience: Job titles and company names must be realistic (e.g. "trds" as company/role is strictly fake). Check if dates are realistic and descriptions are non-gibberish. ALWAYS include the job title or company name in experienceIssues (e.g., 'Add measurable results (e.g., %, performance gains, or scale metrics) for "Senior Software Engineer"').
 4. Skills: Check if minimum 5 skills are present AND directly relevant to the experience/roles listed. Penalize generic or random lists.
 5. Summary: Ensure it aligns with the role and isn't low-effort filler text.
 

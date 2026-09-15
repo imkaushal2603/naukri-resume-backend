@@ -67,7 +67,7 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
         addIssue(
           issues,
           "suggestion",
-          `Add measurable results (e.g., %, numbers, or team size) for "${jobLabel}".`,
+          `Add measurable results (e.g., %, performance gains, or scale metrics) for "${jobLabel}".`,
           "description"
         );
       }
