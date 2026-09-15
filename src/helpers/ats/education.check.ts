@@ -8,7 +8,7 @@ export function checkEducation(resume: ATSResume): ATSCheckResult {
 
   if (!education.length) {
     addIssue(issues, "error", "Education section is missing.", "education");
-    return { type: "education", score: 0, maxScore: 100, issues };
+    return { type: "education", score: 0, maxScore: 100, issues, rating: getATSRating(0) };
   }
 
   score += 20;

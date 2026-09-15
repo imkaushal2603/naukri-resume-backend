@@ -8,7 +8,7 @@ export function checkSummary(resume: ATSResume): ATSCheckResult {
 
   if (!hasText(summary)) {
     addIssue(issues, "error", "Professional summary is missing.", "summary");
-    return { type: "summary", score: 0, maxScore: 100, issues };
+    return { type: "summary", score: 0, maxScore: 100, issues, rating: getATSRating(0) };
   }
 
   // Presence - 25

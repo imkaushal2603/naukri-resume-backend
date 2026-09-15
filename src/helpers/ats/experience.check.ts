@@ -8,25 +8,26 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
 
   if (!experiences.length) {
     addIssue(issues, "error", "Work experience is missing.", "experience");
-    return { type: "experience", score: 0, maxScore: 100, issues };
+    return { type: "experience", score: 0, maxScore: 100, issues, rating: getATSRating(0) };
   }
 
   score += 20;
 
   for (const experience of experiences) {
     const description = experience.description?.trim() || "";
+    const jobLabel = experience.role || experience.company || `Position #${experiences.indexOf(experience) + 1}`;
 
     if (hasText(experience.company)) score += 15;
-    else addIssue(issues, "error", "Company name is missing.", "company");
+    else addIssue(issues, "error", `Company name is missing for "${jobLabel}".`, "company");
 
     if (hasText(experience.role)) score += 15;
-    else addIssue(issues, "error", "Job title is missing.", "role");
+    else addIssue(issues, "error", `Job title is missing for "${jobLabel}".`, "role");
 
     if (experience.startDate) score += 7;
-    else addIssue(issues, "warning", "Start date is missing.", "startDate");
+    else addIssue(issues, "warning", `Start date is missing for "${jobLabel}".`, "startDate");
 
     if (experience.isCurrent || experience.endDate) score += 8;
-    else addIssue(issues, "warning", "End date is missing.", "endDate");
+    else addIssue(issues, "warning", `End date is missing for "${jobLabel}".`, "endDate");
 
     if (description) {
       score += 15;
@@ -51,7 +52,7 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
         addIssue(
           issues,
           "suggestion",
-          "Add at least 3 bullet points for this position.",
+          `Add at least 3 bullet points for "${jobLabel}".`,
           "description"
         );
       }
@@ -63,7 +64,7 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
         addIssue(
           issues,
           "suggestion",
-          "Add measurable results to your experience.",
+          `Add measurable results to your experience for "${jobLabel}".`,
           "description"
         );
       }

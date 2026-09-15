@@ -46,5 +46,5 @@ export function checkContact(resume: ATSResume): ATSCheckResult {
         addIssue(issues, "suggestion", "Consider adding your GitHub profile.", "github");
     } else score += 5;
 
-    return { type: "contact", score, maxScore: 100, issues, rating: getATSRating(score) };
+    return { type: "contact", score: Math.min(score, 95), maxScore: 100, issues, rating: getATSRating(Math.min(score, 95)) };
 }

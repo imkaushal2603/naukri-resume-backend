@@ -8,7 +8,7 @@ export function checkSkills(resume: ATSResume): ATSCheckResult {
 
   if (!skills.length) {
     addIssue(issues, "error", "Skills section is missing.", "skills");
-    return { type: "skills", score: 0, maxScore: 100, issues };
+    return { type: "skills", score: 0, maxScore: 100, issues, rating: getATSRating(0) };
   }
 
   // Skills section exists - 30

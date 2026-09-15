@@ -5,7 +5,8 @@ export type ATSCheckType =
     | "education"
     | "skills"
     | "structure"
-    | "formatting";
+    | "formatting"
+    | "authenticity";
 
 export type ATSSeverity =
     | "error"
@@ -32,10 +33,9 @@ export interface ATSResumeResult {
     maxScore: number;
     percentage: number;
     rating: ATSRating;
-
     categories: ATSCheckResult[];
-
     issues: ATSIssue[];
+    suggestedSkills: string[];
 }
 
 export type ATSRating =
@@ -47,27 +47,20 @@ export type ATSRating =
 
 export interface ATSResume {
     id: number;
-
     fullName: string | null;
     email: string | null;
     phone: string | null;
-
     city: string | null;
     state: string | null;
     country: string | null;
     zipCode: string | null;
-
     linkedin: string | null;
     github: string | null;
-
     summary: string | null;
-
     profilePhoto: string | null;
-
     resume_education: ATSEducation[];
     resume_experience: ATSExperience[];
     resume_skills: ATSSkill[];
-
     resume_templates: ATSTemplate | null;
 }
 
@@ -76,34 +69,26 @@ export interface ATSEducation {
     school: string | null;
     degree: string | null;
     educationLevel: string | null;
-
     startDate: Date | string | null;
     endDate: Date | string | null;
-
     isCurrent: boolean;
-
     gpa: string | null;
 }
 
 export interface ATSExperience {
     id: number;
-
     company: string | null;
     role: string | null;
     location: string | null;
     employmentType: string | null;
-
     startDate: Date | string | null;
     endDate: Date | string | null;
-
     isCurrent: boolean;
-
     description: string | null;
 }
 
 export interface ATSSkill {
     id: number;
-
     name: string | null;
     level: string | null;
 }
@@ -112,7 +97,6 @@ export interface ATSTemplate {
     id: number;
     name: string;
     templateKey: string;
-
     status: boolean;
     tier: string;
 }

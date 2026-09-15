@@ -9,29 +9,29 @@ export function checkFormatting(resume: ATSResume): ATSCheckResult {
 
   if (!template) {
     addIssue(issues, "error", "Resume template information is missing.", "template");
-    return { type: "formatting", score: 0, maxScore: 100, issues };
+    return { type: "formatting", score: 0, maxScore: 100, issues, rating: getATSRating(0) };
   }
 
-  // Template exists - 20
-  score += 20;
+  // Template exists - 25
+  score += 25;
 
-  // Template name - 10
+  // Template name - 15
   if (hasText(template.name)) {
-    score += 10;
+    score += 15;
   } else {
     addIssue(issues, "warning", "Template name is missing.", "template");
   }
 
-  // Template key - 10
+  // Template key - 15
   if (hasText(template.templateKey)) {
-    score += 10;
+    score += 15;
   } else {
     addIssue(issues, "warning", "Template configuration is incomplete.", "template");
   }
 
-  // Template active - 10
+  // Template active - 15
   if (template.status) {
-    score += 10;
+    score += 15;
   } else {
     addIssue(issues, "warning", "The selected resume template is inactive.", "template");
   }
@@ -62,11 +62,6 @@ export function checkFormatting(resume: ATSResume): ATSCheckResult {
   } else {
     addIssue(issues, "error", "Resume contains very little readable content.", "content");
   }
-
-  // Single template system - 20
-  // Your application controls the template, so we assume
-  // the template is rendered consistently.
-  score += 20;
 
   return {
     type: "formatting",
