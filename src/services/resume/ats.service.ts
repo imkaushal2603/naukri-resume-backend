@@ -52,11 +52,26 @@ export async function getResumeATSService(userId: number, publicId: string): Pro
     summary.score = Math.round(summary.score * 0.3 + aiData.summaryScore * 0.7);
     summary.rating = getATSRating(summary.score);
 
-    aiData.contactIssues.forEach((msg) => contact.issues.push({ type: "error", message: msg, field: "ai_check" }));
-    aiData.educationIssues.forEach((msg) => education.issues.push({ type: "error", message: msg, field: "ai_check" }));
-    aiData.experienceIssues.forEach((msg) => experience.issues.push({ type: "error", message: msg, field: "ai_check" }));
-    aiData.skillsIssues.forEach((msg) => skills.issues.push({ type: "error", message: msg, field: "ai_check" }));
-    aiData.summaryIssues.forEach((msg) => summary.issues.push({ type: "error", message: msg, field: "ai_check" }));
+    aiData.contactIssues.forEach((msg) => contact.issues.push({ type: "error", message: msg, field: "contact" }));
+    aiData.educationIssues.forEach((msg) => education.issues.push({ type: "error", message: msg, field: "education" }));
+    aiData.experienceIssues.forEach((msg) => experience.issues.push({ type: "error", message: msg, field: "experience" }));
+    aiData.skillsIssues.forEach((msg) => skills.issues.push({ type: "error", message: msg, field: "skills" }));
+    aiData.summaryIssues.forEach((msg) => summary.issues.push({ type: "error", message: msg, field: "summary" }));
+
+    if (aiData.contactScore < 70 && aiData.contactIssues.length === 0) {
+        contact.issues.push({
+            type: "warning",
+            message: "Contact details need improvement. Ensure name, location, and social links are valid.",
+            field: "contact",
+        });
+    }
+    if (aiData.summaryScore < 70 && aiData.summaryIssues.length === 0) {
+        summary.issues.push({
+            type: "warning",
+            message: "Summary statement needs more professional depth and relevance to target roles.",
+            field: "summary",
+        });
+    }
 
     const checks = [contact, summary, experience, education, skills, structure, formatting];
 
@@ -69,7 +84,12 @@ export async function getResumeATSService(userId: number, publicId: string): Pro
         percentage = Math.min(percentage, 50);
     }
 
-    const issues = checks.flatMap((check) => check.issues);
+    const rawIssues = checks.flatMap((check) => check.issues);
+
+    const issues = rawIssues.filter(
+        (issue, index, self) =>
+            index === self.findIndex((item) => item.message === issue.message && item.field === issue.field)
+    );
 
     return {
         score: totalScore,
