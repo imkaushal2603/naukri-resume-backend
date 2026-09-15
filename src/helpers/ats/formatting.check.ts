@@ -36,7 +36,7 @@ export function checkFormatting(resume: ATSResume): ATSCheckResult {
     addIssue(issues, "warning", "The selected resume template is inactive.", "template");
   }
 
-  // Profile photo - 10
+  // Profile photo check - 10
   if (!resume.profilePhoto) {
     score += 10;
   } else {
@@ -44,18 +44,18 @@ export function checkFormatting(resume: ATSResume): ATSCheckResult {
     addIssue(
       issues,
       "suggestion",
-      "Consider removing the profile photo for a more ATS-friendly resume.",
+      "Consider removing the profile photo for optimal ATS parsing.",
       "profilePhoto"
     );
   }
 
-  // Text content - 20
+  // Safely verify text content presence - 20
   const hasContent =
     hasText(resume.fullName) ||
     hasText(resume.summary) ||
-    resume.resume_experience?.length > 0 ||
-    resume.resume_education?.length > 0 ||
-    resume.resume_skills?.length > 0;
+    (resume.resume_experience || []).length > 0 ||
+    (resume.resume_education || []).length > 0 ||
+    (resume.resume_skills || []).length > 0;
 
   if (hasContent) {
     score += 20;
@@ -63,11 +63,13 @@ export function checkFormatting(resume: ATSResume): ATSCheckResult {
     addIssue(issues, "error", "Resume contains very little readable content.", "content");
   }
 
+  const finalScore = Math.min(score, 95);
+
   return {
     type: "formatting",
-    score: Math.min(score, 95),
+    score: finalScore,
     maxScore: 100,
     issues,
-    rating: getATSRating(score)
+    rating: getATSRating(finalScore)
   };
 }

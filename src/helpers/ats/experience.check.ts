@@ -4,51 +4,61 @@ import { addIssue, getATSRating, hasText } from "../../helpers/ats.helpers";
 export function checkExperience(resume: ATSResume): ATSCheckResult {
   const issues: ATSIssue[] = [];
   const experiences = resume.resume_experience || [];
-  let score = 0;
 
   if (!experiences.length) {
-    addIssue(issues, "error", "Work experience is missing.", "experience");
+    addIssue(issues, "error", "Work experience section is missing.", "experience");
     return { type: "experience", score: 0, maxScore: 100, issues, rating: getATSRating(0) };
   }
 
-  score += 20;
+  const baseScore = 20; // Section presence base score
+  let totalItemsScore = 0;
 
-  for (const experience of experiences) {
+  experiences.forEach((experience, index) => {
+    let itemScore = 0;
     const description = experience.description?.trim() || "";
-    const jobLabel = experience.role || experience.company || `Position #${experiences.indexOf(experience) + 1}`;
+    const jobLabel = experience.role || experience.company || `Position #${index + 1}`;
 
-    if (hasText(experience.company)) score += 15;
-    else addIssue(issues, "error", `Company name is missing for "${jobLabel}".`, "company");
-
-    if (hasText(experience.role)) score += 15;
-    else addIssue(issues, "error", `Job title is missing for "${jobLabel}".`, "role");
-
-    if (experience.startDate) score += 7;
-    else addIssue(issues, "warning", `Start date is missing for "${jobLabel}".`, "startDate");
-
-    if (experience.isCurrent || experience.endDate) score += 8;
-    else addIssue(issues, "warning", `End date is missing for "${jobLabel}".`, "endDate");
-
-    if (description) {
-      score += 15;
+    // Company Name - 15 points
+    if (hasText(experience.company)) {
+      itemScore += 15;
     } else {
-      addIssue(
-        issues,
-        "warning",
-        "Add responsibilities and achievements for this position.",
-        "description"
-      );
+      addIssue(issues, "error", `Company name is missing for "${jobLabel}".`, "company");
     }
 
+    // Job Title - 15 points
+    if (hasText(experience.role)) {
+      itemScore += 15;
+    } else {
+      addIssue(issues, "error", `Job title is missing for "${jobLabel}".`, "role");
+    }
+
+    // Start Date - 10 points
+    if (experience.startDate) {
+      itemScore += 10;
+    } else {
+      addIssue(issues, "warning", `Start date is missing for "${jobLabel}".`, "startDate");
+    }
+
+    // End Date or Current - 10 points
+    if (experience.isCurrent || experience.endDate) {
+      itemScore += 10;
+    } else {
+      addIssue(issues, "warning", `End date is missing for "${jobLabel}".`, "endDate");
+    }
+
+    // Description & Quality - 50 points total
     if (description) {
+      itemScore += 15;
+
       const bullets = description
         .split("\n")
-        .map(line => line.trim())
+        .map((line) => line.trim())
         .filter(Boolean);
 
-      if (bullets.length >= 3) score += 10;
-      else {
-        score += 5;
+      if (bullets.length >= 3) {
+        itemScore += 15;
+      } else {
+        itemScore += 5;
         addIssue(
           issues,
           "suggestion",
@@ -58,9 +68,9 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
       }
 
       if (/\d+%|\d+\+|\b\d+\s*(users|projects|employees|developers|years?|months?)\b/i.test(description)) {
-        score += 10;
+        itemScore += 20;
       } else {
-        score += 5;
+        itemScore += 5;
         addIssue(
           issues,
           "suggestion",
@@ -68,14 +78,29 @@ export function checkExperience(resume: ATSResume): ATSCheckResult {
           "description"
         );
       }
+    } else {
+      addIssue(
+        issues,
+        "warning",
+        `Add responsibilities and achievements for "${jobLabel}".`,
+        "description"
+      );
     }
-  }
+
+    totalItemsScore += itemScore;
+  });
+
+  // Average item scores (max 80 points) + base score (20 points)
+  const averageItemScore = Math.round((totalItemsScore / experiences.length) * 0.8);
+  const calculatedScore = baseScore + averageItemScore;
+
+  const finalScore = Math.min(calculatedScore, 95);
 
   return {
     type: "experience",
-    score: Math.min(score, 95),
+    score: finalScore,
     maxScore: 100,
     issues,
-    rating: getATSRating(score)
+    rating: getATSRating(finalScore),
   };
 }

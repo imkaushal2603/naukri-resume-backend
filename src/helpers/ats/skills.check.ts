@@ -19,58 +19,67 @@ export function checkSkills(resume: ATSResume): ATSCheckResult {
     score += 25;
   } else if (skills.length >= 3) {
     score += 15;
-    addIssue(issues, "suggestion", "Consider adding more relevant skills.", "skills");
+    addIssue(issues, "suggestion", "Consider adding at least 5 relevant skills.", "skills");
   } else {
     score += 5;
     addIssue(issues, "warning", "Add more relevant skills to strengthen your resume.", "skills");
   }
 
-  // Skill names - 20
-  const validSkills = skills.filter(skill => hasText(skill.name));
+  // Skill names check - 20
+  const validSkills = skills.filter((skill) => hasText(skill.name));
 
   if (validSkills.length === skills.length) {
     score += 20;
   } else {
     score += 10;
-    addIssue(issues, "warning", "One or more skills have no name.", "skills");
+    addIssue(issues, "warning", "One or more skills have empty names.", "skills");
   }
 
-  // Duplicate skills - 15
-  const skillNames = skills
-    .map(skill => skill.name?.trim().toLowerCase())
-    .filter(Boolean);
+  // Duplicate skills check - 15
+  const rawSkillNames = skills
+    .map((skill) => skill.name?.trim())
+    .filter((name): name is string => Boolean(name));
 
-  const uniqueSkills = new Set(skillNames);
+  const lowerNames = rawSkillNames.map((name) => name.toLowerCase());
+  const duplicates = rawSkillNames.filter(
+    (name, index) => lowerNames.indexOf(name.toLowerCase()) !== index
+  );
 
-  if (uniqueSkills.size === skillNames.length) {
+  if (duplicates.length === 0) {
     score += 15;
   } else {
     score += 5;
-    addIssue(issues, "warning", "Remove duplicate skills.", "skills");
+    const uniqueDupes = Array.from(new Set(duplicates));
+    addIssue(
+      issues,
+      "warning",
+      `Remove duplicate skills: ${uniqueDupes.map((d) => `"${d}"`).join(", ")}.`,
+      "skills"
+    );
   }
 
-  // Skill length - 10
-  const hasLongSkill = skills.some(
-    skill => (skill.name?.trim().length || 0) > 50
-  );
+  // Skill length check - 10
+  const longSkills = skills.filter((skill) => (skill.name?.trim().length || 0) > 50);
 
-  if (!hasLongSkill) {
+  if (longSkills.length === 0) {
     score += 10;
   } else {
     score += 5;
     addIssue(
       issues,
       "suggestion",
-      "Keep skill names short and easy for ATS systems to read.",
+      "Keep skill names concise (under 50 characters) for optimal ATS readability.",
       "skills"
     );
   }
 
+  const finalScore = Math.min(score, 95);
+
   return {
     type: "skills",
-    score: Math.min(score, 95),
+    score: finalScore,
     maxScore: 100,
     issues,
-    rating: getATSRating(score)
+    rating: getATSRating(finalScore),
   };
 }
