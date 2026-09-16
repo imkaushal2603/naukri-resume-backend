@@ -1,5 +1,5 @@
-import { loadTemplate, replace } from "@/../../src/helpers/templates/template.helper";
-import { escapeHtml, nl2br } from "@/../../src/helpers/templates/html.helper";
+import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
+import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
 
 export const renderCoverLetterModern = (data: any): string => {
     let template = loadTemplate("cover-letter/modern");
