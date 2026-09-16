@@ -115,3 +115,48 @@ Return strictly JSON matching this structure (these are example values showing t
         };
     }
 }
+
+export async function getCoverLetterSummarySuggestions(
+    jobTitle: string,
+    companyName?: string,
+    excludeSummaries: string[] = []
+): Promise<string[]> {
+    let activeExcludes = excludeSummaries;
+    if (activeExcludes.length > 15) {
+        activeExcludes = [];
+    }
+
+    try {
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            temperature: 0.85,
+            messages: [
+                {
+                    role: "system",
+                    content: `You are an expert career coach writing cover letter opening paragraphs.
+
+First, check if the provided Job Title is a real, recognizable job title (e.g. "Software Engineer", "Marketing Manager", "Nurse"). If it is NOT a real job title — if it's gibberish, a number, a random string, or too vague to identify a profession — respond with exactly: {"suggestions": []}
+
+If it IS a real job title, given the job title (and optionally a company name), write 3 distinct, professional cover letter body paragraphs a candidate could use as a starting point. Each should:
+- Be 3-5 sentences, written in first person
+- Sound confident and specific to the role, without fabricating specific achievements or company details the candidate hasn't provided
+- Vary in tone/angle across the 3 (e.g. one emphasizing skills, one enthusiasm/fit, one experience)
+- DO NOT repeat any paragraph listed in EXCLUDE_LIST, and avoid near-identical phrasing to it
+
+Output ONLY valid JSON: {"suggestions": ["...", "...", "..."]}`,
+                },
+                {
+                    role: "user",
+                    content: `Job Title: ${jobTitle}\nCompany: ${companyName || "N/A"}\nEXCLUDE_LIST: ${JSON.stringify(activeExcludes)}`,
+                },
+            ],
+            response_format: { type: "json_object" },
+        });
+
+        const parsed = JSON.parse(completion.choices[0].message.content || "{}");
+        return Array.isArray(parsed.suggestions) ? parsed.suggestions.slice(0, 3) : [];
+    } catch (err: any) {
+        console.error("Cover letter summary suggestion failed:", err?.message || err);
+        return [];
+    }
+}

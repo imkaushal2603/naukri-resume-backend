@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #1a1a2e;
+            padding: 0;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .banner {
+            background: #0456FF;
+            color: #fff;
+            padding: 40px 60px;
+        }
+
+        .name {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .contact-line {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 60px;
+        }
+
+        .date {
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .recipient {
+            margin-bottom: 25px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .greeting {
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .body-text {
+            white-space: pre-wrap;
+            margin-bottom: 25px;
+        }
+
+        .closing {
+            margin-top: 25px;
+        }
+
+        .signature {
+            margin-top: 40px;
+            font-weight: 700;
+            color: #0456FF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <div class="name">{{fullName}}</div>
+        <div class="contact-line">{{contactLine}}</div>
+    </div>
+    <div class="content">
+        <div class="date">{{today}}</div>
+        <div class="recipient">{{recipientBlock}}</div>
+        <div class="greeting">{{greeting}}</div>
+        <div class="body-text">{{summary}}</div>
+        <div class="closing">{{closingBody}}</div>
+        <div class="signature">Best regards,<br />{{fullName}}</div>
+    </div>
+</body>
+
+</html>

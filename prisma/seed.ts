@@ -11,111 +11,46 @@ const adapter = new PrismaMariaDb(connectionString);
 const prisma = new PrismaClient({ adapter });
 
 const templates = [
-    {
-        name: "Classic",
-        templateKey: "classic",
-        preview: "/templates/classic/classic.png",
-        status: true,
-        tier: "free",
-        categories: ["modern"],
-    },
-    {
-        name: "Professional",
-        templateKey: "professional",
-        preview: "/templates/professional/professional.png",
-        status: true,
-        tier: "paid",
-        categories: ["premium", "with-image"],
-    },
-    {
-        name: "Modern",
-        templateKey: "modern",
-        preview: "/templates/modern/modern.png",
-        status: true,
-        tier: "paid",
-        categories: ["premium", "modern"],
-    },
-    {
-        name: "Minimal",
-        templateKey: "minimal",
-        preview: "/templates/minimal/minimal.png",
-        status: true,
-        tier: "free",
-        categories: ["modern"],
-    },
+    { name: "Classic", templateKey: "classic", preview: "/templates/classic/classic.png", status: true, tier: "free", categories: ["modern"] },
+    { name: "Professional", templateKey: "professional", preview: "/templates/professional/professional.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
+    { name: "Modern", templateKey: "modern", preview: "/templates/modern/modern.png", status: true, tier: "paid", categories: ["premium", "modern"] },
+    { name: "Minimal", templateKey: "minimal", preview: "/templates/minimal/minimal.png", status: true, tier: "free", categories: ["modern"] },
 ];
 
 const membershipPlans = [
-    {
-        name: "Weekly",
-        price: 199,
-        durationDays: 7,
-        resumeLimit: 15,
-        status: true,
-    },
-    {
-        name: "Annual",
-        price: 1195,
-        durationDays: 365,
-        resumeLimit: 15,
-        status: true,
-    },
+    { name: "Weekly", price: 199, durationDays: 7, resumeLimit: 15, status: true },
+    { name: "Annual", price: 1195, durationDays: 365, resumeLimit: 15, status: true },
 ];
 
 const resumeLimitAddons = [
-    {
-        name: "Extend to 50 Resumes",
-        price: 299,
-        extraLimit: 35,
-        status: true,
-    },
-    {
-        name: "Extend to 100 Resumes",
-        price: 599,
-        extraLimit: 85,
-        status: true,
-    },
+    { name: "Extend to 50 Resumes", price: 299, extraLimit: 35, status: true },
+    { name: "Extend to 100 Resumes", price: 599, extraLimit: 85, status: true },
+];
+
+const coverLetterTemplates = [
+    { name: "Classic", templateKey: "classic", preview: "/templates/cover-letter/classic/classic.png", status: true },
+    { name: "Modern", templateKey: "modern", preview: "/templates/cover-letter/modern/modern.png", status: true },
+    { name: "Minimal", templateKey: "minimal", preview: "/templates/cover-letter/minimal/minimal.png", status: true },
 ];
 
 async function main() {
     for (const t of templates) {
         await prisma.resume_templates.upsert({
-            where: {
-                templateKey: t.templateKey,
-            },
-            update: {
-                name: t.name,
-                preview: t.preview,
-                status: t.status,
-                tier: t.tier,
-                categories: t.categories,
-            },
+            where: { templateKey: t.templateKey },
+            update: { name: t.name, preview: t.preview, status: t.status, tier: t.tier, categories: t.categories },
             create: t,
         });
     }
 
     for (const plan of membershipPlans) {
-        const existingPlan = await prisma.membership_plan.findFirst({
-            where: {
-                name: plan.name,
-            },
-        });
-
+        const existingPlan = await prisma.membership_plan.findFirst({ where: { name: plan.name } });
         if (existingPlan) {
             await prisma.membership_plan.update({
-                where: {
-                    id: existingPlan.id,
-                },
-                data: {
-                    price: plan.price,
-                    durationDays: plan.durationDays,
-                    status: plan.status,
-                },
+                where: { id: existingPlan.id },
+                data: { price: plan.price, durationDays: plan.durationDays, status: plan.status },
             });
         } else {
-            await prisma.membership_plan.create({
-                data: plan,
-            });
+            await prisma.membership_plan.create({ data: plan });
         }
     }
 
@@ -129,6 +64,14 @@ async function main() {
         } else {
             await prisma.resume_limit_addon.create({ data: addon });
         }
+    }
+
+    for (const t of coverLetterTemplates) {
+        await prisma.cover_letter_templates.upsert({
+            where: { templateKey: t.templateKey },
+            update: { name: t.name, preview: t.preview, status: t.status },
+            create: t,
+        });
     }
 }
 

@@ -201,3 +201,13 @@ model resume_limit_addon {
 
   payments   payment[]
 }
+
+model cover_letter_templates {
+  id          Int      @id @default(autoincrement())
+  name        String
+  templateKey String   @unique
+  preview     String?
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

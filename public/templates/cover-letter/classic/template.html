@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #1a1a1a;
+            padding: 60px 70px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .contact-line {
+            font-size: 13px;
+            color: #444;
+        }
+
+        .date {
+            margin: 30px 0 20px;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .recipient {
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+
+        .greeting {
+            margin-bottom: 18px;
+        }
+
+        .body-text {
+            white-space: pre-wrap;
+            margin-bottom: 25px;
+        }
+
+        .closing {
+            margin-top: 30px;
+        }
+
+        .signature {
+            margin-top: 40px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="name">{{fullName}}</div>
+        <div class="contact-line">{{contactLine}}</div>
+    </div>
+    <div class="date">{{today}}</div>
+    <div class="recipient">{{recipientBlock}}</div>
+    <div class="greeting">{{greeting}}</div>
+    <div class="body-text">{{summary}}</div>
+    <div class="closing">{{closingBody}}</div>
+    <div class="signature">Sincerely,<br />{{fullName}}</div>
+</body>
+
+</html>
