@@ -90,7 +90,6 @@ export interface ATSExperience {
 export interface ATSSkill {
     id: number;
     name: string | null;
-    level: string | null;
 }
 
 export interface ATSTemplate {
