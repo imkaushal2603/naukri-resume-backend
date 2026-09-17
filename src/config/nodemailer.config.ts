@@ -44,3 +44,21 @@ export const sendSupportTicketEmail = async (
         ...(attachmentPath && { attachments: [{ path: attachmentPath }] }),
     });
 };
+
+export const sendSupportTicketConfirmationEmail = async (
+    userEmail: string,
+    userName: string,
+    subject: string
+) => {
+    await transporter.sendMail({
+        from: `"Naukri Resume Support" <${process.env.SMTP_USER}>`,
+        to: userEmail,
+        subject: `We've received your request: ${subject}`,
+        html: `
+            <p>Hi ${userName},</p>
+            <p>Thanks for reaching out! We've received your support request regarding "<strong>${subject}</strong>" and our team will get back to you as soon as possible.</p>
+            <p>If you need to add more details, just reply directly to this email.</p>
+            <p>— Naukri Resume Support Team</p>
+        `,
+    });
+};

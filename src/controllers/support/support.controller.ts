@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { AuthRequest } from "../../types/auth.types";
 import { prisma } from "../../config/database.config";
-import { sendSupportTicketEmail } from "../../config/nodemailer.config";
+import { sendSupportTicketEmail, sendSupportTicketConfirmationEmail } from "../../config/nodemailer.config";
 
 export const submitSupportTicket = async (req: AuthRequest, res: Response) => {
     try {
@@ -16,6 +16,9 @@ export const submitSupportTicket = async (req: AuthRequest, res: Response) => {
         const attachmentPath = req.file ? req.file.path : undefined;
 
         await sendSupportTicketEmail(user.email, user.name, subject, message, attachmentPath);
+        await sendSupportTicketConfirmationEmail(user.email, user.name, subject).catch((err) => {
+            console.error("Failed to send confirmation email:", err);
+        });
 
         return res.status(200).json({ success: true, message: "Support ticket submitted successfully." });
     } catch (error: any) {
