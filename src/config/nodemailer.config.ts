@@ -22,3 +22,25 @@ export const sendResetPasswordEmail = async (to: string, resetLink: string) => {
     `,
     });
 };
+
+export const sendSupportTicketEmail = async (
+    userEmail: string,
+    userName: string,
+    subject: string,
+    message: string,
+    attachmentPath?: string
+) => {
+    await transporter.sendMail({
+        from: `"Naukri Resume Support" <${process.env.SMTP_USER}>`,
+        to: process.env.SUPPORT_EMAIL || process.env.SMTP_USER,
+        replyTo: userEmail,
+        subject: `[Support Ticket] ${subject} — from ${userName}`,
+        html: `
+            <p><strong>From:</strong> ${userName} (${userEmail})</p>
+            <p><strong>Subject:</strong> ${subject}</p>
+            <p><strong>Message:</strong></p>
+            <p>${message.replace(/\n/g, "<br/>")}</p>
+        `,
+        ...(attachmentPath && { attachments: [{ path: attachmentPath }] }),
+    });
+};

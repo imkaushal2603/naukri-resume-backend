@@ -543,12 +543,12 @@ export const getSkillsList = async (userId: number, publicId: string) => {
     return prisma.resume_skills.findMany({ where: { resumeId }, orderBy: { id: "asc" } });
 };
 
-export const addSkill = async (userId: number, publicId: string, name: string, level?: string) => {
+export const addSkill = async (userId: number, publicId: string, name: string) => {
     const resumeId = await assertResumeOwnership(userId, publicId);
     const existing = await prisma.resume_skills.findFirst({ where: { resumeId, name: { equals: name } } });
     if (existing) throw new Error("Skill already added");
 
-    return prisma.resume_skills.create({ data: { resumeId, name, level } });
+    return prisma.resume_skills.create({ data: { resumeId, name } });
 };
 
 export const deleteSkill = async (userId: number, publicId: string, id: number) => {
@@ -772,8 +772,6 @@ export const getResumeProgressService = async (userId: number, publicId: string)
 };
 
 // Helper — confirm the resume belongs to this user, return the INTERNAL numeric id
-// for use against child-table foreign keys (resume_education/experience/skills all
-// still use Int resumeId columns — only resume_builder itself is looked up by publicId)
 async function assertResumeOwnership(userId: number, publicId: string): Promise<number> {
     const resume = await prisma.resume_builder.findFirst({
         where: { publicId, userId },

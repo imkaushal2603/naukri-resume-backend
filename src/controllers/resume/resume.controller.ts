@@ -375,8 +375,7 @@ export const addSkill: RequestHandler = async (req: AuthRequest, res) => {
         const skill = await ResumeService.addSkill(
             req.user!.userId,
             resumeId,
-            req.body.name,
-            req.body.level
+            req.body.name
         );
         return res.status(201).json({ success: true, skill });
     } catch (error: any) {

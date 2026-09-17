@@ -12,6 +12,16 @@ function validateCoverLetterData(data: CoverLetterData) {
     }
 }
 
+async function assertPremium(userId: number) {
+    const activeMembership = await prisma.membership.findFirst({
+        where: { userId, status: "ACTIVE", endDate: { gt: new Date() } },
+    });
+
+    if (!activeMembership) {
+        throw new Error("Please upgrade your plan to use the Cover Letter builder.");
+    }
+}
+
 export async function getCoverLetterTemplatesService() {
     return prisma.cover_letter_templates.findMany({
         where: { status: true },
@@ -19,13 +29,15 @@ export async function getCoverLetterTemplatesService() {
     });
 }
 
-export function previewCoverLetterService(templateKey: string, data: CoverLetterData): { html: string } {
+export async function previewCoverLetterService(userId: number, templateKey: string, data: CoverLetterData): Promise<{ html: string }> {
+    await assertPremium(userId);
     validateCoverLetterData(data);
     const html = renderCoverLetter(templateKey, data);
     return { html };
 }
 
-export async function downloadCoverLetterService(templateKey: string, data: CoverLetterData): Promise<Buffer> {
+export async function downloadCoverLetterService(userId: number, templateKey: string, data: CoverLetterData): Promise<Buffer> {
+    await assertPremium(userId);
     validateCoverLetterData(data);
     const html = renderCoverLetter(templateKey, data);
 

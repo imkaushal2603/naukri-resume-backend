@@ -11,6 +11,14 @@ import { getATSRating } from "../../helpers/ats.helpers";
 import { checkWithAI } from "../../helpers/ats/ai.check";
 
 export async function getResumeATSService(userId: number, publicId: string): Promise<ATSResumeResult> {
+    const activeMembership = await prisma.membership.findFirst({
+        where: { userId, status: "ACTIVE", endDate: { gt: new Date() } },
+    });
+
+    if (!activeMembership) {
+        throw new Error("Please upgrade your plan to use the ATS Checker.");
+    }
+    
     const resume = await prisma.resume_builder.findFirst({
         where: { publicId, userId },
         include: {

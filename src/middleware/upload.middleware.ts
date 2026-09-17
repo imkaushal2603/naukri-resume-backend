@@ -47,3 +47,31 @@ export const uploadResumeFile = multer({
         }
     },
 });
+
+const supportUploadDir = path.join(process.cwd(), "uploads", "support");
+if (!fs.existsSync(supportUploadDir)) {
+    fs.mkdirSync(supportUploadDir, { recursive: true });
+}
+
+const supportDiskStorage = multer.diskStorage({
+    destination: (_req, _file, cb) => {
+        cb(null, supportUploadDir);
+    },
+    filename: (_req, file, cb) => {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+        const ext = path.extname(file.originalname);
+        cb(null, `support-${uniqueSuffix}${ext}`);
+    },
+});
+
+export const uploadSupportAttachment = multer({
+    storage: supportDiskStorage,
+    limits: { fileSize: 1 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+        if (file.mimetype.startsWith("image/")) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only image files are allowed"));
+        }
+    },
+});
