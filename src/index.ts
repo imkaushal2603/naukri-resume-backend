@@ -9,6 +9,7 @@ import memberRoutes from "./routes/member/member.routes";
 import path from "path";
 import coverLetterRoutes from "./routes/coverLetter/coverLetter.routes";
 import supportRoutes from "./routes/support/support.route";
+import statsRoutes from "./routes/stats/stats.routes";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/membership", memberRoutes);
 app.use("/api/cover-letter", coverLetterRoutes);
 app.use("/api/support", supportRoutes);
+app.use("/api/stats", statsRoutes);
 app.use("/uploads", express.static(path.join(process.cwd(), "/uploads")));
 app.use("/api/templates", express.static(path.join(process.cwd(), "public/templates")));
 
