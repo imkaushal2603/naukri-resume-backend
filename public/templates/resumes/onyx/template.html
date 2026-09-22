@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onyx Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 60px 40px;
+            border: 0px solid #000024;
+        }
+
+        .first-resume-section .resume-top-sec {
+            background: #333333;
+        }
+
+        .first-resume-section .resume-top-sec .row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .first-resume-section .resume-top-sec .row .left-sec {
+            width: 132px;
+        }
+
+        .first-resume-section .resume-top-sec .row .right-sec {
+            width: calc(100% - 132px);
+            padding-left: 40px;
+        }
+
+        .first-resume-section .resume-top-sec .row .left-sec .image-section img {
+            width: 132px;
+            height: 132px !important;
+            border-radius: 100%;
+        }
+
+        .first-resume-section .resume-top-sec .row .right-sec h1 {
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 100%;
+            color: #fff;
+            margin: 0 0 20px;
+        }
+
+        .first-resume-section .resume-top-sec .row .right-sec h4 {
+            font-size: 22px;
+            color: #fff;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        .first-resume-section .resume-top-sec .profile-text {
+            background: #55555559;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .first-resume-section .resume-top-sec .profile-text .content h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 15px;
+            line-height: normal;
+            color: #fff;
+        }
+
+        .first-resume-section .resume-top-sec .profile-text .content p {
+            font-size: 14px;
+            line-height: 20px;
+            color: #fff;
+        }
+
+        .first-resume-section .resume-top-sec .row-two {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec {
+            width: 40%;
+            padding-right: 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section {
+            width: 60%;
+            padding-left: 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt {
+            background: #55555559;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt h2 {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 100%;
+            margin: 0 0 15px;
+            color: #fff;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 0 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            line-height: normal;
+            margin: 0 0 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt h5 {
+            font-size: 16px;
+            line-height: normal;
+            color: #fff;
+            margin: 0 0 15px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt ul {
+            padding: 0 20px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt ul li {
+            font-size: 15px;
+            color: #fff;
+            line-height: 150%;
+            margin: 0 0 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt .contents-sec {
+            padding-bottom: 30px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .right-section .experience-txt .contents-sec:last-child {
+            padding: 0;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .contact-details {
+            background: #55555559;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .contact-details h4 {
+            font-size: 24px;
+            line-height: normal;
+            color: #fff;
+            margin: 0 0 20px;
+            font-weight: 600;
+            align-items: center;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .contact-details .phone {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding-bottom: 20px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .contact-details .phone svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .contact-details .phone p,
+        .first-resume-section .resume-top-sec .row-two .left-sec .contact-details .phone a {
+            width: calc(100% - 20px);
+            padding-left: 20px;
+            font-weight: 500;
+            color: #fff;
+            font-size: 16px;
+            line-height: normal;
+            text-decoration: none;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .contact-details .phone:last-child {
+            padding: 0;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .education {
+            background: #55555559;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .education h4 {
+            font-size: 24px;
+            line-height: normal;
+            color: #fff;
+            margin: 0 0 20px;
+            font-weight: 600;
+            align-items: center;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .education .contents {
+            padding-bottom: 30px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .education .contents:last-child {
+            padding-bottom: 0px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .education .contents h5 {
+            font-size: 18px;
+            color: #fff;
+            margin: 0 0 5px;
+            line-height: 26px;
+            font-weight: 500;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .education .contents p {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .skills {
+            background: #55555559;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .skills h4 {
+            font-size: 24px;
+            line-height: normal;
+            color: #fff;
+            margin: 0 0 20px;
+            font-weight: 600;
+            align-items: center;
+        }
+
+        .first-resume-section .resume-top-sec .row-two .left-sec .skills p {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 500;
+            margin: 0 0 10px;
+            line-height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="first-resume-section">
+        <div class="resume-top-sec">
+            <div class="row">
+                <div class="left-sec">
+                    <div class="image-section">
+                        <img src="{{photoUrl}}" alt="profile image">
+                    </div>
+                </div>
+                <div class="right-sec">
+                    <h1>{{name}}</h1>
+                    {{tagline}}
+                </div>
+            </div>
+            <div class="profile-text">
+                <div class="content">
+                    <h2>Profile</h2>
+                    {{summary}}
+                </div>
+            </div>
+            <div class="row-two">
+                <div class="left-sec">
+                    <div class="contact-details">
+                        <h4>Contact Details</h4>
+                        {{contact}}
+                    </div>
+                    <div class="education">
+                        <h4>Educations</h4>
+                        {{education}}
+                    </div>
+                    <div class="skills">
+                        <h4>Skills</h4>
+                        <div class="skill-txt">
+                            {{skills}}
+                        </div>
+                    </div>
+                </div>
+                <div class="right-section">
+                    <div class="experience-txt">
+                        <h2>Experience</h2>
+                        {{experience}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

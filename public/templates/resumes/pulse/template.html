@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Pulse Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: 10px auto;
+            background: #fff;
+            overflow: hidden;
+            padding: 50px 25px;
+            border: 2px solid #000024;
+            border-radius: 12px;
+        }
+
+        .header h4 {
+            font-weight: 500;
+            font-size: 26px;
+            line-height: 100%;
+            letter-spacing: 8%;
+            color: #000024CC;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-weight: 800;
+            font-size: 80px;
+            line-height: 100%;
+            margin-bottom: 25px;
+            color: #000000;
+        }
+
+        .header p {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 140%;
+            color: #000024;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        .header .header_info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            row-gap: 22px;
+        }
+
+        .header .header_details {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header .header_details p,
+        .header .header_details a {
+            margin: 0;
+            font-size: 19px;
+            text-decoration: none;
+            color: #000024;
+            line-height: normal;
+        }
+
+        .education {
+            margin: 40px 0;
+        }
+
+        .education h2,
+        .experience h2,
+        .skills h2 {
+            font-weight: 700;
+            font-size: 34px;
+            line-height: 100%;
+            letter-spacing: 8%;
+            color: #000000;
+            margin-bottom: 22px;
+        }
+
+        .education .education_info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .education .education_details {
+            width: calc(33.33% - 13.33px);
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .education .education_details::after {
+            content: "";
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: #000000;
+            width: 2px;
+            position: absolute;
+        }
+
+        .education .education_details h4,
+        .experience .experience_details h4 {
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 140%;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .education .education_details p,
+        .experience .experience_details p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000024;
+            display: inline-block;
+        }
+
+        .education .education_details:last-child::after,
+        .education .education_details:nth-child(3)::after,
+        .education .education_details:nth-child(6)::after {
+            display: none;
+        }
+
+        .experience {
+            margin-bottom: 40px;
+        }
+
+        .experience .experience_details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 80px;
+        }
+
+        .experience .experience_content {
+            width: calc(75% - 80px);
+        }
+
+        .experience .experience_date {
+            width: 25%;
+        }
+
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+        }
+
+        .experience ul {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+            list-style: none;
+        }
+
+        .experience ul li {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000024;
+            display: inline-block;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .experience ul li::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            left: 0;
+            top: 9px;
+            background: #000024;
+            border-radius: 50%;
+        }
+
+        .skills .skills_info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .skills p {
+            background: #000024;
+            color: #FFFFFF;
+            border-radius: 20px;
+            padding: 8px 30px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <div class="header">
+            {{tagline}}
+            <h1>{{name}}</h1>
+            {{summary}}
+            <div class="header_info">
+                {{headerInfo}}
+            </div>
+        </div>
+        <div class="education">
+            <h2>Education</h2>
+            <div class="education_info">
+                {{education}}
+            </div>
+        </div>
+        <div class="experience">
+            <h2>Experience</h2>
+            <div class="experience_info">
+                {{experience}}
+            </div>
+        </div>
+        <div class="skills">
+            <h2>Skills</h2>
+            <div class="skills_info">
+                {{skills}}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

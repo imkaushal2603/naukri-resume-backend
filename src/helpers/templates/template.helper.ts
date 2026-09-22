@@ -1,11 +1,12 @@
 import fs from "fs";
 import path from "path";
 
-export const loadTemplate = (templateKey: string): string => {
+export const loadTemplate = (templateKey: string, type: "resumes" | "cover-letter" = "resumes"): string => {
   const filePath = path.join(
     process.cwd(),
     "public",
     "templates",
+    type,
     templateKey,
     "template.html"
   );

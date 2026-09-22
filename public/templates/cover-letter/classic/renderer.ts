@@ -2,7 +2,7 @@ import { loadTemplate, replace } from "../../../../src/helpers/templates/templat
 import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
 
 export const renderCoverLetterClassic = (data: any): string => {
-    let template = loadTemplate("cover-letter/classic");
+    let template = loadTemplate("classic", "cover-letter");
 
     const today = new Date().toLocaleDateString("en-US", {
         year: "numeric",

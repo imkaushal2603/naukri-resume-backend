@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harbor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lexend+Exa:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lexend Exa", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 40px 40px;
+            border: 1px solid #000024;
+        }
+
+        .resume-two-section .resume-top-sec .image-with-name {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding-bottom: 40px;
+        }
+
+        .resume-two-section .resume-top-sec .image-with-name .image-sec {
+            width: 200px;
+        }
+
+        .resume-two-section .resume-top-sec .image-with-name .name-content {
+            width: calc(100% - 200px);
+            padding-left: 30px;
+        }
+
+        .resume-two-section .resume-top-sec .image-with-name .image-sec img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 100%;
+        }
+
+        .resume-two-section .resume-top-sec .image-with-name .name-content h1 {
+            font-size: 50px;
+            font-weight: 500;
+            margin: 0 0 15px;
+        }
+
+        .resume-two-section .resume-top-sec .image-with-name .name-content h4 {
+            font-size: 18px;
+            color: #000000CC;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left {
+            width: 40%;
+            padding-right: 10px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right {
+            width: 60%;
+            padding-left: 10px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .contacts {
+            padding-bottom: 20px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .contacts h4,
+        .resume-two-section .resume-top-sec .row-sec .col-left .educations h4,
+        .resume-two-section .resume-top-sec .row-sec .col-right .profile-txt h4 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .contacts .details {
+            padding-bottom: 20px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .contacts .details h5,
+        .resume-two-section .resume-top-sec .row-sec .col-left .educations .details h5 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #000;
+            margin: 0 0 10px;
+            line-height: 26px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .contacts .details p,
+        .resume-two-section .resume-top-sec .row-sec .col-left .educations .details p,
+        .resume-two-section .resume-top-sec .row-sec .col-left .contacts .details p a {
+            font-size: 16px;
+            color: #000;
+            font-weight: 400;
+            line-height: normal;
+            text-decoration: none;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .educations .details {
+            padding-bottom: 20px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .educations .details p {
+            line-height: 26px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .skilles {
+            padding-top: 20px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .skilles h4 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-left .skilles .details p {
+            color: #000000;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            margin: 0 0 10px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .profile-txt p {
+            font-size: 14px;
+            line-height: 22px;
+            color: #000;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .profile-txt {
+            padding-bottom: 40px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .experience h4 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .experience .details-sec {
+            padding-bottom: 30px;
+            position: relative;
+            border-left: 2px solid #000;
+            padding-left: 20px;
+            left: 11px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .experience .details-sec h5 {
+            font-size: 16px;
+            line-height: 22px;
+            color: #000;
+            margin: 0 0 10px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .experience .details-sec h6 {
+            font-size: 16px;
+            color: #000000CC;
+            font-weight: 400;
+            margin: 0 0 10px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .experience .details-sec p {
+            font-size: 14px;
+            line-height: 24px;
+            color: #000;
+            margin: 0 0 10px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .experience .details-sec:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 50%;
+            left: -12px;
+            top: -1px;
+        }
+
+        .resume-two-section .resume-top-sec .row-sec .col-right .experience .details-sec:last-child {
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-two-section">
+        <div class="resume-top-sec">
+            <div class="image-with-name">
+                <div class="image-sec">
+                    <img src="{{photoUrl}}" alt="profile">
+                </div>
+                <div class="name-content">
+                    <h1>{{name}}</h1>
+                    {{tagline}}
+                </div>
+            </div>
+            <div class="row-sec">
+                <div class="col-left">
+                    <div class="contacts">
+                        <h4>Contacts</h4>
+                        {{contact}}
+                    </div>
+                    <div class="educations">
+                        <h4>Education</h4>
+                        {{education}}
+                    </div>
+                    <div class="skilles">
+                        <h4>Skills</h4>
+                        <div class="details">
+                            {{skills}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-right">
+                    <div class="profile-txt">
+                        <h4>Profile Overview</h4>
+                        {{summary}}
+                    </div>
+                    <div class="experience">
+                        <h4>Experience</h4>
+                        {{experience}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

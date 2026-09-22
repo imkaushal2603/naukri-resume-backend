@@ -11,10 +11,13 @@ const adapter = new PrismaMariaDb(connectionString);
 const prisma = new PrismaClient({ adapter });
 
 const templates = [
-    { name: "Classic", templateKey: "classic", preview: "/templates/classic/classic.png", status: true, tier: "free", categories: ["modern"] },
-    { name: "Professional", templateKey: "professional", preview: "/templates/professional/professional.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
-    { name: "Modern", templateKey: "modern", preview: "/templates/modern/modern.png", status: true, tier: "paid", categories: ["premium", "modern"] },
-    { name: "Minimal", templateKey: "minimal", preview: "/templates/minimal/minimal.png", status: true, tier: "free", categories: ["modern"] },
+    { name: "Classic", templateKey: "classic", preview: "/templates/resumes/classic/classic.png", status: true, tier: "free", categories: ["modern"] },
+    { name: "Professional", templateKey: "professional", preview: "/templates/resumes/professional/professional.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
+    { name: "Minimal", templateKey: "minimal", preview: "/templates/resumes/minimal/minimal.png", status: true, tier: "free", categories: ["modern"] },
+    { name: "Onyx", templateKey: "onyx", preview: "/templates/resumes/onyx/onyx.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
+    { name: "Harbor", templateKey: "harbor", preview: "/templates/resumes/harbor/harbor.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Umber", templateKey: "umber", preview: "/templates/resumes/umber/umber.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Pulse", templateKey: "pulse", preview: "/templates/resumes/pulse/pulse.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
 ];
 
 const membershipPlans = [
@@ -34,6 +37,32 @@ const coverLetterTemplates = [
 ];
 
 async function main() {
+    const validKeys = templates.map((t) => t.templateKey);
+
+    const obsoleteTemplates = await prisma.resume_templates.findMany({
+        where: { templateKey: { notIn: validKeys } },
+        select: { id: true }
+    });
+
+    if (obsoleteTemplates.length > 0) {
+        const obsoleteIds = obsoleteTemplates.map(t => t.id);
+
+        const defaultTemplate = await prisma.resume_templates.findUnique({
+            where: { templateKey: "classic" }
+        });
+
+        if (defaultTemplate) {
+            await prisma.resume_builder.updateMany({
+                where: { templateId: { in: obsoleteIds } },
+                data: { templateId: defaultTemplate.id }
+            });
+        }
+
+        await prisma.resume_templates.deleteMany({
+            where: { id: { in: obsoleteIds } }
+        });
+    }
+
     for (const t of templates) {
         await prisma.resume_templates.upsert({
             where: { templateKey: t.templateKey },
