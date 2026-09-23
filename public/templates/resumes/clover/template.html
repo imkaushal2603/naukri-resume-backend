@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Clover Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: 10px auto;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 40px 25px;
+            border: 2px solid #D9E5D5;
+        }
+
+        .header {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+        }
+
+        .header::before {
+            content: "";
+            background: #D9E5D5;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 330px;
+            border-radius: 230px 0 0 0;
+        }
+
+        .header .header_top h1 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 57px;
+            line-height: 100%;
+            letter-spacing: 6%;
+            text-shadow: 0px 7px 3px #0000006B;
+            margin-bottom: 20px;
+        }
+
+        .header .header_top {
+            padding: 60px 0 0 150px;
+            position: relative;
+        }
+
+        .header .header_top h4 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 24px;
+            line-height: 100%;
+            letter-spacing: 6%;
+            color: #000000;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header .header_top h4::before {
+            content: "";
+            height: 5px;
+            background: #000000;
+            display: inline-block;
+            width: 80px;
+        }
+
+        .header .header_bottom {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .header .header_left {
+            width: 300px;
+            line-height: 0;
+            text-align: center;
+        }
+
+        .header .header_right {
+            width: calc(100% - 330px);
+        }
+
+        .header .header_left img {
+            width: 240px;
+            border-radius: 50%;
+            object-fit: cover;
+            height: 240px;
+        }
+
+        .header .header_right h2 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 28px;
+            line-height: 100%;
+            letter-spacing: 10%;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .header .header_right p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000000;
+            display: inline-block;
+        }
+
+        .resume_content {
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+            margin-top: 60px;
+        }
+
+        .contacts,
+        .experience,
+        .education,
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contacts h2,
+        .experience h2,
+        .education h2,
+        .skills h2 {
+            font-weight: 700;
+            font-style: Italic;
+            font-size: 28px;
+            line-height: 100%;
+            letter-spacing: 10%;
+            color: #000000;
+            border-bottom: 2px solid #000024;
+            padding-bottom: 15px;
+        }
+
+        .contacts .contacts_left,
+        .experience .experience_left,
+        .education .education_left,
+        .skills .skills_left {
+            width: 180px;
+        }
+
+        .contacts .contacts_right,
+        .experience .experience_right,
+        .education .education_right,
+        .skills .skills_right {
+            width: calc(100% - 220px);
+        }
+
+        .contacts .contacts_info,
+        .skills .skills_info,
+        .education .education_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .contacts .contacts_details a,
+        .contacts .contacts_details p {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 100%;
+            letter-spacing: 10%;
+            color: #000000;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+        }
+
+        .experience .experience_details h4 {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 140%;
+            letter-spacing: 6%;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .experience .experience_details ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .experience .experience_details ul li,
+        .skills .skills_details p,
+        .education .education_details h4 {
+            position: relative;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000000;
+            display: inline-block;
+            padding-left: 20px;
+        }
+
+        .experience .experience_details ul li::before,
+        .skills .skills_details p::before,
+        .education .education_details h4::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            left: 0;
+            top: 8px;
+            background: #000000;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <div class="header">
+            <div class="header_top">
+                <h1>{{name}}</h1>
+                {{tagline}}
+            </div>
+            <div class="header_bottom">
+                <div class="header_left">
+                    <img src="{{photoUrl}}" alt="{{name}}" />
+                </div>
+                <div class="header_right">
+                    <h2>Profile</h2>
+                    {{summary}}
+                </div>
+            </div>
+        </div>
+        <div class="resume_content">
+            <div class="contacts">
+                <div class="contacts_left">
+                    <h2>Contacts</h2>
+                </div>
+                <div class="contacts_right">
+                    <div class="contacts_info">
+                        {{contact}}
+                    </div>
+                </div>
+            </div>
+            <div class="experience">
+                <div class="experience_left">
+                    <h2>Experience</h2>
+                </div>
+                <div class="experience_right">
+                    <div class="experience_info">
+                        {{experience}}
+                    </div>
+                </div>
+            </div>
+            <div class="education">
+                <div class="education_left">
+                    <h2>Educations</h2>
+                </div>
+                <div class="education_right">
+                    <div class="education_info">
+                        {{education}}
+                    </div>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="skills_left">
+                    <h2>Skills</h2>
+                </div>
+                <div class="skills_right">
+                    <div class="skills_info">
+                        {{skills}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

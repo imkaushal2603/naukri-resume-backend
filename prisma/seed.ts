@@ -18,6 +18,10 @@ const templates = [
     { name: "Harbor", templateKey: "harbor", preview: "/templates/resumes/harbor/harbor.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Umber", templateKey: "umber", preview: "/templates/resumes/umber/umber.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Pulse", templateKey: "pulse", preview: "/templates/resumes/pulse/pulse.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Lagoon", templateKey: "lagoon", preview: "/templates/resumes/lagoon/lagoon.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Marine", templateKey: "marine", preview: "/templates/resumes/marine/marine.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Amber", templateKey: "amber", preview: "/templates/resumes/amber/amber.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Clover", templateKey: "clover", preview: "/templates/resumes/clover/clover.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
 ];
 
 const membershipPlans = [

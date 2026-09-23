@@ -90,8 +90,10 @@ export const renderUmber = (resume: any): string => {
                 duration = start || end;
             }
 
-            const location = edu.address || edu.city || "";
-            const metaLine = [duration, location].filter(Boolean).join(" | ");
+            const gradeVal = edu.grade || edu.gpa;
+            const metaParts = [duration];
+            if (gradeVal) metaParts.push(`CGPA: ${gradeVal}`);
+            const metaLine = metaParts.filter(Boolean).join(" | ");
 
             return `
 <div class="education_details">
