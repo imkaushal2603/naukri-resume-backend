@@ -22,6 +22,11 @@ const templates = [
     { name: "Marine", templateKey: "marine", preview: "/templates/resumes/marine/marine.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Amber", templateKey: "amber", preview: "/templates/resumes/amber/amber.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Clover", templateKey: "clover", preview: "/templates/resumes/clover/clover.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Blank", templateKey: "blank", preview: "/templates/resumes/blank/blank.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Linen", templateKey: "linen", preview: "/templates/resumes/linen/linen.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Willow", templateKey: "willow", preview: "/templates/resumes/willow/willow.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Confetti", templateKey: "confetti", preview: "/templates/resumes/confetti/confetti.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Flare", templateKey: "flare", preview: "/templates/resumes/flare/flare.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
 ];
 
 const membershipPlans = [

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            overflow: hidden;
+            padding: 40px 0px 0;
+            border: 1px solid #000024;
+            position: relative;
+        }
+
+        .resume-section .resume-top-sec .content-with-img {
+            display: flex;
+            position: relative;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            padding: 0 40px;
+        }
+
+        .resume-section .resume-top-sec .content-with-img:before {
+            position: absolute;
+            content: '';
+            border: 1px solid;
+            width: 79%;
+            bottom: -27px;
+            right: 0;
+        }
+
+        .resume-section .resume-top-sec .content-with-img .name {
+            width: 80%;
+        }
+
+        .resume-section .resume-top-sec .content-with-img .image {
+            width: 160px;
+            position: absolute;
+            bottom: -58px;
+            right: 30px;
+            border: 8px solid #fff;
+            border-radius: 50%;
+            height: 160px;
+        }
+
+        .resume-section .resume-top-sec .content-with-img .image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .resume-section .resume-top-sec .content-with-img .name h1 {
+            font-size: 55px;
+            padding: 0 45px 0 120px;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .top-svg {
+            position: absolute;
+            top: -94px;
+            left: 37px;
+        }
+
+        .resume-section .resume-top-sec .top-svg svg {
+            width: 58%;
+        }
+
+        .resume-section .resume-top-sec .positions p {
+            font-size: 20px;
+            text-align: end;
+            letter-spacing: 20%;
+        }
+
+        .resume-section .resume-top-sec .positions {
+            position: relative;
+            bottom: -60px;
+            right: 40px;
+        }
+
+        .resume-section .resume-top-sec .profile-sec {
+            padding-top: 140px !important;
+            padding-left: 40px !important;
+            padding-right: 40px !important;
+        }
+
+        .resume-section .resume-top-sec .profile-sec h4 {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: normal;
+            margin: 0 0 15px;
+            letter-spacing: 10%;
+        }
+
+        .resume-section .resume-top-sec .profile-sec p {
+            font-size: 15px;
+            line-height: 22px;
+            letter-spacing: 10%;
+            color: #000;
+        }
+
+        .resume-section .resume-top-sec .education-skills {
+            display: flex;
+            flex-wrap: wrap;
+            padding-top: 50px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+
+        .resume-section .resume-top-sec .education-skills .left-sec {
+            width: 50%;
+            padding-right: 20px;
+        }
+
+        .resume-section .resume-top-sec .education-skills .right-sec {
+            width: 50%;
+            padding-left: 20px;
+        }
+
+        .resume-section .resume-top-sec .education-skills .left-sec .education h4,
+        .resume-section .resume-top-sec .education-skills .right-sec .skills h4,
+        .resume-section .resume-top-sec .experince h4 {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0 0 15px;
+            color: #000;
+        }
+
+        .resume-section .resume-top-sec .education-skills .left-sec .education .details p {
+            font-size: 18px;
+            line-height: 28px;
+            color: #000;
+            margin: 0 0 20px;
+        }
+
+        .resume-section .resume-top-sec .education-skills .right-sec p {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: normal;
+            margin: 0 0 10px;
+        }
+
+        .resume-section .resume-top-sec .experince {
+            padding-top: 30px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .resume-section .resume-top-sec .experince .details-sec {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -20px;
+            row-gap: 30px;
+        }
+
+        .resume-section .resume-top-sec .experince .details-sec .details {
+            width: 50%;
+            padding: 0 20px;
+        }
+
+        .resume-section .resume-top-sec .experince .details-sec .details h6 {
+            font-size: 18px;
+            line-height: 28px;
+            margin: 0 0 15px;
+            color: #000;
+        }
+
+        .resume-section .resume-top-sec .experince .details-sec .details p {
+            font-size: 16px;
+            line-height: 24px;
+            color: #000;
+        }
+
+        .resume-section .resume-top-sec .contacts-sec .contacts {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            background: #FF92CF;
+            padding: 20px 40px 20px;
+            flex-wrap: wrap;
+            row-gap: 12px;
+        }
+
+        .resume-section .resume-top-sec .contacts-sec .contacts .phone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resume-section .resume-top-sec .contacts-sec .contacts .phone p a,
+        .resume-section .resume-top-sec .contacts-sec .contacts .phone p {
+            font-size: 14px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .contacts-sec {
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-section">
+        <div class="resume-top-sec">
+            <div class="top-svg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="692" height="468" viewBox="0 0 692 468" fill="none">
+                    <path
+                        d="M45.066 422.501C-15.0218 362.413 -15.0217 264.992 45.066 204.904L473.89 -223.92L691.487 -6.32376L262.663 422.501C202.575 482.589 105.154 482.588 45.066 422.501Z"
+                        fill="#FF92CF" />
+                </svg>
+            </div>
+            <div class="content-with-img">
+                <div class="name">
+                    <h1>{{name}}</h1>
+                </div>
+                <div class="image">
+                    <img src="{{photoUrl}}" alt="{{name}}">
+                </div>
+            </div>
+            <div class="positions">
+                {{tagline}}
+            </div>
+            <div class="profile-sec">
+                <h4>Profile</h4>
+                {{summary}}
+            </div>
+            <div class="education-skills">
+                <div class="left-sec">
+                    <div class="education">
+                        <h4>Educations</h4>
+                        <div class="details">
+                            {{education}}
+                        </div>
+                    </div>
+                </div>
+                <div class="right-sec">
+                    <div class="skills">
+                        <h4>Skills</h4>
+                        {{skills}}
+                    </div>
+                </div>
+            </div>
+            <div class="experince">
+                <h4>Work Experience</h4>
+                <div class="details-sec">
+                    {{experience}}
+                </div>
+            </div>
+            <div class="contacts-sec">
+                <div class="contacts">
+                    {{contact}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

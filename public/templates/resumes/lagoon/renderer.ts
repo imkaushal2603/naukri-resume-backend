@@ -113,7 +113,6 @@ export const renderLagoon = (resume: any): string => {
             const duration = start ? `${start} – ${end}` : end;
 
             const location = exp.location || "";
-            const metaLine = [duration, location].filter(Boolean).join(" | ");
             const titleLine = [company, location].filter(Boolean).join(" — ");
             const headingLine = role ? `${escapeHtml(role)}${company ? ` — ${escapeHtml(company)}` : ""}${location ? `, ${escapeHtml(location)}` : ""}` : escapeHtml(titleLine);
 

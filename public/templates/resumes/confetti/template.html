@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Confetti Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: 10px auto;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #0456FF75;
+            padding: 70px;
+            position: relative;
+        }
+
+        .header {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-weight: 700;
+            font-size: 42px;
+            line-height: 100%;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .header h4 {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 100%;
+            color: #29B33A;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000024;
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+
+        .resume_content .resume_section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 100px;
+        }
+
+        .resume_content .resume_left {
+            width: calc(45% - 50px);
+        }
+
+        .resume_content .resume_right {
+            width: calc(55% - 50px);
+        }
+
+        .contacts h2,
+        .skills h2,
+        .education h2,
+        .experience h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #8CB1FF;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 100%;
+            margin-bottom: 20px;
+            max-width: 260px;
+        }
+
+        .contacts .contacts_info,
+        .skills .skills_info,
+        .education .education_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 12px;
+        }
+
+        .contacts .contacts_details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contacts .contacts_details a,
+        .contacts .contacts_details p,
+        .skills .skills_details p {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 100%;
+            color: #000000;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .contacts .contacts_svg {
+            line-height: 0;
+        }
+
+        .resume_content {
+            display: flex;
+            flex-direction: column;
+            row-gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .education .education_details h4 {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 140%;
+            color: #000000;
+        }
+
+        .education .education_details h4 span {
+            font-weight: 400;
+        }
+
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+        }
+
+        .experience .experience_details h4 {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 140%;
+            color: #000000;
+            margin-bottom: 12px;
+        }
+
+        .experience .experience_details ul {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+            list-style: none;
+        }
+
+        .experience .experience_details ul li {
+            position: relative;
+            padding-left: 20px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000024;
+            display: inline-block;
+        }
+
+        .experience .experience_details ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: #000024;
+            border-radius: 50%;
+        }
+
+        .resume_svgs .svg1 {
+            background: #0456FF75;
+            position: absolute;
+            left: 42px;
+            top: -80px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+        }
+
+        .resume_svgs .svg2 {
+            background: #9ABECC;
+            position: absolute;
+            left: -85px;
+            top: 100px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+        }
+
+        .resume_svgs .svg3 {
+            position: absolute;
+            left: 40%;
+            top: -65px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #29B33A80;
+        }
+
+        .resume_svgs .svg4 {
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #FF92CF8F;
+        }
+
+        .resume_svgs .svg5 {
+            position: absolute;
+            right: -80px;
+            top: -40px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: #C2B49A;
+        }
+
+        .resume_svgs .svg6 {
+            position: absolute;
+            right: 40px;
+            top: -80px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: #F6B9B9;
+        }
+
+        .resume_svgs .svg7 {
+            position: absolute;
+            right: 80px;
+            top: 20px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: #9ABECC;
+        }
+
+        .resume_svgs .svg8 {
+            position: absolute;
+            right: 100px;
+            top: -40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #008CFF;
+        }
+
+        .resume_svgs .svg9 {
+            position: absolute;
+            right: 10%;
+            bottom: 300px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #008CFF;
+        }
+
+        .resume_svgs .svg10 {
+            position: absolute;
+            left: 80px;
+            bottom: -90px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #9ABECC;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <div class="resume_svgs">
+            <div class="svg1"></div>
+            <div class="svg2"></div>
+            <div class="svg3"></div>
+            <div class="svg4"></div>
+            <div class="svg5"></div>
+            <div class="svg6"></div>
+            <div class="svg7"></div>
+            <div class="svg8"></div>
+            <div class="svg9"></div>
+            <div class="svg10"></div>
+        </div>
+        <div class="header">
+            <h1>{{name}}</h1>
+            {{tagline}}
+            {{summary}}
+        </div>
+        <div class="resume_content">
+            <div class="resume_section">
+                <div class="resume_left">
+                    <div class="contacts">
+                        <h2>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 27 28"
+                                fill="none">
+                                <path
+                                    d="M19.25 2.625C19.7313 2.625 20.125 3.01875 20.125 3.5V24.5C20.125 24.9812 19.7313 25.375 19.25 25.375H3.5C3.01875 25.375 2.625 24.9812 2.625 24.5V3.5C2.625 3.01875 3.01875 2.625 3.5 2.625H19.25ZM3.5 0C1.56953 0 0 1.56953 0 3.5V24.5C0 26.4305 1.56953 28 3.5 28H19.25C21.1805 28 22.75 26.4305 22.75 24.5V3.5C22.75 1.56953 21.1805 0 19.25 0H3.5ZM11.375 13.5625C13.0648 13.5625 14.4375 12.1898 14.4375 10.5C14.4375 8.81015 13.0648 7.4375 11.375 7.4375C9.68516 7.4375 8.3125 8.81015 8.3125 10.5C8.3125 12.1898 9.68516 13.5625 11.375 13.5625ZM9.625 15.75C7.20781 15.75 5.25 17.7078 5.25 20.125C5.25 20.6062 5.64375 21 6.125 21H16.625C17.1063 21 17.5 20.6062 17.5 20.125C17.5 17.7078 15.5422 15.75 13.125 15.75H9.625ZM26.25 4.375C26.25 3.89375 25.8563 3.5 25.375 3.5C24.8937 3.5 24.5 3.89375 24.5 4.375V7.875C24.5 8.35625 24.8937 8.75 25.375 8.75C25.8563 8.75 26.25 8.35625 26.25 7.875V4.375ZM25.375 10.5C24.8937 10.5 24.5 10.8937 24.5 11.375V14.875C24.5 15.3562 24.8937 15.75 25.375 15.75C25.8563 15.75 26.25 15.3562 26.25 14.875V11.375C26.25 10.8937 25.8563 10.5 25.375 10.5ZM26.25 18.375C26.25 17.8937 25.8563 17.5 25.375 17.5C24.8937 17.5 24.5 17.8937 24.5 18.375V21.875C24.5 22.3562 24.8937 22.75 25.375 22.75C25.8563 22.75 26.25 22.3562 26.25 21.875V18.375Z"
+                                    fill="black" />
+                            </svg>
+                            Contacts
+                        </h2>
+                        <div class="contacts_info">
+                            {{contact}}
+                        </div>
+                    </div>
+                </div>
+                <div class="resume_right">
+                    <div class="skills">
+                        <h2>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 35 35"
+                                fill="none">
+                                <path
+                                    d="M19.6875 28.4375H28.6256L25.7972 31.2659L27.3438 32.8125L32.8125 27.3438L27.3438 21.875L25.7972 23.4216L28.6256 26.25H19.6875V28.4375ZM10.9375 22.9688H16.4062V25.1562H10.9375V22.9688ZM10.9375 17.5H21.875V19.6875H10.9375V17.5Z"
+                                    fill="black" />
+                                <path
+                                    d="M27.0156 10.1719L19.3594 2.51562C19.1406 2.29687 18.9219 2.1875 18.5938 2.1875H7.65625C6.45312 2.1875 5.46875 3.17188 5.46875 4.375V30.625C5.46875 31.8314 6.45094 32.8125 7.65625 32.8125H16.4062V30.625H7.65625V4.375H16.4062V10.9375C16.4062 12.1406 17.3906 13.125 18.5938 13.125H25.1562V19.6875H27.3438V10.9375C27.3438 10.6094 27.2344 10.3906 27.0156 10.1719ZM18.5938 10.9375V4.8125L24.7188 10.9375H18.5938Z"
+                                    fill="black" />
+                            </svg>
+                            Skills
+                        </h2>
+                        <div class="skills_info">
+                            {{skills}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="education">
+                <h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 35 35" fill="none">
+                        <path
+                            d="M31.281 12.5563L18.156 5.99378C17.9543 5.89358 17.7322 5.84143 17.507 5.84143C17.2819 5.84143 17.0597 5.89358 16.8581 5.99378L8.10807 10.3688L3.73307 12.5563L2.27474 13.2854C2.03424 13.4066 1.83199 13.5921 1.69042 13.8211C1.54884 14.0502 1.47347 14.3141 1.47266 14.5834V23.3334H4.38932V15.4875L16.8581 21.7292C17.0622 21.8313 17.281 21.8896 17.5143 21.8896C17.7477 21.8896 17.9664 21.8313 18.1706 21.7292L31.2956 15.1667C31.7914 14.9188 32.0977 14.4084 32.0977 13.8688C32.0977 13.3292 31.7914 12.8188 31.2956 12.5709L31.281 12.5563Z"
+                            fill="black" />
+                        <path
+                            d="M17.4993 24.7916C16.8285 24.7916 16.1431 24.6312 15.5452 24.325L7.29102 20.1979V22.5166C7.29102 25.5208 11.841 29.1666 17.4993 29.1666C23.1577 29.1666 27.7077 25.5354 27.7077 22.5166V20.1979L19.4535 24.325C18.8556 24.6312 18.1702 24.7916 17.4993 24.7916Z"
+                            fill="black" />
+                    </svg>
+                    Education
+                </h2>
+                <div class="education_info">
+                    {{education}}
+                </div>
+            </div>
+            <div class="experience">
+                <h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 29" fill="none">
+                        <path
+                            d="M18.5 24.3333C23.9994 24.3333 26.7498 24.3333 28.4575 22.6242C30.1652 20.915 30.1667 18.166 30.1667 12.6667C30.1667 7.16729 30.1667 4.41687 28.4575 2.70917C26.7483 1.00146 23.9994 1 18.5 1H12.6667C7.16729 1 4.41687 1 2.70917 2.70917C1.00146 4.41833 1 7.16729 1 12.6667C1 18.166 1 20.9165 2.70917 22.6242C3.66146 23.5779 4.9375 23.9994 6.83333 24.1846"
+                            stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M18.4997 24.3334C16.6972 24.3334 14.7109 25.0625 12.8982 26.0032C9.98445 27.5155 8.52758 28.2723 7.81008 27.7896C7.09258 27.3069 7.2282 25.8136 7.50091 22.8255L7.56216 22.1459"
+                            stroke="black" stroke-width="2" stroke-linecap="round" />
+                        <path
+                            d="M14.8535 16.3125L13.3952 13.3958L11.7823 10.1715C11.661 9.92955 11.4749 9.72614 11.2446 9.58399C11.0144 9.44184 10.7491 9.36656 10.4785 9.36656C10.2079 9.36656 9.94266 9.44184 9.71242 9.58399C9.48217 9.72614 9.29601 9.92955 9.17477 10.1715L7.56185 13.3958L6.10352 16.3125M7.56185 13.3958H13.3952M16.3118 7.5625H19.2023V9.75C19.2023 10.4792 18.4789 11.9375 17.0337 11.9375M22.8146 7.5625V10.4792M22.8146 10.4792V16.3125M22.8146 10.4792H25.0618"
+                            stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Work Experience
+                </h2>
+                <div class="experience_info">
+                    {{experience}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

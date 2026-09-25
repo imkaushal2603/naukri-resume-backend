@@ -108,12 +108,12 @@
         }
 
         .header {
-            padding: 45px 30px;
+            padding: 45px 25px;
         }
 
         .header h1 {
             font-weight: 700;
-            font-size: 48px;
+            font-size: 44px;
             line-height: 100%;
             letter-spacing: 6%;
             color: #000000;
@@ -122,7 +122,7 @@
 
         .header h4 {
             font-weight: 700;
-            font-size: 24px;
+            font-size: 22px;
             line-height: 100%;
             letter-spacing: 6%;
             color: #1E5D25;
@@ -151,11 +151,11 @@
 
         .resume_content {
             background: #C7C8CC;
-            padding: 0 30px;
+            padding: 0 25px;
         }
 
         .resume_content .resume_info {
-            max-width: 90%;
+            max-width: 94%;
             margin: auto;
             background: #000000;
             display: flex;
@@ -185,51 +185,143 @@
             padding-right: 0;
             border-right: none;
         }
+
+        .resume_content .resume_heading {
+            border-top: 3px solid #000000;
+        }
+
+        .resume_section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .resume_section .resume_left {
+            width: calc(65% - 10px);
+            padding-top: 60px;
+            padding-bottom: 45px;
+        }
+
+        .resume_section .resume_right {
+            width: calc(35% - 10px);
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+            border-left: 2px solid #000024;
+            padding-left: 15px;
+            padding-bottom: 45px;
+        }
+
+        .experience h2,
+        .education h2,
+        .skills h2 {
+            font-weight: 700;
+            font-size: 26px;
+            line-height: 100%;
+            letter-spacing: 6%;
+            color: #000024;
+            margin-bottom: 12px;
+        }
+
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+        }
+
+        .experience .experience_details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .experience .experience_left {
+            width: 170px;
+        }
+
+        .experience .experience_right {
+            width: calc(100% - 190px);
+        }
+
+        .experience .experience_details h4,
+        .education .education_details h4 {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000024;
+        }
+
+        .experience .experience_details ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+            margin-top: 12px;
+        }
+
+        .experience .experience_details li {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000024E5;
+            display: inline-block;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .experience .experience_details li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: #000024E5;
+            border-radius: 50%;
+        }
+
+        .education .education_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 18px;
+        }
+
+        .education .education_details h4 {
+            margin-bottom: 10px;
+        }
+
+        .education .education_details p,
+        .skills .skills_details p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000024E5;
+            display: inline-block;
+        }
+
+        .skills .skills_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
     </style>
 </head>
 
 <body>
     <div class="resume">
         <div class="header">
-            <h1>Albert Young</h1>
-            <h4>HR Manager</h4>
-            <p>Results-driven HR professional with 5+ years of experience in human resource management, recruitment,
-                employee relations, and HR operations. Experienced in managing end-to-end recruitment, onboarding,
-                employee engagement, attendance, payroll coordination, performance management, and HR documentation.
-                Strong ability to develop positive employee relationships, implement HR policies, resolve workplace
-                issues, and support organizational growth. Excellent communication, leadership, organizational, and
-                problem-solving skills with a strong focus on employee satisfaction and business objectives.</p>
+            <h1>{{name}}</h1>
+            {{tagline}}
+            {{summary}}
             <div class="header_info">
-                <div class="header_details">
-                    <a href="linkdn.com">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 19 19" fill="none">
-                            <path
-                                d="M2.188 0C1.90067 -4.28158e-09 1.61615 0.0565943 1.35069 0.166552C1.08523 0.276509 0.844025 0.437676 0.64085 0.64085C0.437676 0.844025 0.276509 1.08523 0.166552 1.35069C0.0565943 1.61615 0 1.90067 0 2.188C0 2.47533 0.0565943 2.75985 0.166552 3.02531C0.276509 3.29077 0.437676 3.53197 0.64085 3.73515C0.844025 3.93832 1.08523 4.09949 1.35069 4.20945C1.61615 4.31941 1.90067 4.376 2.188 4.376C2.47533 4.376 2.75985 4.31941 3.02531 4.20945C3.29077 4.09949 3.53197 3.93832 3.73515 3.73515C3.93832 3.53197 4.09949 3.29077 4.20945 3.02531C4.31941 2.75985 4.376 2.47533 4.376 2.188C4.376 1.90067 4.31941 1.61615 4.20945 1.35069C4.09949 1.08523 3.93832 0.844025 3.73515 0.64085C3.53197 0.437676 3.29077 0.276509 3.02531 0.166552C2.75985 0.0565943 2.47533 -4.28158e-09 2.188 0ZM6.442 6.034V18.173H10.211V12.17C10.211 10.586 10.509 9.052 12.473 9.052C14.41 9.052 14.434 10.863 14.434 12.27V18.174H18.205V11.517C18.205 8.247 17.501 5.734 13.679 5.734C11.844 5.734 10.614 6.741 10.111 7.694H10.06V6.034H6.442ZM0.3 6.034H4.075V18.173H0.3V6.034Z"
-                                fill="black" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="header_details">
-                    <a href="github.com">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 23 23" fill="none">
-                            <path
-                                d="M11.3648 9.50783e-07C5.08574 -0.00253811 0 5.08067 0 11.3547C0 16.316 3.18145 20.5334 7.61211 22.0822C8.20879 22.232 8.11738 21.808 8.11738 21.5186V19.5508C4.67188 19.9545 4.53223 17.6744 4.30117 17.2936C3.83398 16.4963 2.72949 16.2932 3.05957 15.9123C3.84414 15.5086 4.64395 16.0139 5.5707 17.3824C6.24102 18.3752 7.54863 18.2076 8.21133 18.0426C8.35605 17.4459 8.66582 16.9127 9.09238 16.4988C5.52246 15.859 4.03457 13.6805 4.03457 11.0906C4.03457 9.83379 4.44844 8.67852 5.26094 7.74668C4.74297 6.21055 5.30918 4.89531 5.38535 4.69981C6.86055 4.56777 8.39414 5.75606 8.51348 5.85C9.35137 5.62402 10.3086 5.50469 11.3801 5.50469C12.4566 5.50469 13.4164 5.6291 14.2619 5.85762C14.5488 5.63926 15.9707 4.61856 17.3418 4.74297C17.4154 4.93848 17.9689 6.22324 17.4814 7.73906C18.3041 8.67344 18.723 9.83887 18.723 11.0982C18.723 13.6932 17.225 15.8742 13.6449 16.5039C13.9516 16.8055 14.195 17.1651 14.3611 17.5618C14.5272 17.9585 14.6126 18.3844 14.6123 18.8145V21.6709C14.6326 21.8994 14.6123 22.1254 14.9932 22.1254C19.4898 20.6096 22.7271 16.3617 22.7271 11.3572C22.7271 5.08066 17.6389 9.50783e-07 11.3648 9.50783e-07Z"
-                                fill="black" />
-                        </svg>
-                    </a>
-                </div>
+                {{socialLinks}}
             </div>
         </div>
         <div class="resume_content">
-            <div class="resume_info">
-                <div class="resume_details">
-                    <p>P: <a href="tel:135477897436">135477897436</a></p>
-                </div>
-                <div class="resume_details">
-                    <p>E: <a href="testing32@gmail.com">testing32@gmail.com</a></p>
-                </div>
-                <div class="resume_details">
-                    <p>#2541 Mohali Punjab</p>
+            <div class="resume_heading">
+                <div class="resume_info">
+                    {{contact}}
                 </div>
             </div>
             <div class="resume_section">
@@ -237,54 +329,7 @@
                     <div class="experience">
                         <h2>Experience</h2>
                         <div class="experience_info">
-                            <div class="experience_details">
-                                <div class="experience_left">
-                                    <h4>April 2022 – Present</h4>
-                                </div>
-                                <div class="experience_right">
-                                    <h4>TalentBridge Solutions Pvt. Ltd. — Chandigarh, Punjab</h4>
-                                    <p>Managed recruitment, onboarding, employee relations, attendance, payroll
-                                        coordination, and HR documentation. Supported performance management, training,
-                                        employee engagement, and HR policy implementation while coordinating daily HR
-                                        operations and maintaining accurate employee records.</p>
-                                </div>
-                            </div>
-                            <div class="experience_details">
-                                <div class="experience_left">
-                                    <h4>April 2018 – May 2020</h4>
-                                </div>
-                                <div class="experience_right">
-                                    <h4>PrimeTech Solutions Pvt. Ltd. — Chandigarh, Punjab</h4>
-                                    <p>Handled recruitment, candidate screening, interviews, onboarding, employee
-                                        records, attendance, leave management, and HR documentation. Assisted with
-                                        payroll coordination, employee engagement, and performance appraisal activities.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="experience_details">
-                                <div class="experience_left">
-                                    <h4>April 2018 – May 2020</h4>
-                                </div>
-                                <div class="experience_right">
-                                    <h4>PrimeTech Solutions Pvt. Ltd. — Chandigarh, Punjab</h4>
-                                    <p>Handled recruitment, candidate screening, interviews, onboarding, employee
-                                        records, attendance, leave management, and HR documentation. Assisted with
-                                        payroll coordination, employee engagement, and performance appraisal activities.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="experience_details">
-                                <div class="experience_left">
-                                    <h4>April 2018 – May 2020</h4>
-                                </div>
-                                <div class="experience_right">
-                                    <h4>PrimeTech Solutions Pvt. Ltd. — Chandigarh, Punjab</h4>
-                                    <p>Handled recruitment, candidate screening, interviews, onboarding, employee
-                                        records, attendance, leave management, and HR documentation. Assisted with
-                                        payroll coordination, employee engagement, and performance appraisal activities.
-                                    </p>
-                                </div>
-                            </div>
+                            {{experience}}
                         </div>
                     </div>
                 </div>
@@ -292,35 +337,13 @@
                     <div class="education">
                         <h2>Education</h2>
                         <div class="education_info">
-                            <div class="education_details">
-                                <h4>Master of Business Administration: Chandigarh University</h4>
-                                <p>April 2022 – Present | cgpa</p>
-                            </div>
-                            <div class="education_details">
-                                <h4>Bachelor of Business Administration: Chandigarh University</h4>
-                                <p>April 2022 – Present | cgpa</p>
-                            </div>
-                            <div class="education_details">
-                                <h4>Senior Secondary: Chandigarh University</h4>
-                                <p>April 2022 – Present | cgpa</p>
-                            </div>
+                            {{education}}
                         </div>
                     </div>
                     <div class="skills">
                         <h2>Skills</h2>
                         <div class="skills_info">
-                            <div class="skills_details">
-                                <p>Recruitment & Talent Acquisition</p>
-                            </div>
-                            <div class="skills_details">
-                                <p>Employee Relations</p>
-                            </div>
-                            <div class="skills_details">
-                                <p>Performance Management</p>
-                            </div>
-                            <div class="skills_details">
-                                <p>Payroll & Attendance Management</p>
-                            </div>
+                            {{skills}}
                         </div>
                     </div>
                 </div>
