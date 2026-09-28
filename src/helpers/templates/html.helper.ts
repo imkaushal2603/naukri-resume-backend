@@ -12,3 +12,11 @@ export const nl2br = (str: unknown): string => {
     if (str === null || str === undefined) return "";
     return escapeHtml(str).replace(/\n/g, "<br/>");
 };
+
+export const normalizeUrl = (url: unknown): string => {
+    if (url === null || url === undefined) return "";
+    const trimmed = String(url).trim();
+    if (!trimmed) return "";
+    if (/^(https?:)?\/\//i.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+};

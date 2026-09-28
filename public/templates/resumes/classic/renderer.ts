@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 
 const getYear = (dateVal: any): string => {
@@ -59,10 +59,10 @@ export const renderClassic = (resume: any): string => {
         headerInfoParts.push(headerDetail(PHONE_ICON, `<a href="tel:${escapeHtml(resume.phone)}">${escapeHtml(resume.phone)}</a>`));
     }
     if (resume.linkedin) {
-        headerInfoParts.push(headerDetail(LINKEDIN_ICON, `<a href="${escapeHtml(resume.linkedin)}" target="_blank">LinkedIn</a>`));
+        headerInfoParts.push(headerDetail(LINKEDIN_ICON, `<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">LinkedIn</a>`));
     }
     if (resume.github) {
-        headerInfoParts.push(headerDetail(GITHUB_ICON, `<a href="${escapeHtml(resume.github)}" target="_blank">GitHub</a>`));
+        headerInfoParts.push(headerDetail(GITHUB_ICON, `<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">GitHub</a>`));
     }
 
     html = replace(html, "headerInfo", headerInfoParts.join(""));
