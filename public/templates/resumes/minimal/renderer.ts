@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 
 const getYear = (dateVal: any): string => {
@@ -140,10 +140,10 @@ export const renderMinimal = (resume: any): string => {
         contactParts.push(contactDetail(LOCATION_ICON, `<p>${escapeHtml(address)}</p>`));
     }
     if (resume.linkedin) {
-        contactParts.push(contactDetail(LINKEDIN_ICON, `<a href="${escapeHtml(resume.linkedin)}" target="_blank">LinkedIn</a>`));
+        contactParts.push(contactDetail(LINKEDIN_ICON, `<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">LinkedIn</a>`));
     }
     if (resume.github) {
-        contactParts.push(contactDetail(GITHUB_ICON, `<a href="${escapeHtml(resume.github)}" target="_blank">GitHub</a>`));
+        contactParts.push(contactDetail(GITHUB_ICON, `<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">GitHub</a>`));
     }
     html = replace(html, "contact", contactParts.join(""));
 

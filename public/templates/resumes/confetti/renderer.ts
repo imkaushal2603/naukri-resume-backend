@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 
 const PHONE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 30 30" fill="none"><path d="M23.4309 29.1643H23.9414C24.6268 29.1351 25.2539 28.7851 25.6476 28.231L28.7684 23.7247C29.1039 23.2435 29.2351 22.6455 29.1184 22.0622C29.0018 21.4789 28.6664 20.983 28.1851 20.6476L21.4184 16.1414C21.0608 15.9009 20.639 15.7739 20.208 15.7768C19.6101 15.7768 19.0268 16.0101 18.6039 16.4768L16.4601 18.7955C15.4539 18.1685 14.1122 17.2351 13.0184 16.1414C11.9684 15.0914 11.0205 13.7497 10.3643 12.6997L12.683 10.556C13.4705 9.82679 13.6164 8.63096 13.0184 7.74137L8.51219 0.974708C8.19136 0.493458 7.68094 0.143458 7.09761 0.0413744C6.81356 -0.0154537 6.52091 -0.0137242 6.23756 0.0464567C5.95421 0.106638 5.68612 0.224004 5.44969 0.391374L0.943441 3.51221C0.374691 3.90596 0.0392742 4.53304 0.0101076 5.21846C-0.0336424 6.22471 -0.223226 15.281 6.83511 22.3393C13.1789 28.683 21.1414 29.1789 23.4309 29.1789V29.1643ZM7.11219 11.7372C6.87886 11.956 6.80594 12.306 6.95177 12.5976C7.02469 12.7289 8.62886 15.8643 10.9476 18.1976C13.2809 20.531 16.4164 22.1351 16.5476 22.208C16.8393 22.3539 17.1893 22.2955 17.408 22.0476L20.3101 18.9122L25.9393 22.6601L23.4601 26.2476C21.7684 26.2476 14.5205 25.8976 8.89136 20.2685C3.26219 14.6393 2.91219 7.37679 2.91219 5.69971L6.49969 3.22054L10.2476 8.84971L7.11219 11.7518V11.7372Z" fill="black" /></svg>`;
@@ -48,8 +48,8 @@ export const renderConfetti = (resume: any): string => {
     if (resume.email) contactParts.push(contactRow(EMAIL_ICON, `<a href="mailto:${escapeHtml(resume.email)}">${escapeHtml(resume.email)}</a>`));
     const address = [resume.city, resume.state, resume.country].filter(Boolean).join(", ");
     if (address) contactParts.push(contactRow(LOCATION_ICON, `<p>${escapeHtml(address)}</p>`));
-    if (resume.linkedin) contactParts.push(contactRow(LINKEDIN_ICON, `<a href="${escapeHtml(resume.linkedin)}" target="_blank">linkedin</a>`));
-    if (resume.github) contactParts.push(contactRow(GITHUB_ICON, `<a href="${escapeHtml(resume.github)}" target="_blank">Github </a>`));
+    if (resume.linkedin) contactParts.push(contactRow(LINKEDIN_ICON, `<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">linkedin</a>`));
+    if (resume.github) contactParts.push(contactRow(GITHUB_ICON, `<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">Github </a>`));
     html = replace(html, "contact", contactParts.join(""));
 
     // --- SKILLS ---
@@ -105,9 +105,14 @@ export const renderConfetti = (resume: any): string => {
             const role = exp.jobTitle || exp.role || "";
             const isCurrent = exp.isCurrent ?? !exp.endYear;
 
+            const startMonth = exp.startMonth ?? getMonth(exp.startDate);
             const startYear = exp.startYear ?? getYear(exp.startDate);
-            const endYear = isCurrent ? "Present" : (exp.endYear ?? getYear(exp.endDate));
-            const duration = [startYear, endYear].filter(Boolean).join("–");
+            const endMonth = exp.endMonth ?? getMonth(exp.endDate);
+            const endYear = exp.endYear ?? getYear(exp.endDate);
+
+            const start = [startMonth, startYear].filter(Boolean).join("/");
+            const end = isCurrent ? "Present" : [endMonth, endYear].filter(Boolean).join("/");
+            const duration = start ? `${start} – ${end}` : end;
 
             const location = exp.location || "";
             const titleLine = [role, company, duration, location].filter(Boolean).join(" | ");

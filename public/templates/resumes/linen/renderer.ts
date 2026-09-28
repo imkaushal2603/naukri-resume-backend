@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 import { SERVER_URL } from "../../../../src/config/environment.config";
 
@@ -38,10 +38,10 @@ export const renderLinen = (resume: any): string => {
     // --- SOCIAL LINKS ---
     const socialParts: string[] = [];
     if (resume.linkedin) {
-        socialParts.push(`<p>${LINKEDIN_ICON}<a href="${escapeHtml(resume.linkedin)}" target="_blank">linkedin</a></p>`);
+        socialParts.push(`<p>${LINKEDIN_ICON}<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">linkedin</a></p>`);
     }
     if (resume.github) {
-        socialParts.push(`<p>${GITHUB_ICON}<a href="${escapeHtml(resume.github)}" target="_blank">Github</a></p>`);
+        socialParts.push(`<p>${GITHUB_ICON}<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">Github</a></p>`);
     }
     html = replace(html, "socialLinks", socialParts.join(""));
 

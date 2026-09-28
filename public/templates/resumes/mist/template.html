@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mist Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            overflow: hidden;
+            padding: 40px 0 0;
+            border: 1px solid #000024;
+            position: relative;
+        }
+
+        .resume-section .resume-top-sec .name h1 {
+            font-size: 46px;
+            font-weight: 800;
+            color: #172B3A;
+            line-height: normal;
+            margin: 0 0 20px;
+        }
+
+        .resume-section .resume-top-sec .name .position {
+            background: #B8C8D5;
+            width: fit-content;
+            padding: 12px 30px;
+            border-radius: 60px;
+            margin: 0 0 40px;
+        }
+
+        .resume-section .resume-top-sec .name .position h6 {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: normal;
+            color: #172B3A;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec {
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+            align-items: end;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec {
+            width: 60%;
+            padding-right: 20px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .right-section {
+            width: 40%;
+            position: relative;
+            padding-right: 40px;
+            z-index: 9;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .right-section .image {
+            text-align: center;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .right-section .image img {
+            width: 170px;
+            height: 333px;
+            border-radius: 160px;
+            object-fit: cover;
+            object-position: top;
+            border: 6px solid #B8C8D5;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .profile {
+            background: #B8C8D5;
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            z-index: 99;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .profile h4 {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: normal;
+            color: #172B3A;
+            margin: 0 0 10px;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .profile p {
+            font-size: 16px;
+            line-height: 24px;
+            color: #000;
+            font-weight: 400;
+            margin: 0 0 20px;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .contacts {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .contacts p {
+            width: 60%;
+            padding-left: 8px;
+            display: flex;
+            gap: 10px;
+            color: #172B3A;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .contacts p:nth-child(odd) {
+            width: 40%;
+        }
+
+        .resume-section .resume-top-sec .name .name-txt {
+            padding: 0 40px;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .contacts p a {
+            text-decoration: none;
+            color: #172B3A;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .left-sec .contacts p svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .resume-section .resume-top-sec {
+            position: relative;
+        }
+
+        .resume-section .resume-top-sec .right-svg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: auto;
+            text-align: end;
+        }
+
+        .resume-section .resume-top-sec .right-svg svg {
+            width: 77%;
+            height: 70%;
+        }
+
+        .resume-section .resume-top-sec .row-bottom {
+            padding: 40px 40px 0;
+            display: flex;
+            flex-wrap: wrap;
+            background: #DFF0F5;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left {
+            width: 60%;
+            padding-right: 10px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right {
+            width: 40%;
+            padding-left: 20px;
+            border-left: 2px solid #B8C8D54F;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince h4 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #172B3A;
+            margin: 0 0 30px;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .year-position {
+            display: flex;
+            align-items: flex-end;
+            margin: 0 0 15px;
+            flex-wrap: wrap;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .year-position .year {
+            border: 1px solid #172B3A;
+            padding: 4px 12px;
+            border-radius: 36px;
+            width: 122px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .year-position .year h6 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #172B3A;
+            line-height: normal;
+            text-align: center;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .year-position .position {
+            padding-left: 15px;
+            width: calc(100% - 122px);
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .year-position .position h5 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #172B3A;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .details h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #172B3A;
+            margin: 0 0 20px;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .details p {
+            width: calc(100% - 25px);
+            padding-left: 10px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .details p svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .details .icon-txt {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            margin: 0 0 15px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .details .icon-txt .icon {
+            width: 25px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .details .icon-txt .icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince .details {
+            padding-bottom: 40px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education h4,
+        .resume-section .resume-top-sec .row-bottom .col-right .skills h4 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #172B3A;
+            margin: 0 0 30px;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .year-position {
+            display: flex;
+            align-items: flex-start;
+            margin: 0 0 15px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .year-position .year {
+            border: 1px solid #172B3A;
+            padding: 4px 12px;
+            border-radius: 36px;
+            width: 108px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .year-position .year h6 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #172B3A;
+            line-height: normal;
+            text-align: center;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .year-position .position {
+            padding-left: 15px;
+            width: calc(100% - 108px);
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .year-position .position h5 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #172B3A;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #172B3A;
+            margin: 0 0 20px;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .icon-txt,
+        .resume-section .resume-top-sec .row-bottom .col-right .skills .icon-txt {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 0 10px;
+            align-items: flex-start;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .icon-txt .icon,
+        .resume-section .resume-top-sec .row-bottom .col-right .skills .icon-txt .icon {
+            width: 20px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .icon-txt p,
+        .resume-section .resume-top-sec .row-bottom .col-right .skills .icon-txt p {
+            width: calc(100% - 20px);
+            padding-left: 10px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details .icon-txt .icon svg,
+        .resume-section .resume-top-sec .row-bottom .col-right .skills .icon-txt .icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-right .education .details {
+            margin: 0 0 40px;
+        }
+
+        .resume-section .resume-top-sec .name .row-sec .bottom-color {
+            background: #DFF0F5;
+            width: 100%;
+            height: 40%;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .resume-section .resume-top-sec .bg-bottom {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+        }
+
+        .resume-section .resume-top-sec .bg-bottom svg {
+            width: 70%;
+            height: auto;
+        }
+
+        .resume-section .resume-top-sec .row-bottom .col-left .experince {
+            position: relative;
+            z-index: 9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-section">
+        <div class="resume-top-sec">
+            <div class="right-svg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="297" height="571" viewBox="0 0 297 571" fill="none">
+                    <path
+                        d="M353.059 509.387C316.947 519.063 279.063 520.096 242.478 512.4C205.893 504.704 171.635 488.497 142.482 465.093C113.329 441.688 90.0995 411.744 74.6771 377.688C59.2547 343.631 52.0729 306.42 53.7139 269.071C55.3548 231.721 65.7723 195.283 84.122 162.71C102.472 130.138 128.237 102.346 159.331 81.5886C190.425 60.8309 225.971 47.6909 263.091 43.2334C300.21 38.776 337.857 43.1264 372.981 55.9323L329.371 175.547C313.038 169.592 295.531 167.569 278.27 169.642C261.01 171.715 244.48 177.825 230.021 187.478C215.562 197.13 203.581 210.053 195.048 225.2C186.515 240.347 181.671 257.291 180.908 274.659C180.145 292.027 183.484 309.33 190.656 325.167C197.828 341.004 208.629 354.928 222.186 365.811C235.743 376.695 251.673 384.231 268.685 387.81C285.698 391.388 303.314 390.908 320.107 386.409L353.059 509.387Z"
+                        fill="#B8C8D5" />
+                    <path
+                        d="M338.748 403.239C313.025 410.131 285.789 408.796 260.863 399.419C235.938 390.042 214.574 373.096 199.772 350.958C184.969 328.82 177.471 302.602 178.329 275.985C179.187 249.368 188.359 223.688 204.556 202.55C220.754 181.412 243.165 165.876 268.643 158.125C294.12 150.373 321.386 150.794 346.612 159.329C371.838 167.865 393.758 184.085 409.295 205.714C424.832 227.343 433.206 253.294 433.241 279.925L305.752 280.094L338.748 403.239Z"
+                        fill="#DFF0F5" />
+                    <circle cx="166.021" cy="9" r="35" fill="#DFF0F5" />
+                    <rect x="4.52148" y="130.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="4.52148" y="146.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="4.52148" y="162.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="22.5215" y="130.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="22.5215" y="146.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="22.5215" y="162.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="40.5215" y="130.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="40.5215" y="146.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="40.5215" y="162.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="58.5215" y="130.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="58.5215" y="146.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="58.5215" y="162.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="76.5215" y="130.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="76.5215" y="146.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="76.5215" y="162.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="94.5215" y="130.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="94.5215" y="146.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="94.5215" y="162.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="112.521" y="130.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="112.521" y="146.5" width="11" height="9" stroke="#16596D" />
+                    <rect x="112.521" y="162.5" width="11" height="9" stroke="#16596D" />
+                </svg>
+            </div>
+            <div class="name">
+                <div class="name-txt">
+                    <h1>{{name}}</h1>
+                    <div class="position">
+                        {{tagline}}
+                    </div>
+                </div>
+                <div class="row-sec">
+                    <div class="left-sec">
+                        <div class="profile">
+                            <h4>About Me</h4>
+                            {{summary}}
+                            <div class="contacts">
+                                {{contact}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-section">
+                        <div class="image">
+                            <img src="{{photoUrl}}" alt="{{name}}">
+                        </div>
+                    </div>
+                    <div class="bottom-color"></div>
+                </div>
+            </div>
+            <div class="row-bottom">
+                <div class="col-left">
+                    <div class="experince">
+                        <h4>Job & Experience</h4>
+                        {{experience}}
+                    </div>
+                </div>
+                <div class="col-right">
+                    <div class="education">
+                        <h4>Education</h4>
+                        {{education}}
+                    </div>
+                    <div class="skills">
+                        <h4>Skills</h4>
+                        {{skills}}
+                    </div>
+                </div>
+            </div>
+            <div class="bg-bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" width="313" height="583" viewBox="0 0 313 583" fill="none">
+                    <foreignObject x="-111.572" y="1.98462" width="422.496" height="578.96">
+                        <div xmlns="http://www.w3.org/1999/xhtml"
+                            style="backdrop-filter:blur(25.75px);clip-path:url(#bgblur_0_1231_533_clip_path);height:100%;width:100%">
+                        </div>
+                    </foreignObject>
+                    <path data-figma-bg-blur-radius="51.5"
+                        d="M-40.1504 61.5936C-4.03849 51.9175 33.8451 50.8854 70.4303 58.581C107.015 66.2767 141.273 82.4835 170.426 105.888C199.58 129.293 222.809 159.237 238.231 193.293C253.654 227.35 260.835 264.561 259.194 301.91C257.553 339.26 247.136 375.698 228.786 408.271C210.436 440.843 184.671 468.635 153.577 489.392C122.483 510.15 86.9367 523.29 49.8176 527.748C12.6985 532.205 -24.9486 527.855 -60.0727 515.049L-16.4625 395.434C-0.129362 401.389 17.377 403.412 34.6378 401.339C51.8986 399.266 68.4282 393.156 82.8871 383.503C97.346 373.851 109.327 360.928 117.86 345.781C126.393 330.634 131.237 313.69 132 296.322C132.763 278.954 129.424 261.651 122.252 245.814C115.081 229.977 104.279 216.053 90.7221 205.17C77.1654 194.286 61.2354 186.75 44.2229 183.171C27.2104 179.593 9.59405 180.073 -7.19837 184.572L-40.1504 61.5936Z"
+                        fill="white" fill-opacity="0.6" />
+                    <path
+                        d="M-25.8403 167.742C-0.116867 160.849 27.1192 162.185 52.0447 171.562C76.9703 180.938 98.3338 197.885 113.136 220.023C127.939 242.161 135.438 268.378 134.579 294.995C133.721 321.612 124.55 347.292 108.352 368.431C92.1539 389.569 69.7432 405.105 44.2654 412.856C18.7877 420.608 -8.47786 420.186 -33.7039 411.651C-58.9299 403.116 -80.8499 386.896 -96.3868 365.267C-111.924 343.638 -120.298 317.687 -120.333 291.056L7.15637 290.887L-25.8403 167.742Z"
+                        fill="white" />
+                    <defs>
+                        <clipPath id="bgblur_0_1231_533_clip_path" transform="translate(111.572 -1.98462)">
+                            <path
+                                d="M-40.1504 61.5936C-4.03849 51.9175 33.8451 50.8854 70.4303 58.581C107.015 66.2767 141.273 82.4835 170.426 105.888C199.58 129.293 222.809 159.237 238.231 193.293C253.654 227.35 260.835 264.561 259.194 301.91C257.553 339.26 247.136 375.698 228.786 408.271C210.436 440.843 184.671 468.635 153.577 489.392C122.483 510.15 86.9367 523.29 49.8176 527.748C12.6985 532.205 -24.9486 527.855 -60.0727 515.049L-16.4625 395.434C-0.129362 401.389 17.377 403.412 34.6378 401.339C51.8986 399.266 68.4282 393.156 82.8871 383.503C97.346 373.851 109.327 360.928 117.86 345.781C126.393 330.634 131.237 313.69 132 296.322C132.763 278.954 129.424 261.651 122.252 245.814C115.081 229.977 104.279 216.053 90.7221 205.17C77.1654 194.286 61.2354 186.75 44.2229 183.171C27.2104 179.593 9.59405 180.073 -7.19837 184.572L-40.1504 61.5936Z" />
+                        </clipPath>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

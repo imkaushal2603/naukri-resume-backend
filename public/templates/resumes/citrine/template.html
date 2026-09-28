@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Citrine Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: 10px auto;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #4467B2;
+        }
+
+        .resume_content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resume_left {
+            width: 35%;
+            background: #F5DB0E;
+        }
+
+        .resume_right {
+            width: 65%;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+            padding-bottom: 45px;
+        }
+
+        .resume_profile {
+            background: #4467B2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 35px;
+            position: relative;
+        }
+
+        .resume_profile img {
+            width: 170px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resume_left h1 {
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 100%;
+            color: #4467B2;
+            padding: 24px;
+            background: #fff;
+        }
+
+        .resume_left_content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+        }
+
+        .contacts h2,
+        .skills h2,
+        .summary h2,
+        .education h2,
+        .experience h2 {
+            font-weight: 700;
+            font-size: 26px;
+            line-height: 100%;
+            color: #4467B2;
+            margin-bottom: 20px;
+        }
+
+        .contacts .contacts_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 12px;
+        }
+
+        .contacts .contacts_details h4 {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 100%;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .contacts .contacts_details a,
+        .contacts .contacts_details p,
+        .skills .skills_details p {
+            display: inline-block;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000000;
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .skills .skills_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .summary h2,
+        .education h2,
+        .experience h2 {
+            border-bottom: 2px dashed #4467B2;
+            padding-bottom: 15px;
+        }
+
+        .summary p {
+            display: inline-block;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000000;
+        }
+
+        .education .education_info,
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+        .education .education_details,
+        .experience .experience_content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .education .education_title,
+        .experience .experience_title {
+            width: calc(65% - 15px);
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .education .education_uni,
+        .experience .experience_name {
+            width: 35%;
+            text-align: end;
+        }
+
+        .education .education_details h4,
+        .experience .experience_details h4 {
+            font-weight: 500;
+            font-size: 17px;
+            line-height: 140%;
+            color: #000000;
+        }
+
+        .experience .experience_details ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .experience .experience_details ul li {
+            padding-left: 20px;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000000;
+            position: relative;
+        }
+
+        .experience .experience_details ul li::before {
+            background: #000000;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+        }
+
+        .experience .experience_details {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+        }
+
+        .resume_bottom {
+            background: #4467B2;
+            padding: 30px;
+        }
+
+        .resume_profile .resume_image_bg {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            line-height: 0;
+        }
+
+        .resume_profile .resume_image_bg svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <div class="resume_content">
+            <div class="resume_left">
+                <div class="resume_profile">
+                    <img src="{{photoUrl}}" alt="{{name}}" />
+                    <div class="resume_image_bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="500" height="329" viewBox="0 0 500 329"
+                            fill="none">
+                            <g clip-path="url(#clip0_1242_2)">
+                                <circle cx="13" cy="317" r="70" fill="#F6DD0F" />
+                                <path
+                                    d="M-155.527 167.781C-128.408 120.926 -85.8816 84.9238 -35.1939 65.9084C15.4938 46.8929 71.2067 46.041 122.452 63.4978C173.697 80.9546 217.305 115.64 245.843 161.644C274.382 207.648 286.087 262.124 278.963 315.791C271.839 369.457 246.327 418.993 206.775 455.958C167.223 492.924 116.077 515.031 62.0515 518.514C8.02656 521.997 -45.5347 506.639 -89.506 475.058C-133.477 443.478 -165.138 397.627 -179.094 345.32L-115.871 328.452C-105.818 366.133 -83.0108 399.162 -51.3352 421.912C-19.6597 444.661 18.9241 455.724 57.842 453.216C96.7599 450.707 133.604 434.781 162.096 408.152C190.588 381.524 208.966 345.84 214.098 307.18C219.23 268.521 210.798 229.278 190.24 196.138C169.681 162.998 138.268 138.012 101.353 125.437C64.4371 112.861 24.3033 113.475 -12.2105 127.173C-48.7243 140.871 -79.3588 166.806 -98.8944 200.559L-155.527 167.781Z"
+                                    fill="#F5DB0E" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1242_2">
+                                    <rect width="500" height="329" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+                <h1>{{name}}</h1>
+                <div class="resume_left_content">
+                    <div class="contacts">
+                        <h2>Contacts</h2>
+                        <div class="contacts_info">
+                            {{contact}}
+                        </div>
+                    </div>
+                    <div class="skills">
+                        <h2>Skills</h2>
+                        <div class="skills_info">
+                            {{skills}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="resume_right">
+                <div class="summary">
+                    <h2>About Me</h2>
+                    {{summary}}
+                </div>
+                <div class="education">
+                    <h2>Education</h2>
+                    <div class="education_info">
+                        {{education}}
+                    </div>
+                </div>
+                <div class="experience">
+                    <h2>Experience</h2>
+                    <div class="experience_info">
+                        {{experience}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="resume_bottom"></div>
+    </div>
+</body>
+
+</html>

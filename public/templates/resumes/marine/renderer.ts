@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 import { SERVER_URL } from "../../../../src/config/environment.config";
 
@@ -35,10 +35,10 @@ export const renderMarine = (resume: any): string => {
     // --- SOCIAL LINKS (linkedin, github icons in top-right) ---
     const socialParts: string[] = [];
     if (resume.linkedin) {
-        socialParts.push(`<div class="header_details"><a href="${escapeHtml(resume.linkedin)}" target="_blank">${LINKEDIN_ICON}</a></div>`);
+        socialParts.push(`<div class="header_details"><a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">${LINKEDIN_ICON}</a></div>`);
     }
     if (resume.github) {
-        socialParts.push(`<div class="header_details"><a href="${escapeHtml(resume.github)}" target="_blank">${GITHUB_ICON}</a></div>`);
+        socialParts.push(`<div class="header_details"><a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">${GITHUB_ICON}</a></div>`);
     }
     html = replace(html, "socialLinks", socialParts.join(""));
 

@@ -14,6 +14,12 @@ import { renderLinen } from "../../../public/templates/resumes/linen/renderer";
 import { renderWillow } from "../../../public/templates/resumes/willow/renderer";
 import { renderConfetti } from "../../../public/templates/resumes/confetti/renderer";
 import { renderFlare } from "../../../public/templates/resumes/flare/renderer";
+import { renderFrost } from "../../../public/templates/resumes/frost/renderer";
+import { renderGranite } from "../../../public/templates/resumes/granite/renderer";
+import { renderDenim } from "../../../public/templates/resumes/denim/renderer";
+import { renderSage } from "../../../public/templates/resumes/sage/renderer";
+import { renderMist } from "../../../public/templates/resumes/mist/renderer";
+import { renderCitrine } from "../../../public/templates/resumes/citrine/renderer";
 
 const templateMap: Record<string, (userData: any) => string> = {
     classic: renderClassic,
@@ -32,6 +38,12 @@ const templateMap: Record<string, (userData: any) => string> = {
     willow: renderWillow,
     confetti: renderConfetti,
     flare: renderFlare,
+    frost: renderFrost,
+    granite: renderGranite,
+    denim: renderDenim,
+    sage: renderSage,
+    mist: renderMist,
+    citrine: renderCitrine,
 };
 
 export const renderResumeTemplate = (templateKey: string, userData: any): string => {

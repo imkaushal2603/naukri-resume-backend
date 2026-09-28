@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 import { SERVER_URL } from "../../../../src/config/environment.config";
 
@@ -52,10 +52,10 @@ export const renderUmber = (resume: any): string => {
         headerInfoParts.push(headerDetail(EMAIL_ICON, `<a href="mailto:${escapeHtml(resume.email)}">${escapeHtml(resume.email)}</a>`));
     }
     if (resume.linkedin) {
-        headerInfoParts.push(headerDetail(LINKEDIN_ICON, `<a href="${escapeHtml(resume.linkedin)}" target="_blank">LinkedIn</a>`));
+        headerInfoParts.push(headerDetail(LINKEDIN_ICON, `<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">LinkedIn</a>`));
     }
     if (resume.github) {
-        headerInfoParts.push(headerDetail(GITHUB_ICON, `<a href="${escapeHtml(resume.github)}" target="_blank">Github</a>`));
+        headerInfoParts.push(headerDetail(GITHUB_ICON, `<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">Github</a>`));
     }
     html = replace(html, "headerInfo", headerInfoParts.join(""));
 

@@ -27,6 +27,12 @@ const templates = [
     { name: "Willow", templateKey: "willow", preview: "/templates/resumes/willow/willow.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Confetti", templateKey: "confetti", preview: "/templates/resumes/confetti/confetti.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Flare", templateKey: "flare", preview: "/templates/resumes/flare/flare.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Frost", templateKey: "frost", preview: "/templates/resumes/frost/frost.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Granite", templateKey: "granite", preview: "/templates/resumes/granite/granite.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Denim", templateKey: "denim", preview: "/templates/resumes/denim/denim.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Sage", templateKey: "sage", preview: "/templates/resumes/sage/sage.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Mist", templateKey: "mist", preview: "/templates/resumes/mist/mist.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Citrine", templateKey: "citrine", preview: "/templates/resumes/citrine/citrine.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
 ];
 
 const membershipPlans = [

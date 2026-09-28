@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 import { SERVER_URL } from "../../../../src/config/environment.config";
 
@@ -45,8 +45,8 @@ export const renderAmber = (resume: any): string => {
     if (resume.email) contactParts.push(contactRow(EMAIL_ICON, `<a href="mailto:${escapeHtml(resume.email)}">${escapeHtml(resume.email)}</a>`));
     const address = [resume.city, resume.state, resume.country].filter(Boolean).join(", ");
     if (address) contactParts.push(contactRow(LOCATION_ICON, `<p>${escapeHtml(address)}</p>`));
-    if (resume.linkedin) contactParts.push(contactRow(LINKEDIN_ICON, `<a href="${escapeHtml(resume.linkedin)}" target="_blank">LinkedIn</a>`));
-    if (resume.github) contactParts.push(contactRow(GITHUB_ICON, `<a href="${escapeHtml(resume.github)}" target="_blank">GitHub</a>`));
+    if (resume.linkedin) contactParts.push(contactRow(LINKEDIN_ICON, `<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">LinkedIn</a>`));
+    if (resume.github) contactParts.push(contactRow(GITHUB_ICON, `<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">GitHub</a>`));
     html = replace(html, "contact", contactParts.join(""));
 
     // --- SUMMARY ---
@@ -109,9 +109,14 @@ export const renderAmber = (resume: any): string => {
             const role = exp.jobTitle || exp.role || "";
             const isCurrent = exp.isCurrent ?? !exp.endYear;
 
+            const startMonth = exp.startMonth ?? getMonth(exp.startDate);
             const startYear = exp.startYear ?? getYear(exp.startDate);
-            const endYear = isCurrent ? "Present" : (exp.endYear ?? getYear(exp.endDate));
-            const duration = [startYear, endYear].filter(Boolean).join("–");
+            const endMonth = exp.endMonth ?? getMonth(exp.endDate);
+            const endYear = exp.endYear ?? getYear(exp.endDate);
+
+            const start = [startMonth, startYear].filter(Boolean).join("/");
+            const end = isCurrent ? "Present" : [endMonth, endYear].filter(Boolean).join("/");
+            const duration = start ? `${start} – ${end}` : end;
 
             const titleLine = [role, company, duration].filter(Boolean).join(" | ");
 

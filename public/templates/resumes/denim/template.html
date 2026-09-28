@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Denim Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            background: #fff;
+            overflow: hidden;
+            padding: 40px;
+            border: 1px solid #000024;
+            position: relative;
+        }
+
+        .resume-section .resume-top-sec .resume .name {
+            margin: 0 0 40px;
+        }
+
+        .resume-section .resume-top-sec .resume .name h1 {
+            font-size: 52px;
+            line-height: normal;
+            margin: 0px 0 15px;
+        }
+
+        .resume-section .resume-top-sec .resume .name h6 {
+            font-size: 18px;
+            line-height: normal;
+            margin: 0 0 20px;
+        }
+
+        .resume-section .resume-top-sec .resume .summary h4,
+        .resume-section .resume-top-sec .resume .experince .div-line h4,
+        .resume-section .resume-top-sec .resume .experince .skills h4,
+        .resume-section .resume-top-sec .resume .experince .education h4 {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: normal;
+            margin: 0 0 20px;
+            position: relative;
+            background: #fff;
+            width: fit-content;
+            padding-right: 15px;
+        }
+
+        .resume-section .resume-top-sec .resume .summary .div-line,
+        .resume-section .resume-top-sec .resume .experince .div-line,
+        .resume-section .resume-top-sec .resume .experince .skills .div-line,
+        .resume-section .resume-top-sec .resume .experince .education .div-line {
+            position: relative;
+        }
+
+        .resume-section .resume-top-sec .resume .summary .div-line:before,
+        .resume-section .resume-top-sec .resume .experince .div-line::before,
+        .resume-section .resume-top-sec .resume .experince .skills .div-line::before,
+        .resume-section .resume-top-sec .resume .experince .education .div-line::before {
+            position: absolute;
+            content: '';
+            border: 1px solid;
+            width: 100%;
+            top: 50%;
+            right: 0;
+        }
+
+        .resume-section .resume-top-sec .resume .summary p,
+        .resume-section .resume-top-sec .resume .experince p {
+            font-size: 15px;
+            line-height: 23px;
+            margin: 0 0 20px;
+            color: #000;
+        }
+
+        .resume-section .resume-top-sec .resume .experince h5 {
+            font-size: 18px;
+            line-height: normal;
+            font-weight: 600;
+            margin: 0 0 15px;
+        }
+
+        .resume-section .resume-top-sec .resume .experince .details h6 {
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0 0 12px;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .resume .experince .details p,
+        .resume-section .resume-top-sec .resume .experince .details ul li,
+        .resume-section .resume-top-sec .resume .experince .skills ul li {
+            font-size: 15px;
+            line-height: 23px;
+            margin: 0 0 12px;
+            color: #000;
+        }
+
+        .resume-section .resume-top-sec .resume .experince .details ul,
+        .resume-section .resume-top-sec .resume .experince .skills ul {
+            padding: 0 0 0 20px;
+        }
+
+        .resume-section .resume-top-sec .resume .experince .skills {
+            padding-top: 40px;
+        }
+
+        .resume-section .resume-top-sec .resume .experince .education {
+            padding-top: 40px;
+        }
+
+        .resume-section .resume-top-sec .resume .experince .education p {
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0 0 12px;
+            line-height: normal;
+        }
+
+        .resume-section .resume-top-sec .contacts {
+            display: inline-flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding-top: 70px;
+            row-gap: 15px;
+        }
+
+        .resume-section .resume-top-sec .contacts .phone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resume-section .resume-top-sec .contacts .phone svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .resume-section .resume-top-sec .contacts .phone p a,
+        .resume-section .resume-top-sec .contacts .phone p {
+            text-decoration: none;
+            font-size: 16px;
+            line-height: normal;
+            color: #000;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-section">
+        <div class="resume-top-sec">
+            <div class="resume">
+                <div class="name">
+                    <h1>{{name}}</h1>
+                    {{tagline}}
+                </div>
+                <div class="summary">
+                    <div class="div-line">
+                        <h4>SUMMARY</h4>
+                    </div>
+                    {{summary}}
+                </div>
+                <div class="experince">
+                    <div class="div-line">
+                        <h4>EXPERIENCE</h4>
+                    </div>
+                    <h5>Career Highlights</h5>
+                    {{experience}}
+                    <div class="skills">
+                        <div class="div-line">
+                            <h4>SKILLS</h4>
+                        </div>
+                        <ul>
+                            {{skills}}
+                        </ul>
+                    </div>
+                    <div class="education">
+                        <div class="div-line">
+                            <h4>Educations</h4>
+                        </div>
+                        {{education}}
+                    </div>
+                </div>
+            </div>
+            <div class="contacts">
+                {{contact}}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

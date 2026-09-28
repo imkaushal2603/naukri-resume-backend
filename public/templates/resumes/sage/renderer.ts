@@ -2,10 +2,6 @@ import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templat
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 import { SERVER_URL } from "../../../../src/config/environment.config";
 
-function contactRow(label: string, content: string): string {
-    return `<div class="details"><h5>${label}</h5><p>${content}</p></div>`;
-}
-
 const getYear = (dateVal: any): string => {
     if (!dateVal) return "";
     const date = new Date(dateVal);
@@ -19,8 +15,8 @@ const getMonth = (dateVal: any): string => {
     return String(date.getUTCMonth() + 1).padStart(2, "0");
 };
 
-export const renderHarbor = (resume: any): string => {
-    let html = loadTemplate("harbor", "resumes");
+export const renderSage = (resume: any): string => {
+    let html = loadTemplate("sage", "resumes");
 
     // --- NAME + PHOTO ---
     const fullName = [resume.firstName, resume.lastName].filter(Boolean).join(" ");
@@ -31,26 +27,22 @@ export const renderHarbor = (resume: any): string => {
     // --- TAGLINE ---
     const primaryExperience = (resume.candidate_experience || [])[0];
     const taglineText = primaryExperience?.jobTitle || primaryExperience?.role || "";
-    html = replace(html, "tagline", taglineText ? `<h4>${escapeHtml(taglineText)}</h4>` : "");
+    html = replace(html, "tagline", taglineText ? `<h6>${escapeHtml(taglineText)}</h6>` : "");
+
+    // --- SUMMARY ---
+    const summary = resume.resume_builder?.summary
+        ? `<p>${nl2br(escapeHtml(resume.resume_builder.summary))}</p>`
+        : "";
+    html = replace(html, "summary", summary);
 
     // --- CONTACT ---
     const contactParts: string[] = [];
-    if (resume.phone) {
-        contactParts.push(contactRow("Phone", `<a href="tel:${escapeHtml(resume.phone)}">${escapeHtml(resume.phone)}</a>`));
-    }
-    if (resume.email) {
-        contactParts.push(contactRow("Email", `<a href="mailto:${escapeHtml(resume.email)}">${escapeHtml(resume.email)}</a>`));
-    }
+    if (resume.phone) contactParts.push(`<p><a href="tel:${escapeHtml(resume.phone)}">P: ${escapeHtml(resume.phone)}</a></p>`);
+    if (resume.email) contactParts.push(`<p><a href="mailto:${escapeHtml(resume.email)}">E: ${escapeHtml(resume.email)}</a></p>`);
     const address = [resume.city, resume.state, resume.country].filter(Boolean).join(", ");
-    if (address) {
-        contactParts.push(contactRow("Location", escapeHtml(address)));
-    }
-    if (resume.linkedin) {
-        contactParts.push(contactRow('Linkedin', `<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">${escapeHtml(normalizeUrl(resume.linkedin))}</a>`));
-    }
-    if (resume.github) {
-        contactParts.push(contactRow('Github', `<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">${escapeHtml(normalizeUrl(resume.github))}</a>`));
-    }
+    if (address) contactParts.push(`<p>${escapeHtml(address)}</p>`);
+    if (resume.linkedin) contactParts.push(`<p><a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">LinkedIn</a></p>`);
+    if (resume.github) contactParts.push(`<p><a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">GitHub</a></p>`);
     html = replace(html, "contact", contactParts.join(""));
 
     // --- EDUCATION ---
@@ -59,6 +51,7 @@ export const renderHarbor = (resume: any): string => {
         .map((edu: any) => {
             const institute = edu.instituteName || edu.school || "";
             const degree = edu.courseDegree || edu.degree || "";
+            const level = edu.educationLevel || "";
             const isCurrent = edu.currentlyStudying ?? edu.isCurrent ?? false;
 
             const startMonth = edu.startMonth || getMonth(edu.startDate);
@@ -78,17 +71,16 @@ export const renderHarbor = (resume: any): string => {
                 duration = start || end;
             }
 
+            const location = edu.address || edu.city || "";
             const gradeVal = edu.grade || edu.gpa;
-            const metaParts = [duration];
-            if (gradeVal) metaParts.push(`CGPA: ${gradeVal}`);
-            const metaLine = metaParts.filter(Boolean).join(" | ");
 
-            return `
-<div class="details">
-    <h5>${escapeHtml(degree)}</h5>
-    <h5>${escapeHtml(institute)}</h5>
-    ${metaLine ? `<p>${escapeHtml(metaLine)}</p>` : ""}
-</div>`;
+            const restParts = [institute, location, duration];
+            if (gradeVal) restParts.push(`CGPA: ${gradeVal}`);
+            const restLine = restParts.filter(Boolean).join(" | ");
+
+            const degreeLabel = level ? `${degree} (${level})` : degree;
+
+            return `<p><strong>${escapeHtml(degreeLabel)}${restLine ? " |" : ""}</strong> ${escapeHtml(restLine)}</p>`;
         })
         .join("");
     html = replace(html, "education", educationHtml);
@@ -100,18 +92,13 @@ export const renderHarbor = (resume: any): string => {
         .join("");
     html = replace(html, "skills", skillsHtml);
 
-    // --- SUMMARY ---
-    const summary = resume.resume_builder?.summary
-        ? `<p>${nl2br(escapeHtml(resume.resume_builder.summary))}</p>`
-        : "";
-    html = replace(html, "summary", summary);
-
     // --- EXPERIENCE ---
     const experiences = resume.candidate_experience || [];
     const experienceHtml = experiences
         .map((exp: any) => {
             const company = exp.companyName || exp.company || "";
             const role = exp.jobTitle || exp.role || "";
+            const location = exp.location || "";
             const isCurrent = exp.isCurrent ?? !exp.endYear;
 
             const startMonth = exp.startMonth ?? getMonth(exp.startDate);
@@ -123,18 +110,15 @@ export const renderHarbor = (resume: any): string => {
             const end = isCurrent ? "Present" : [endMonth, endYear].filter(Boolean).join("/");
             const duration = start ? `${start} – ${end}` : end;
 
-            const location = exp.location || "";
-            const metaLine = [duration, location].filter(Boolean).join(" | ");
+            const titleLine = [company, role, location, duration].filter(Boolean).join(" | ");
 
-            const titleLine = [role, company].filter(Boolean).join(" — ");
             const description = exp.description
                 ? `<p>${nl2br(escapeHtml(exp.description))}</p>`
                 : "";
 
             return `
-<div class="details-sec">
-    <h5>${escapeHtml(titleLine)}</h5>
-    ${duration ? `<h6>${escapeHtml(metaLine)}</h6>` : ""}
+<div class="details">
+    <h6>${escapeHtml(titleLine)}</h6>
     ${description}
 </div>`;
         })

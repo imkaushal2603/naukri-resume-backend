@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 import { SERVER_URL } from "../../../../src/config/environment.config";
 
@@ -45,8 +45,8 @@ export const renderClover = (resume: any): string => {
     if (resume.email) contactParts.push(contactRow(`<a href="mailto:${escapeHtml(resume.email)}">${escapeHtml(resume.email)}</a>`));
     const address = [resume.city, resume.state, resume.country].filter(Boolean).join(", ");
     if (address) contactParts.push(contactRow(`<p>${escapeHtml(address)}</p>`));
-    if (resume.linkedin) contactParts.push(contactRow(`<a href="${escapeHtml(resume.linkedin)}" target="_blank">LinkedIn</a>`));
-    if (resume.github) contactParts.push(contactRow(`<a href="${escapeHtml(resume.github)}" target="_blank">GitHub</a>`));
+    if (resume.linkedin) contactParts.push(contactRow(`<a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">LinkedIn</a>`));
+    if (resume.github) contactParts.push(contactRow(`<a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">GitHub</a>`));
     html = replace(html, "contact", contactParts.join(""));
 
     // --- EXPERIENCE ---

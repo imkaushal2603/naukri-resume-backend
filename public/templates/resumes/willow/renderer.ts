@@ -1,4 +1,4 @@
-import { escapeHtml, nl2br } from "../../../../src/helpers/templates/html.helper";
+import { escapeHtml, nl2br, normalizeUrl } from "../../../../src/helpers/templates/html.helper";
 import { loadTemplate, replace } from "../../../../src/helpers/templates/template.helper";
 
 const getYear = (dateVal: any): string => {
@@ -45,10 +45,10 @@ export const renderWillow = (resume: any): string => {
         contactParts.push(`<p><a href="tel:${escapeHtml(resume.phone)}">${escapeHtml(resume.phone)}</a></p>`);
     }
     if (resume.linkedin) {
-        contactParts.push(`<p><a href="${escapeHtml(resume.linkedin)}" target="_blank">${escapeHtml(resume.linkedin)}</a></p>`);
+        contactParts.push(`<p><a href="${escapeHtml(normalizeUrl(resume.linkedin))}" target="_blank">LinkedIn</a></p>`);
     }
     if (resume.github) {
-        contactParts.push(`<p><a href="${escapeHtml(resume.github)}" target="_blank">${escapeHtml(resume.github)}</a></p>`);
+        contactParts.push(`<p><a href="${escapeHtml(normalizeUrl(resume.github))}" target="_blank">Github</a></p>`);
     }
     html = replace(html, "contact", contactParts.join(""));
 
@@ -105,9 +105,14 @@ export const renderWillow = (resume: any): string => {
             const role = exp.jobTitle || exp.role || "";
             const isCurrent = exp.isCurrent ?? !exp.endYear;
 
+            const startMonth = exp.startMonth ?? getMonth(exp.startDate);
             const startYear = exp.startYear ?? getYear(exp.startDate);
-            const endYear = isCurrent ? "Present" : (exp.endYear ?? getYear(exp.endDate));
-            const duration = [startYear, endYear].filter(Boolean).join("–");
+            const endMonth = exp.endMonth ?? getMonth(exp.endDate);
+            const endYear = exp.endYear ?? getYear(exp.endDate);
+
+            const start = [startMonth, startYear].filter(Boolean).join("/");
+            const end = isCurrent ? "Present" : [endMonth, endYear].filter(Boolean).join("/");
+            const duration = start ? `${start} – ${end}` : end;
 
             const location = exp.location || "";
             const titleLine = [role, company, location, duration].filter(Boolean).join(" | ");
