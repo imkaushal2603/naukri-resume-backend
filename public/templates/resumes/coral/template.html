@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Coral Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: 10px auto;
+            background: #F6FFEC;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #0C4036;
+            padding: 30px;
+            position: relative;
+        }
+
+        .header .header_top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header_top .header_left,
+        .header_top .header_right {
+            width: calc(50% - 10px);
+        }
+
+        .header_top .header_left h1 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 58px;
+            line-height: 100%;
+            letter-spacing: 5%;
+            color: #0C4036;
+        }
+
+        .header_top .header_right {
+            display: flex;
+            justify-content: end;
+        }
+
+        .header_top .header_right h4 {
+            background: #D2FF98;
+            width: fit-content;
+            font-weight: 500;
+            font-style: Italic;
+            font-size: 26px;
+            line-height: 100%;
+            color: #0C4036;
+            border-radius: 30px;
+            padding: 7px 40px;
+        }
+
+        .header p {
+            font-weight: 400;
+            font-style: Italic;
+            font-size: 17px;
+            line-height: 140%;
+            letter-spacing: 5%;
+            color: #0C4036;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .resume_content {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            gap: 40px;
+        }
+
+        .resume_content .resume_left {
+            width: calc(55% - 20px);
+        }
+
+        .resume_content .resume_right {
+            width: calc(45% - 20px);
+        }
+
+        .resume_content .resume_left,
+        .resume_content .resume_right {
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+        }
+
+        .experience h2,
+        .contact h2,
+        .education h2,
+        .skills h2 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 32px;
+            line-height: 100%;
+            letter-spacing: 5%;
+            color: #0C4036;
+            margin-bottom: 30px;
+        }
+
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+        }
+
+        .experience .experience_content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .experience .experience_name,
+        .experience .experience_title {
+            width: calc(50% - 7.5px);
+        }
+
+        .skills .skills_info,
+        .contact .contact_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 12px;
+        }
+
+        .skills .skills_details p {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 17px;
+            line-height: 100%;
+            letter-spacing: 5%;
+            color: #0C4036;
+        }
+
+        .contact .contact_details a,
+        .contact .contact_details p {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 18px;
+            line-height: 100%;
+            letter-spacing: 5%;
+            color: #0C4036;
+            text-decoration: none;
+        }
+
+        .experience .experience_name h4 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 17px;
+            line-height: 140%;
+            letter-spacing: 5%;
+            color: #0C4036;
+        }
+
+        .experience .experience_name h4 span {
+            font-weight: 400;
+        }
+
+        .experience .experience_title h5 {
+            background: #D2FF98;
+            font-weight: 500;
+            font-style: Italic;
+            font-size: 16px;
+            line-height: 100%;
+            color: #0C4036;
+            border-radius: 30px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .experience .experience_details ul {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+            list-style: none;
+        }
+
+        .experience .experience_details ul li {
+            padding-left: 20px;
+            font-weight: 400;
+            font-style: Italic;
+            font-size: 16px;
+            line-height: 140%;
+            letter-spacing: 5%;
+            color: #0C4036;
+            display: inline-block;
+            position: relative;
+        }
+
+        .experience .experience_details ul li::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            left: 0;
+            top: 8px;
+            position: absolute;
+            background: #0C4036;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <div class="header">
+            <div class="header_top">
+                <div class="header_left">
+                    <h1>About Me</h1>
+                </div>
+                <div class="header_right">
+                    <h4>UI UX Desinger</h4>
+                </div>
+            </div>
+            <p>Creative and user-focused UI/UX Designer with experience designing intuitive, modern, and visually
+                engaging websites and digital products. Skilled in user research, wireframing, prototyping, responsive
+                design, design systems, and high-fidelity interfaces using Figma and Adobe Creative tools. Strong
+                understanding of user-centered design principles with the ability to transform ideas and business
+                requirements into simple, effective, and engaging digital experiences.</p>
+        </div>
+        <div class="resume_content">
+            <div class="resume_left">
+                <div class="experience">
+                    <h2>Work Experience</h2>
+                    <div class="experience_info">
+                        <div class="experience_details">
+                            <div class="experience_content">
+                                <div class="experience_name">
+                                    <h4>PixelWorks Digital | <span>2023 – Present | location</span></h4>
+                                </div>
+                                <div class="experience_title">
+                                    <h5>Senior UI/UX Designer</h5>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>Developed and deployed 10+ web applications, improving user engagement by 30% within
+                                    six months.</li>
+                                <li>Collaborated with a team of 5 developers to implement Agile methodologies,
+                                    increasing project delivery speed by 25%.</li>
+                                <li>Automated testing processes, achieving a 50% reduction in manual testing time and
+                                    improving code quality.</li>
+                                <li>Integrated third-party APIs, expanding application functionality and increasing user
+                                    acquisition by 20%.</li>
+                                <li>Mentored junior developers, enhancing team skills and reducing onboarding time by
+                                    15%.</li>
+                                <li>Optimized existing codebase, reducing load times by 40% and enhancing overall
+                                    application performance.</li>
+                            </ul>
+                        </div>
+                        <div class="experience_details">
+                            <div class="experience_content">
+                                <div class="experience_name">
+                                    <h4>PixelWorks Digital | <span>2023 – Present | location</span></h4>
+                                </div>
+                                <div class="experience_title">
+                                    <h5>Senior UI/UX Designer</h5>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>Developed and deployed 10+ web applications, improving user engagement by 30% within
+                                    six months.</li>
+                                <li>Collaborated with a team of 5 developers to implement Agile methodologies,
+                                    increasing project delivery speed by 25%.</li>
+                                <li>Automated testing processes, achieving a 50% reduction in manual testing time and
+                                    improving code quality.</li>
+                                <li>Integrated third-party APIs, expanding application functionality and increasing user
+                                    acquisition by 20%.</li>
+                                <li>Mentored junior developers, enhancing team skills and reducing onboarding time by
+                                    15%.</li>
+                                <li>Optimized existing codebase, reducing load times by 40% and enhancing overall
+                                    application performance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact">
+                    <h2>Contact Us</h2>
+                    <div class="contact_info">
+                        <div class="contact_details">
+                            <a href="tel:+96541604010">+96541604010</a>
+                        </div>
+                        <div class="contact_details">
+                            <p>Plat 45 Phase 7 Mohali Punjab</p>
+                        </div>
+                        <div class="contact_details">
+                            <a href="mailto:+anikasharma45@gmail.com">anikasharma45@gmail.com</a>
+                        </div>
+                        <div class="contact_details">
+                            <a href="linkedin" target="_blank">linkedin</a>
+                        </div>
+                        <div class="contact_details">
+                            <a href="Github" target="_blank">Github</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="resume_right">
+                <div class="education">
+                    <h2>Education</h2>
+                    <div class="education_info">
+                        <div class="education_details">
+                            <h4>Bachelor of Design (B.Des.)</h4>
+                            <h4>Delhi University | 2020 – 2023 | cgpa</h4>
+                        </div>
+                        <div class="education_details">
+                            <h4>Bachelor of Design (B.Des.)</h4>
+                            <h4>Delhi University | 2020 – 2023 | cgpa</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills">
+                    <h2>Skills</h2>
+                    <div class="skills_info">
+                        <div class="skills_details">
+                            <p>UI/UX Design</p>
+                        </div>
+                        <div class="skills_details">
+                            <p>User Research</p>
+                        </div>
+                        <div class="skills_details">
+                            <p>Responsive Web Design</p>
+                        </div>
+                        <div class="skills_details">
+                            <p>Prototyping & User Testing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="image">
+                    <div class="resume_img">
+                        <img />
+                    </div>
+                    <h2>Anika Sharma</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

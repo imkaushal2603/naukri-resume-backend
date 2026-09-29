@@ -20,6 +20,10 @@ import { renderDenim } from "../../../public/templates/resumes/denim/renderer";
 import { renderSage } from "../../../public/templates/resumes/sage/renderer";
 import { renderMist } from "../../../public/templates/resumes/mist/renderer";
 import { renderCitrine } from "../../../public/templates/resumes/citrine/renderer";
+import { renderViolet } from "../../../public/templates/resumes/violet/renderer";
+import { renderCove } from "../../../public/templates/resumes/cove/renderer";
+import { renderMagenta } from "../../../public/templates/resumes/magenta/renderer";
+import { renderIndigo } from "../../../public/templates/resumes/indigo/renderer";
 
 const templateMap: Record<string, (userData: any) => string> = {
     classic: renderClassic,
@@ -44,6 +48,10 @@ const templateMap: Record<string, (userData: any) => string> = {
     sage: renderSage,
     mist: renderMist,
     citrine: renderCitrine,
+    violet: renderViolet,
+    cove: renderCove,
+    magenta: renderMagenta,
+    indigo: renderIndigo,
 };
 
 export const renderResumeTemplate = (templateKey: string, userData: any): string => {

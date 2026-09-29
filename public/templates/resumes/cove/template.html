@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Cove Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: 10px auto;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #1800AC;
+            padding: 0 0 40px 30px;
+        }
+
+        .resume_content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resume_left {
+            width: 55%;
+            border-right: 4px solid #1800AC;
+            padding-right: 25px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+            margin-top: 50px;
+        }
+
+        .resume_right {
+            width: 45%;
+            padding-left: 25px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+        }
+
+        .header h1 {
+            font-weight: 700;
+            font-size: 45px;
+            line-height: 100%;
+            letter-spacing: 5%;
+            color: #1800AC;
+            margin-bottom: 20px;
+            word-break: break-word;
+        }
+
+        .header h4 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 22px;
+            line-height: 100%;
+            letter-spacing: 5%;
+            color: #000000B2;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .summary h2,
+        .experience h2,
+        .contact h2,
+        .skills h2,
+        .education h2 {
+            font-weight: 500;
+            font-style: Italic;
+            font-size: 22px;
+            line-height: 100%;
+            letter-spacing: 2%;
+            color: #000000;
+            border-top: 1px solid #000000;
+            padding-top: 20px;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 25px;
+        }
+
+        .summary h2::before,
+        .experience h2::before,
+        .contact h2::before,
+        .skills h2::before,
+        .education h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            height: 22px;
+            background: #1800AC;
+            width: 10px;
+        }
+
+
+        .summary p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000000;
+            display: inline-block;
+        }
+
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+        }
+
+        .experience .experience_details h4 {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 28px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .experience .experience_details p {
+            font-weight: 500;
+            font-style: Italic;
+            font-size: 18px;
+            line-height: 140%;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .experience .experience_details ul,
+        .skills .skills_info,
+        .education .education_details {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .experience .experience_details ul li {
+            padding-left: 20px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: #000000;
+            display: inline-block;
+            position: relative;
+        }
+
+        .experience .experience_details ul li::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            left: 0;
+            top: 8px;
+            position: absolute;
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        .contact .contact_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 12px;
+        }
+
+        .contact .contact_details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .contact .contact_icon {
+            width: 44px;
+            line-height: 0;
+        }
+
+        .contact .contact_content {
+            width: calc(100% - 59px);
+            display: flex;
+            flex-direction: column;
+            row-gap: 6px;
+        }
+
+        .contact .contact_content p,
+        .contact .contact_content a {
+            font-weight: 600;
+            font-style: Italic;
+            line-height: 100%;
+            font-size: 16px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .skills .skills_details p {
+            font-weight: 500;
+            font-style: Italic;
+            font-size: 18px;
+            line-height: normal;
+            color: #000000;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skills .skills_details p::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        .education .education_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+        .education p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: normal;
+            color: #000000;
+            display: inline-block;
+            width: fit-content;
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            padding-right: 20px;
+        }
+
+        .education .education_date {
+            position: relative;
+        }
+
+        .education .education_date::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #000000;
+        }
+
+        .education .education_details h4 {
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 140%;
+            color: #000000;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .education .education_details h4::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        .resume_img {
+            max-width: 230px;
+            margin: 0 0 0 auto;
+            padding-top: 50px;
+            position: relative;
+            padding-right: 70px;
+        }
+
+        .resume_right .resume_img img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 200px;
+            position: relative;
+            z-index: 1;
+            object-position: top;
+        }
+
+        .resume_img::after {
+            content: "";
+            background: #1800AC;
+            width: 145px;
+            height: 280px;
+            position: absolute;
+            right: -1px;
+            top: 0;
+        }
+
+        .resume_img::before {
+            content: "";
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            background: #1800AC;
+            position: absolute;
+            left: -30px;
+            top: 70px;
+            z-index: 2;
+        }
+
+        .resume_img .resume_img_bg {
+            position: absolute;
+            right: 10px;
+            bottom: 0;
+        }
+
+        .education,
+        .skills {
+            padding-right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <div class="resume_content">
+            <div class="resume_left">
+                <div class="header">
+                    <h1>{{name}}</h1>
+                    {{tagline}}
+                </div>
+                <div class="summary">
+                    <h2>ABOUT ME</h2>
+                    {{summary}}
+                </div>
+                <div class="experience">
+                    <h2>PROFESSIONAL EXPERIENCE</h2>
+                    <div class="experience_info">
+                        {{experience}}
+                    </div>
+                </div>
+                <div class="contact">
+                    <h2>Contact</h2>
+                    <div class="contact_info">
+                        {{contact}}
+                    </div>
+                </div>
+            </div>
+            <div class="resume_right">
+                <div class="resume_img">
+                    <img src="{{photoUrl}}" alt="{{name}}" />
+                    <div class="resume_img_bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="170" viewBox="0 0 90 170"
+                            fill="none">
+                            <circle cx="5" cy="5" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="5" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="5" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="5" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="5" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="25" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="25" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="25" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="25" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="25" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="45" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="45" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="45" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="45" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="45" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="65" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="65" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="65" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="65" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="65" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="85" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="85" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="85" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="85" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="85" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="105" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="105" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="105" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="105" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="105" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="125" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="125" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="125" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="125" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="125" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="145" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="145" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="145" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="145" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="145" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="5" cy="165" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="25" cy="165" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="45" cy="165" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="65" cy="165" r="5" fill="#1800AC" fill-opacity="0.4" />
+                            <circle cx="85" cy="165" r="5" fill="#1800AC" fill-opacity="0.4" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="education">
+                    <h2>Education</h2>
+                    <div class="education_info">
+                        {{education}}
+                    </div>
+                </div>
+                <div class="skills">
+                    <h2>Skills</h2>
+                    <div class="skills_info">
+                        {{skills}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

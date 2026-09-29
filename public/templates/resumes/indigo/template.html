@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indigo Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            overflow: hidden;
+            padding: 40px 0px 0;
+            border: 1px solid #000024;
+            position: relative;
+            border-radius: 20px;
+        }
+
+        .resume-sec .resume-top-sec .top-sec {
+            padding: 0 30px 30px;
+        }
+
+        .resume-sec .resume-top-sec .top-sec h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: normal;
+        }
+
+        .resume-sec .resume-top-sec .row-sec {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left {
+            width: 40%;
+            padding: 0 20px 0 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right {
+            width: 60%;
+            padding-left: 20px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .position {
+            border: 1px solid #000;
+            padding: 10px 20px;
+            border-radius: 40px;
+            margin-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .position h6 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .contacts {
+            padding-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .contacts p,
+        .resume-sec .resume-top-sec .row-sec .column-left .contacts p a {
+            font-size: 16px;
+            line-height: normal;
+            color: #000;
+            text-decoration: none;
+            font-weight: 400;
+            margin: 0 0 15px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .educations {
+            padding-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .educations h4,
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince h4,
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .skills h4 {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0 0 15px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .educations .details {
+            padding-bottom: 20px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .educations .details h6 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 28px;
+            color: #000;
+            margin: 0 0 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .educations .details p {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-left .image-sec .img img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 15px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .profile-txt {
+            padding-right: 30px;
+            padding-bottom: 40px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .profile-txt p {
+            font-size: 15px;
+            line-height: 24px;
+            color: #000;
+            font-weight: 400;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills {
+            border: 2px solid #000;
+            padding: 20px;
+            border-radius: 15px 0 0 15px;
+            border-right: 0;
+            margin-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince {
+            padding-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince .details {
+            padding-bottom: 30px;
+            position: relative;
+            border-left: 2px solid #000;
+            padding-left: 30px;
+            left: 8px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince .details h5 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+            margin: 0 0 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince .details h6 {
+            font-size: 16px;
+            margin: 0 0 10px;
+            line-height: normal;
+            color: #000;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince .details p {
+            font-size: 15px;
+            line-height: 24px;
+            color: #000;
+            font-weight: 400;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince .details:before {
+            position: absolute;
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #000;
+            left: -11px;
+            top: 0;
+            border-radius: 100%;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .skills .details {
+            border-left: 2px solid #000;
+            padding-left: 20px;
+            position: relative;
+            left: 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .skills .details h6 {
+            position: relative;
+            margin: 0 0 20px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .skills .details h6:before {
+            position: absolute;
+            content: '';
+            height: 15px;
+            width: 15px;
+            background: #000;
+            left: -29px;
+            border-radius: 100%;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .column-right .experince-skills .experince:first-child .details:last-child {
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-sec">
+        <div class="resume-top-sec">
+            <div class="top-sec">
+                <h1>{{name}}</h1>
+            </div>
+            <div class="row-sec">
+                <div class="column-left">
+                    <div class="position">
+                        {{tagline}}
+                    </div>
+                    <div class="contacts">
+                        {{contact}}
+                    </div>
+                    <div class="educations">
+                        <h4>Educations</h4>
+                        {{education}}
+                    </div>
+                    <div class="image-sec">
+                        <div class="img">
+                            <img src="{{photoUrl}}" alt="{{name}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="column-right">
+                    <div class="profile-txt">
+                        {{summary}}
+                    </div>
+                    <div class="experince-skills">
+                        <div class="experince">
+                            <h4>Experience</h4>
+                            {{experience}}
+                        </div>
+                        <div class="skills">
+                            <h4>Skills</h4>
+                            <div class="details">
+                                {{skills}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

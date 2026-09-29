@@ -33,6 +33,10 @@ const templates = [
     { name: "Sage", templateKey: "sage", preview: "/templates/resumes/sage/sage.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Mist", templateKey: "mist", preview: "/templates/resumes/mist/mist.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
     { name: "Citrine", templateKey: "citrine", preview: "/templates/resumes/citrine/citrine.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Violet", templateKey: "violet", preview: "/templates/resumes/violet/violet.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Cove", templateKey: "cove", preview: "/templates/resumes/cove/cove.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Magenta", templateKey: "magenta", preview: "/templates/resumes/magenta/magenta.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
+    { name: "Indigo", templateKey: "indigo", preview: "/templates/resumes/indigo/indigo.png", status: true, tier: "paid", categories: ["premium", "with-image", "modern"] },
 ];
 
 const membershipPlans = [
