@@ -38,7 +38,7 @@ const templates = [
     { name: "Magenta", templateKey: "magenta", preview: "/templates/resumes/magenta/magenta.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
     { name: "Indigo", templateKey: "indigo", preview: "/templates/resumes/indigo/indigo.png", status: true, tier: "paid", categories: ["with-image", "modern"] },
     { name: "Coral", templateKey: "coral", preview: "/templates/resumes/coral/coral.png", status: true, tier: "paid", categories: ["with-image", "modern"] },
-    { name: "Azure", templateKey: "azure", preview: "/templates/resumes/azure/azure.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
+    // { name: "Azure", templateKey: "azure", preview: "/templates/resumes/azure/azure.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
     // { name: "Sketch", templateKey: "sketch", preview: "/templates/resumes/sketch/sketch.png", status: true, tier: "paid", categories: ["premium"] },
     // { name: "Sunset", templateKey: "sunset", preview: "/templates/resumes/sunset/sunset.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
 ];
