@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azure Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            overflow: hidden;
+            padding: 40px 0px 40px;
+            border: 1px solid #000024;
+            position: relative;
+        }
+
+        .resume-sec .resume-top-sec .row-sec {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec {
+            width: 40%;
+            padding-right: 10px;
+            padding-left: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec {
+            width: 60%;
+            padding-left: 20px;
+            padding-right: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .image {
+            line-height: 0;
+            padding: 20px 20px 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 200px 200px 0 0;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left {
+            background: #F1F5D4;
+            border-radius: 200px 200px 0 0;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts {
+            padding-bottom: 30px;
+            padding: 0px 20px 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts h4,
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .skills h4,
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .education h4,
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .profile-txt h4,
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince h4 {
+            font-size: 22px;
+            margin: 0 0 20px;
+            line-height: normal;
+            font-weight: 800;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts .icon-txt {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-bottom: 15px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts .icon-txt .icon {
+            width: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts .icon-txt .txt {
+            width: calc(100% - 30px);
+            padding-left: 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts .icon-txt .icon svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts .icon-txt .txt p,
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .contacts .icon-txt .txt p a {
+            font-size: 16px;
+            line-height: normal;
+            font-weight: 400;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .skills {
+            background: #4578B8;
+            padding: 30px 20px;
+            border-radius: 0 110px 0 0;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .skills h4 {
+            color: #FFF;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .skills .deails p {
+            color: #fff;
+            font-size: 16px;
+            position: relative;
+            padding-left: 20px;
+            padding-bottom: 15px;
+            line-height: normal;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .skills .deails p::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 2px;
+            height: 100%;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .skills .deails p:first-child::after {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .skills .deails p:last-child {
+            padding-bottom: 0;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .education {
+            padding: 30px 20px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .education .details {
+            padding-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .education .details:last-child {
+            padding-bottom: 0;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .education .details h6 {
+            font-size: 18px;
+            line-height: 28px;
+            font-weight: 600;
+            color: #000;
+            margin: 0 0 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .left-sec .section-left .education .details p {
+            font-size: 16px;
+            line-height: normal;
+            color: #000;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .name {
+            background: #F1F5D4;
+            padding: 20px;
+            border-radius: 12px;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .name h1 {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: normal;
+            color: #000;
+            margin: 0 0 15px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .name h6 {
+            font-size: 18px;
+            color: #4578B8;
+            font-weight: 600;
+            line-height: normal;
+            font-style: italic;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .profile-txt {
+            padding-bottom: 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .profile-txt p {
+            font-size: 16px;
+            color: #000;
+            line-height: 24px;
+            font-weight: 400;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince h4 {
+            margin: 0 0 30px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince .details {
+            padding-bottom: 30px;
+            border-left: 2px solid #4578B8;
+            position: relative;
+            padding-left: 30px;
+            left: 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince .details h5 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+            margin: 0 0 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince .details h6 {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 0 0 10px;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince .details p {
+            font-size: 15px;
+            line-height: 24px;
+            color: #000;
+            font-weight: 400;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince .details:before {
+            position: absolute;
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #4578B8;
+            left: -11px;
+            top: 0;
+            border-radius: 50%;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .experince:last-child .details:last-child {
+            padding-bottom: 0;
+        }
+
+        .resume-sec .resume-top-sec .row-sec .right-sec .section-rgt .name h1 span {
+            color: #4578B8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-sec">
+        <div class="resume-top-sec">
+            <div class="row-sec">
+                <div class="left-sec">
+                    <div class="section-left">
+                        <div class="image">
+                            <img src="{{photoUrl}}" alt="{{name}}">
+                        </div>
+                        <div class="contacts">
+                            <h4>Contacts</h4>
+                            {{contact}}
+                        </div>
+                        <div class="skills">
+                            <h4>Skills</h4>
+                            <div class="deails">
+                                {{skills}}
+                            </div>
+                        </div>
+                        <div class="education">
+                            <h4>Education</h4>
+                            {{education}}
+                        </div>
+                    </div>
+                </div>
+                <div class="right-sec">
+                    <div class="section-rgt">
+                        <div class="name">
+                            <h1>{{name}}</h1>
+                            {{tagline}}
+                        </div>
+                        <div class="profile-txt">
+                            <h4>Summary</h4>
+                            {{summary}}
+                        </div>
+                        <div class="experince">
+                            <h4>Professional Experience</h4>
+                            {{experience}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

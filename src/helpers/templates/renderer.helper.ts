@@ -25,7 +25,7 @@ import { renderCove } from "../../../public/templates/resumes/cove/renderer";
 import { renderMagenta } from "../../../public/templates/resumes/magenta/renderer";
 import { renderIndigo } from "../../../public/templates/resumes/indigo/renderer";
 import { renderCoral } from "../../../public/templates/resumes/coral/renderer";
-// import { renderAzure } from "../../../public/templates/resumes/azure/renderer";
+import { renderAzure } from "../../../public/templates/resumes/azure/renderer";
 // import { renderSketch } from "../../../public/templates/resumes/sketch/renderer";
 // import { renderSunset } from "../../../public/templates/resumes/sunset/renderer";
 
@@ -57,7 +57,7 @@ const templateMap: Record<string, (userData: any) => string> = {
     magenta: renderMagenta,
     indigo: renderIndigo,
     coral: renderCoral,
-    // azure: renderAzure,
+    azure: renderAzure,
     // sketch: renderSketch,
     // sunset: renderSunset,
 };
