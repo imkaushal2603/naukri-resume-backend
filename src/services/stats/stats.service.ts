@@ -6,3 +6,10 @@ export const getResumeStatsService = async () => {
         totalResumes: totalResumes + 1000,
     };
 };
+
+export const getUserStatsService = async () => {
+    const totalUsers = await prisma.user.count();
+    return {
+        totalUsers: totalUsers + 50,
+    };
+};
