@@ -117,12 +117,17 @@ const activateMembershipService = async (paymentId: number) => {
 
     if (existing) return existing;
 
+    await prisma.membership.updateMany({
+        where: {
+            userId: payment.userId,
+            status: "ACTIVE",
+        },
+        data: { status: "EXPIRED" },
+    });
+
     const startDate = new Date();
     const endDate = new Date(startDate);
-
-    endDate.setDate(
-        endDate.getDate() + payment.membership_plan.durationDays
-    );
+    endDate.setDate(endDate.getDate() + payment.membership_plan.durationDays);
 
     return prisma.membership.create({
         data: {
@@ -211,7 +216,7 @@ export const getMembershipPlansService = async (userId: number) => {
             currentPlanId === plan.id
                 ? "current"
                 : currentDuration > plan.durationDays
-                ? "included"
-                : "available",
+                    ? "included"
+                    : "available",
     }));
 };

@@ -140,11 +140,12 @@
             width: fit-content;
             font-weight: 500;
             font-style: Italic;
-            font-size: 26px;
+            font-size: 20px;
             line-height: 100%;
             color: #0C4036;
             border-radius: 30px;
-            padding: 7px 40px;
+            padding: 10px 35px;
+            text-align: center;
         }
 
         .header p {
@@ -190,7 +191,7 @@
             line-height: 100%;
             letter-spacing: 5%;
             color: #0C4036;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .experience .experience_info {
@@ -238,7 +239,8 @@
             text-decoration: none;
         }
 
-        .experience .experience_name h4 {
+        .experience .experience_name h4,
+        .education .education_details h4 {
             font-weight: 600;
             font-style: Italic;
             font-size: 17px;
@@ -292,6 +294,38 @@
             background: #0C4036;
             border-radius: 50%;
         }
+
+        .education .education_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 22px;
+        }
+
+        .image .resume_img {
+            border: 5px solid #0C4036;
+            padding: 20px;
+            border-radius: 50%;
+            width: 280px;
+            height: 280px;
+        }
+
+        .image .resume_img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .image h2 {
+            font-weight: 700;
+            font-style: Italic;
+            font-size: 45px;
+            line-height: 100%;
+            letter-spacing: 5%;
+            color: #0C4036;
+            margin-top: 30px;
+        }
     </style>
 </head>
 
@@ -303,88 +337,23 @@
                     <h1>About Me</h1>
                 </div>
                 <div class="header_right">
-                    <h4>UI UX Desinger</h4>
+                    {{tagline}}
                 </div>
             </div>
-            <p>Creative and user-focused UI/UX Designer with experience designing intuitive, modern, and visually
-                engaging websites and digital products. Skilled in user research, wireframing, prototyping, responsive
-                design, design systems, and high-fidelity interfaces using Figma and Adobe Creative tools. Strong
-                understanding of user-centered design principles with the ability to transform ideas and business
-                requirements into simple, effective, and engaging digital experiences.</p>
+            {{summary}}
         </div>
         <div class="resume_content">
             <div class="resume_left">
                 <div class="experience">
                     <h2>Work Experience</h2>
                     <div class="experience_info">
-                        <div class="experience_details">
-                            <div class="experience_content">
-                                <div class="experience_name">
-                                    <h4>PixelWorks Digital | <span>2023 – Present | location</span></h4>
-                                </div>
-                                <div class="experience_title">
-                                    <h5>Senior UI/UX Designer</h5>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Developed and deployed 10+ web applications, improving user engagement by 30% within
-                                    six months.</li>
-                                <li>Collaborated with a team of 5 developers to implement Agile methodologies,
-                                    increasing project delivery speed by 25%.</li>
-                                <li>Automated testing processes, achieving a 50% reduction in manual testing time and
-                                    improving code quality.</li>
-                                <li>Integrated third-party APIs, expanding application functionality and increasing user
-                                    acquisition by 20%.</li>
-                                <li>Mentored junior developers, enhancing team skills and reducing onboarding time by
-                                    15%.</li>
-                                <li>Optimized existing codebase, reducing load times by 40% and enhancing overall
-                                    application performance.</li>
-                            </ul>
-                        </div>
-                        <div class="experience_details">
-                            <div class="experience_content">
-                                <div class="experience_name">
-                                    <h4>PixelWorks Digital | <span>2023 – Present | location</span></h4>
-                                </div>
-                                <div class="experience_title">
-                                    <h5>Senior UI/UX Designer</h5>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Developed and deployed 10+ web applications, improving user engagement by 30% within
-                                    six months.</li>
-                                <li>Collaborated with a team of 5 developers to implement Agile methodologies,
-                                    increasing project delivery speed by 25%.</li>
-                                <li>Automated testing processes, achieving a 50% reduction in manual testing time and
-                                    improving code quality.</li>
-                                <li>Integrated third-party APIs, expanding application functionality and increasing user
-                                    acquisition by 20%.</li>
-                                <li>Mentored junior developers, enhancing team skills and reducing onboarding time by
-                                    15%.</li>
-                                <li>Optimized existing codebase, reducing load times by 40% and enhancing overall
-                                    application performance.</li>
-                            </ul>
-                        </div>
+                        {{experience}}
                     </div>
                 </div>
                 <div class="contact">
                     <h2>Contact Us</h2>
                     <div class="contact_info">
-                        <div class="contact_details">
-                            <a href="tel:+96541604010">+96541604010</a>
-                        </div>
-                        <div class="contact_details">
-                            <p>Plat 45 Phase 7 Mohali Punjab</p>
-                        </div>
-                        <div class="contact_details">
-                            <a href="mailto:+anikasharma45@gmail.com">anikasharma45@gmail.com</a>
-                        </div>
-                        <div class="contact_details">
-                            <a href="linkedin" target="_blank">linkedin</a>
-                        </div>
-                        <div class="contact_details">
-                            <a href="Github" target="_blank">Github</a>
-                        </div>
+                        {{contact}}
                     </div>
                 </div>
             </div>
@@ -392,38 +361,20 @@
                 <div class="education">
                     <h2>Education</h2>
                     <div class="education_info">
-                        <div class="education_details">
-                            <h4>Bachelor of Design (B.Des.)</h4>
-                            <h4>Delhi University | 2020 – 2023 | cgpa</h4>
-                        </div>
-                        <div class="education_details">
-                            <h4>Bachelor of Design (B.Des.)</h4>
-                            <h4>Delhi University | 2020 – 2023 | cgpa</h4>
-                        </div>
+                        {{education}}
                     </div>
                 </div>
                 <div class="skills">
                     <h2>Skills</h2>
                     <div class="skills_info">
-                        <div class="skills_details">
-                            <p>UI/UX Design</p>
-                        </div>
-                        <div class="skills_details">
-                            <p>User Research</p>
-                        </div>
-                        <div class="skills_details">
-                            <p>Responsive Web Design</p>
-                        </div>
-                        <div class="skills_details">
-                            <p>Prototyping & User Testing</p>
-                        </div>
+                        {{skills}}
                     </div>
                 </div>
                 <div class="image">
                     <div class="resume_img">
-                        <img />
+                        <img src="{{photoUrl}}" alt="{{name}}" />
                     </div>
-                    <h2>Anika Sharma</h2>
+                    <h2>{{name}}</h2>
                 </div>
             </div>
         </div>
