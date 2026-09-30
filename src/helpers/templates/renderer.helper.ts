@@ -25,8 +25,8 @@ import { renderCove } from "../../../public/templates/resumes/cove/renderer";
 import { renderMagenta } from "../../../public/templates/resumes/magenta/renderer";
 import { renderIndigo } from "../../../public/templates/resumes/indigo/renderer";
 import { renderCoral } from "../../../public/templates/resumes/coral/renderer";
-import { renderAzure } from "../../../public/templates/resumes/azure/renderer";
-import { renderSketch } from "../../../public/templates/resumes/sketch/renderer";
+// import { renderAzure } from "../../../public/templates/resumes/azure/renderer";
+// import { renderSketch } from "../../../public/templates/resumes/sketch/renderer";
 
 const templateMap: Record<string, (userData: any) => string> = {
     classic: renderClassic,
