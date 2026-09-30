@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sketch Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+        }
+
+        .resume {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            overflow: hidden;
+            padding: 35px;
+            border: 1px solid #DBE0FE;
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .resume_img {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            line-height: 0;
+        }
+
+        .header_top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header_top .header_left {
+            width: calc(60% - 15px);
+        }
+
+        .header_top .header_right {
+            width: 40%;
+            display: flex;
+            justify-content: end;
+        }
+
+        .header_top h1 {
+            font-weight: 500;
+            font-size: 52px;
+            line-height: 100%;
+            color: #000024;
+        }
+
+        .header_top h4 {
+            background: #DBE0FE;
+            font-weight: 500;
+            font-style: Italic;
+            font-size: 20px;
+            line-height: 100%;
+            color: #000024;
+            border-radius: 30px;
+            padding: 10px 30px;
+            text-align: center;
+            width: fit-content;
+        }
+
+        .header_bottom {
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+        }
+
+        .summary h2 {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 100%;
+            color: #000024;
+            margin-bottom: 16px;
+        }
+
+        .summary p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            display: inline-block;
+            color: #000024;
+        }
+
+        .contact h2,
+        .education h2,
+        .skills h2,
+        .experience h2 {
+            background: #DBE0FE;
+            width: fit-content;
+            padding: 15px 70px 15px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 100%;
+            color: #000024;
+        }
+
+        .contact .contact_info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+            align-items: center;
+            row-gap: 15px;
+        }
+
+        .contact .contact_details a,
+        .contact .contact_details p {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 100%;
+            color: #000024;
+            text-decoration: none;
+        }
+
+        .resume_content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resume_left,
+        .resume_right {
+            width: calc(50% - 20px);
+        }
+
+        .education,
+        .skills,
+        .experience {
+            border: 2px solid #DBE0FE;
+            border-radius: 20px;
+            padding: 45px 20px 20px;
+            position: relative;
+        }
+
+        .resume_left {
+            display: flex;
+            flex-direction: column;
+            row-gap: 60px;
+        }
+
+        .education h2,
+        .skills h2,
+        .experience h2 {
+            position: absolute;
+            top: -25px;
+        }
+
+        .skills .skills_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+        }
+
+        .skills .skills_details p {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: normal;
+            color: #000000;
+        }
+
+        .education .education_info,
+        .experience .experience_info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+        }
+
+        .education .education_details h4,
+        .experience .experience_details h4 {
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 140%;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+
+        .education .education_details p,
+        .experience .experience_details p {
+            font-weight: 500;
+            font-size: 17px;
+            line-height: 140%;
+            color: #000000;
+            display: inline-block;
+        }
+
+        .experience .experience_details p {
+            margin-bottom: 12px;
+        }
+
+        .experience .experience_details ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .experience .experience_details ul li {
+            padding-left: 20px;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 140%;
+            color: #000000;
+            display: inline-block;
+            position: relative;
+        }
+
+        .experience .experience_details ul li::before {
+            content: "";
+            position: absolute;
+            background: #000;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume">
+        <div class="resume_img">
+            <svg xmlns="http://www.w3.org/2000/svg" width="350" height="350" viewBox="0 0 418 480" fill="none">
+                <path
+                    d="M517.463 408.302L247.131 580.293C242.654 583.141 236.746 581.828 233.898 577.351L24.4366 248.123C21.5881 243.646 22.9016 237.738 27.3787 234.89L297.711 62.8992C302.188 60.0508 308.095 61.3642 310.944 65.8414L520.405 395.069C523.253 399.546 521.94 405.454 517.463 408.302Z"
+                    fill="white" />
+                <path
+                    d="M301.595 76.6583L506.646 398.954L243.246 566.534L38.1957 244.238L301.595 76.6583ZM297.711 62.8992L27.3787 234.89C22.9016 237.738 21.5881 243.646 24.4366 248.123L233.898 577.351C236.746 581.828 242.654 583.141 247.131 580.293L517.463 408.302C521.94 405.454 523.253 399.546 520.405 395.069L310.944 65.8414C308.095 61.3642 302.188 60.0508 297.711 62.8992Z"
+                    fill="#DBE0FE" />
+                <path
+                    d="M95.6434 274.965C99.8925 268.569 108.445 267.024 114.988 263.023C122.33 258.555 127.301 250.807 134.809 246.598C142.182 242.435 151.202 242.134 158.693 238.22C168.078 233.263 173.722 223.383 181.872 216.615C193.466 206.967 209.696 203.904 220.502 193.337M129.326 328.481C133.488 323.925 138.861 320.507 144.713 318.61C150.241 316.838 156.225 316.358 161.18 313.368C167.511 309.543 170.922 302.341 176.208 297.192C188.818 284.868 210.704 285.146 221.72 271.402M265.113 242.983C271.793 234.797 283.053 232.34 292.133 226.969C296.442 224.43 300.263 221.188 304.073 217.993C308.918 213.937 313.773 209.833 318.618 205.777M157.758 372.149C163.54 366.888 169.506 361.469 176.848 358.786C181.031 357.261 185.584 356.637 189.376 354.305C193.659 351.662 196.432 347.219 199.937 343.609C204.686 338.732 210.794 335.397 217.465 334.04M259.421 309.741C259.421 309.741 261.89 301.759 277.984 295.74C286.342 292.614 294.973 289.151 301.291 282.819C303.775 280.346 305.747 277.387 308.25 274.942C311.023 272.285 314.342 270.296 317.632 268.324C322.999 265.153 328.377 261.934 333.744 258.763M185.646 419.491C190.772 408.033 206.947 407.115 216.041 398.449C220.2 394.464 222.711 388.971 226.925 385.072C232.109 380.273 239.243 378.412 245.624 375.367C249.587 373.495 253.265 371.114 256.963 368.762C260.804 366.317 264.675 363.855 268.498 361.382C281.507 353.065 294.602 344.693 305.649 333.931M210.331 462.5C215.328 455.75 220.767 448.8 228.455 445.45C235.837 442.256 244.814 442.59 250.993 437.442C253.487 435.368 255.257 432.537 257.222 429.949C261.591 424.125 267.035 419.16 273.232 415.38M356.206 371.111C357.239 364.571 363.336 360.123 369.386 357.451C375.436 354.779 382.103 353.012 386.948 348.51C389.97 345.735 392.024 342.075 395.065 339.328C401.496 333.492 411.66 332.057 416.366 324.721M246.725 519.321C248.233 512.316 255.502 508.179 262.384 506.113C269.266 504.047 276.752 503.058 282.356 498.6C287.235 494.725 290.013 488.697 294.837 484.735C300.039 480.411 306.974 479.002 313.383 476.831C322.251 473.868 330.517 469.258 337.738 463.324"
+                    stroke="#B0BEC5" stroke-width="0.384375" stroke-miterlimit="10" stroke-linecap="round" />
+                <path opacity="0.3"
+                    d="M391.442 191.54L330.157 387.887L330.096 388.047C328.678 392.642 334.82 459.824 334.82 459.824C336.007 466.535 344.445 468.957 349.29 464.008C349.29 464.008 404.584 399.574 405.535 396.859L444.599 275.92L391.442 191.54Z"
+                    fill="#6FBFF0" />
+                <path
+                    d="M329.765 462.593L312.755 419.976L301.026 390.635C297.745 383.309 295.959 380.631 296.249 374.644L298.309 331.134L392.057 335.56L389.986 379.118C389.834 382.704 387.688 387.559 383.73 394.54L369.302 422.629L348.342 463.475C344.119 470.868 333.246 470.361 329.765 462.593Z"
+                    fill="#FFECB3" fill-opacity="0.5" />
+                <path
+                    d="M348.342 463.475L365.685 429.636C365.685 429.636 354.27 438.927 340.21 438.256C326.149 437.585 315.647 427.265 315.647 427.265L329.718 462.583C333.246 470.36 344.119 470.868 348.342 463.475Z"
+                    fill="#616161" fill-opacity="0.5" />
+                <path
+                    d="M372.396 162.432L334.208 160.638L323.74 382.393C323.74 382.393 330.34 394.425 341.877 394.957C353.414 395.488 361.928 384.188 361.928 384.188L372.396 162.432Z"
+                    fill="#FFC107" fill-opacity="0.5" />
+                <path
+                    d="M400.175 163.748L389.96 379.459C375.341 400.04 361.938 383.694 361.938 383.694L372.395 162.432L400.175 163.748Z"
+                    fill="#FFA000" fill-opacity="0.5" />
+                <path
+                    d="M334.189 160.608L323.732 381.87C323.732 381.87 302.869 400.865 296.255 374.397L306.41 159.293L334.189 160.608Z"
+                    fill="#FDD835" fill-opacity="0.5" />
+                <path opacity="0.2"
+                    d="M306.427 159.322C306.427 159.322 331.182 165.321 347.926 166.192C379.972 167.836 400.175 163.748 400.175 163.748L399.885 170.181C393.373 172.701 375.999 178.237 352.583 177.147C329.025 176.026 312.245 169.295 306.085 166.437L306.427 159.322Z"
+                    fill="#4E342E" />
+                <path d="M326.93 386.45L323.741 382.393L319.978 384.706L330.727 160.458L337.719 160.798L326.93 386.45Z"
+                    fill="#F19534" />
+                <path
+                    d="M361.928 384.188L358.226 388.126L368.633 167.869L375.654 168.19L365.331 386.73L361.928 384.188Z"
+                    fill="#D1762C" />
+                <path
+                    d="M308.002 126.143L352.256 153.862L401.721 130.588L404.252 86.4133C404.802 74.9048 396.198 62.8493 365.743 61.4099L347.384 60.5521C321.056 59.2864 311.072 70.5076 310.504 81.9872L308.002 126.143Z"
+                    fill="#EF5350" />
+                <path
+                    d="M405.921 157.536C405.81 159.595 404.744 161.49 403.011 162.593C403.011 162.593 382.834 172.143 352.872 170.714C322.881 169.304 303.809 158.715 303.809 158.715C302.184 157.436 301.286 155.451 301.397 153.392L302.889 121.808C302.936 120.479 303.58 119.258 304.651 118.455C305.008 118.187 305.384 117.948 305.77 117.662C307.253 116.678 309.162 116.681 310.69 117.615C310.69 117.615 331.58 125.384 355.337 126.5C379.094 127.616 400.899 121.007 400.899 121.007C402.493 120.195 404.399 120.322 405.78 121.472L405.798 121.501C406.89 122.388 407.507 123.741 407.439 125.164L405.921 157.536Z"
+                    fill="#94D1E0" />
+                <path
+                    d="M396.968 72.9721C397.271 66.5696 380.001 60.5516 358.395 59.5305C336.789 58.5095 319.028 62.872 318.726 69.2745C318.423 75.677 335.693 81.695 357.299 82.716C378.905 83.7371 396.665 79.3746 396.968 72.9721Z"
+                    fill="#FF8383" />
+                <path
+                    d="M318.154 135.022C335.53 141.415 355.047 141.86 372.716 136.34C373.863 135.975 375.835 134.802 375.633 133.591C375.463 132.686 374.108 131.194 371.459 131.622C361.891 133.165 349.697 133.132 331.651 130.087C313.604 127.042 305.977 122.197 305.362 125.185C304.853 127.7 314.827 133.811 318.154 135.022ZM345.872 147.211C349.979 147.032 349.34 154.256 335.542 155.528C325.693 156.438 315.012 154.063 307.912 147.178C307.075 146.372 305.442 144.124 305.862 142.68C307.204 138.093 311.3 142.426 321.627 144.945C329.619 146.92 337.601 147.604 345.872 147.211Z"
+                    fill="#B9E4EA" />
+            </svg>
+        </div>
+        <div class="header">
+            <div class="header_top">
+                <div class="header_left">
+                    <h1>{{name}}</h1>
+                </div>
+                <div class="header_right">
+                    {{tagline}}
+                </div>
+            </div>
+            <div class="header_bottom">
+                <div class="summary">
+                    <h2>Profile</h2>
+                    {{summary}}
+                </div>
+                <div class="contact">
+                    <h2>Contacts Details</h2>
+                    <div class="contact_info">
+                        {{contact}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="resume_content">
+            <div class="resume_left">
+                <div class="education">
+                    <h2>Education</h2>
+                    <div class="education_info">
+                        {{education}}
+                    </div>
+                </div>
+                <div class="skills">
+                    <h2>Skills</h2>
+                    <div class="skills_info">
+                        {{skills}}
+                    </div>
+                </div>
+            </div>
+            <div class="resume_right">
+                <div class="experience">
+                    <h2>Experience</h2>
+                    <div class="experience_info">
+                        {{experience}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
