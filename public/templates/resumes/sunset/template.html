@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sunset Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .resume-top-sec {
+            width: 794px;
+            min-height: 1110px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            overflow: hidden;
+            padding: 40px 0px 40px;
+            border: 1px solid #000024;
+            position: relative;
+        }
+
+        .resume-section .resume-top-sec {
+            position: relative;
+            background: #F4E8DC;
+        }
+
+        .resume-section .resume-top-sec .bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .resume-section .resume-top-sec .bg-img svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .resume-section .resume-top-sec .image-with-txt {
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+            padding: 30px 40px;
+            margin: 0px 30px 40px;
+            background: #FEF9F3;
+            border-radius: 12px;
+            align-items: center;
+        }
+
+        .resume-section .resume-top-sec .image-with-txt .image {
+            width: 30%;
+            text-align: center;
+        }
+
+        .resume-section .resume-top-sec .image-with-txt .image img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 100%;
+            position: relative;
+        }
+
+        .resume-section .resume-top-sec .image-with-txt .name-positon {
+            width: 70%;
+            padding-left: 20px;
+        }
+
+        .resume-section .resume-top-sec .image-with-txt .name-positon h1 {
+            font-size: 52px;
+            font-weight: 600;
+            color: #412F93;
+            margin: 0 0 15px;
+        }
+
+        .resume-section .resume-top-sec .image-with-txt .name-positon h6 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .resume-section .resume-top-sec .profile-summary,
+        .resume-section .resume-top-sec .education,
+        .resume-section .resume-top-sec .skills {
+            margin: 0 30px;
+            background: #FEF9F3;
+            padding: 30px;
+            position: relative;
+            border-radius: 20px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .summary {
+            padding-bottom: 30px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .summary h4,
+        .resume-section .resume-top-sec .profile-summary .experince h4,
+        .resume-section .resume-top-sec .education h4,
+        .resume-section .resume-top-sec .skills h4 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 15px;
+            line-height: normal;
+            color: #412F93;
+            position: relative;
+            padding-bottom: 6px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .summary h4:before,
+        .resume-section .resume-top-sec .profile-summary .experince h4:before,
+        .resume-section .resume-top-sec .education h4:before,
+        .resume-section .resume-top-sec .skills h4:before {
+            position: absolute;
+            content: '';
+            width: 80px;
+            background: #FF6525;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .summary p {
+            font-size: 15px;
+            color: #000;
+            line-height: 24px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .experince .row,
+        .resume-section .resume-top-sec .education .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -20px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .experince .row .details,
+        .resume-section .resume-top-sec .education .row .details {
+            width: 50%;
+            padding: 0 20px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .experince .row .details .title,
+        .resume-section .resume-top-sec .education .row .details .title {
+            background: #B0D434;
+            width: fit-content;
+            padding: 10px 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .experince .row .details .title h5,
+        .resume-section .resume-top-sec .education .row .details .title h5 {
+            font-size: 16px;
+            color: #412F93;
+            font-weight: 600;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .experince .row .details h6,
+        .resume-section .resume-top-sec .education .row .details h6 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #000;
+            margin: 0 0 10px;
+        }
+
+        .resume-section .resume-top-sec .profile-summary .experince .row .details p,
+        .resume-section .resume-top-sec .education .row .details p {
+            font-size: 15px;
+            line-height: 24px;
+        }
+
+        .experince ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .experince ul li {
+            font-size: 15px;
+            line-height: 140%;
+            color: #000000;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .experince ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #412F93;
+        }
+
+        .resume-section .resume-top-sec .education {
+            margin-top: 40px;
+        }
+
+        .resume-section .resume-top-sec .skills {
+            margin-top: 40px;
+        }
+
+        .resume-section .resume-top-sec .skills .row .details h6 {
+            font-size: 16px;
+            margin: 0 0 15px;
+            font-weight: 600;
+            line-height: normal;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .resume-section .resume-top-sec .skills .row .details h6::after {
+            background: #412F93;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+        }
+
+        .resume-section .resume-top-sec .skills .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resume-section .resume-top-sec .skills .row .left {
+            width: 50%;
+            padding-right: 20px;
+        }
+
+        .resume-section .resume-top-sec .skills .row .right {
+            padding-left: 10px;
+            width: 50%;
+        }
+
+        .resume-section .resume-top-sec .skills .row .right .details .icon-txt {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .resume-section .resume-top-sec .skills .row .right .details .icon-txt .icon {
+            width: 30px;
+            line-height: 0;
+        }
+
+        .resume-section .resume-top-sec .skills .row .right .details .icon-txt .txt {
+            width: calc(100% - 30px);
+            padding-left: 10px;
+        }
+
+        .resume-section .resume-top-sec .skills .row .right .details .icon-txt .txt p,
+        .resume-section .resume-top-sec .skills .row .right .details .icon-txt .txt p a {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            line-height: normal;
+            text-decoration: none;
+        }
+
+        .resume-section .resume-top-sec .image-with-txt .image:before {
+            position: absolute;
+            content: '';
+            background: #FF6525;
+            width: 25%;
+            height: 280px;
+            top: -85px;
+            left: 46px;
+            border-radius: 0 0 100px 100px;
+        }
+
+        .resume-section .resume-top-sec .skills .row .details h6:last-child {
+            margin-bottom: 0;
+        }
+
+        .skills .right .details {
+            display: flex;
+            flex-direction: column;
+            row-gap: 12px;
+        }
+
+        .resume-section .resume-top-sec .education .row .details h6 {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-section">
+        <div class="resume-top-sec">
+            <div class="bg-img">
+                <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1440 2011" fill="none">
+                    <line y1="79.5" x2="1440" y2="79.5" stroke="#CCCCCC" />
+                    <line y1="159.5" x2="1440" y2="159.5" stroke="#CCCCCC" />
+                    <line y1="239.5" x2="1440" y2="239.5" stroke="#CCCCCC" />
+                    <line y1="319.5" x2="1440" y2="319.5" stroke="#CCCCCC" />
+                    <line y1="399.5" x2="1440" y2="399.5" stroke="#CCCCCC" />
+                    <line y1="479.5" x2="1440" y2="479.5" stroke="#CCCCCC" />
+                    <line y1="559.5" x2="1440" y2="559.5" stroke="#CCCCCC" />
+                    <line y1="639.5" x2="1440" y2="639.5" stroke="#CCCCCC" />
+                    <line y1="719.5" x2="1440" y2="719.5" stroke="#CCCCCC" />
+                    <line y1="799.5" x2="1440" y2="799.5" stroke="#CCCCCC" />
+                    <line y1="879.5" x2="1440" y2="879.5" stroke="#CCCCCC" />
+                    <line y1="959.5" x2="1440" y2="959.5" stroke="#CCCCCC" />
+                    <line y1="1039.5" x2="1440" y2="1039.5" stroke="#CCCCCC" />
+                    <line y1="1119.5" x2="1440" y2="1119.5" stroke="#CCCCCC" />
+                    <line y1="1199.5" x2="1440" y2="1199.5" stroke="#CCCCCC" />
+                    <line y1="1279.5" x2="1440" y2="1279.5" stroke="#CCCCCC" />
+                    <line y1="1359.5" x2="1440" y2="1359.5" stroke="#CCCCCC" />
+                    <line y1="1439.5" x2="1440" y2="1439.5" stroke="#CCCCCC" />
+                    <line y1="1519.5" x2="1440" y2="1519.5" stroke="#CCCCCC" />
+                    <line y1="1599.5" x2="1440" y2="1599.5" stroke="#CCCCCC" />
+                    <line y1="1679.5" x2="1440" y2="1679.5" stroke="#CCCCCC" />
+                    <line y1="1759.5" x2="1440" y2="1759.5" stroke="#CCCCCC" />
+                    <line y1="1839.5" x2="1440" y2="1839.5" stroke="#CCCCCC" />
+                    <line y1="1919.5" x2="1440" y2="1919.5" stroke="#CCCCCC" />
+                    <line y1="1999.5" x2="1440" y2="1999.5" stroke="#CCCCCC" />
+                    <line x1="80.5" x2="80.5" y2="2011" stroke="#CCCCCC" />
+                    <line x1="161.5" x2="161.5" y2="2011" stroke="#CCCCCC" />
+                    <line x1="241.5" y1="3" x2="241.5" y2="2014" stroke="#CCCCCC" />
+                    <line x1="321.5" y1="3" x2="321.5" y2="2014" stroke="#CCCCCC" />
+                    <line x1="401.5" y1="3" x2="401.5" y2="2014" stroke="#CCCCCC" />
+                    <line x1="481.5" y1="3" x2="481.5" y2="2014" stroke="#CCCCCC" />
+                    <line x1="561.5" x2="561.5" y2="2011" stroke="#CCCCCC" />
+                    <line x1="641.5" x2="641.5" y2="2011" stroke="#CCCCCC" />
+                    <line x1="721.5" y1="-1" x2="721.5" y2="2010" stroke="#CCCCCC" />
+                    <line x1="801.5" y1="1" x2="801.5" y2="2012" stroke="#CCCCCC" />
+                    <line x1="881.5" y1="-1" x2="881.5" y2="2010" stroke="#CCCCCC" />
+                    <line x1="961.5" y1="3" x2="961.5" y2="2014" stroke="#CCCCCC" />
+                    <line x1="1041.5" y1="3" x2="1041.5" y2="2014" stroke="#CCCCCC" />
+                    <line x1="1121.5" y1="-1" x2="1121.5" y2="2010" stroke="#CCCCCC" />
+                    <line x1="1201.5" y1="-4" x2="1201.5" y2="2007" stroke="#CCCCCC" />
+                    <line x1="1281.5" y1="3" x2="1281.5" y2="2014" stroke="#CCCCCC" />
+                    <line x1="1361.5" y1="-1" x2="1361.5" y2="2010" stroke="#CCCCCC" />
+                </svg>
+            </div>
+            <div class="image-with-txt">
+                <div class="image">
+                    <img src="{{photoUrl}}" alt="{{name}}">
+                </div>
+                <div class="name-positon">
+                    <h1>{{name}}</h1>
+                    {{tagline}}
+                </div>
+            </div>
+            <div class="profile-summary">
+                <div class="summary">
+                    <h4>Profile Summary</h4>
+                    {{summary}}
+                </div>
+                <div class="experince">
+                    <h4>Professional Experience</h4>
+                    <div class="row">
+                        {{experience}}
+                    </div>
+                </div>
+            </div>
+            <div class="education">
+                <h4>Education</h4>
+                <div class="row">
+                    {{education}}
+                </div>
+            </div>
+            <div class="skills">
+                <div class="row">
+                    <div class="left">
+                        <h4>Skills</h4>
+                        <div class="details">
+                            {{skills}}
+                        </div>
+                    </div>
+                    <div class="right">
+                        <h4>Contacts</h4>
+                        <div class="details">
+                            {{contact}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

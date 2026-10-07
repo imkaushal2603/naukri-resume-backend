@@ -27,7 +27,9 @@ import { renderIndigo } from "../../../public/templates/resumes/indigo/renderer"
 import { renderCoral } from "../../../public/templates/resumes/coral/renderer";
 import { renderAzure } from "../../../public/templates/resumes/azure/renderer";
 import { renderSketch } from "../../../public/templates/resumes/sketch/renderer";
-// import { renderSunset } from "../../../public/templates/resumes/sunset/renderer";
+import { renderSunset } from "../../../public/templates/resumes/sunset/renderer";
+import { renderCobalt } from "../../../public/templates/resumes/cobalt/renderer";
+import { renderParchment } from "../../../public/templates/resumes/parchment/renderer";
 
 const templateMap: Record<string, (userData: any) => string> = {
     classic: renderClassic,
@@ -59,7 +61,9 @@ const templateMap: Record<string, (userData: any) => string> = {
     coral: renderCoral,
     azure: renderAzure,
     sketch: renderSketch,
-    // sunset: renderSunset,
+    sunset: renderSunset,
+    cobalt: renderCobalt,
+    parchment: renderParchment,
 };
 
 export const renderResumeTemplate = (templateKey: string, userData: any): string => {

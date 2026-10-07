@@ -40,7 +40,9 @@ const templates = [
     { name: "Coral", templateKey: "coral", preview: "/templates/resumes/coral/coral.png", status: true, tier: "paid", categories: ["with-image", "modern"] },
     { name: "Azure", templateKey: "azure", preview: "/templates/resumes/azure/azure.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
     { name: "Sketch", templateKey: "sketch", preview: "/templates/resumes/sketch/sketch.png", status: true, tier: "paid", categories: ["premium"] },
-    // { name: "Sunset", templateKey: "sunset", preview: "/templates/resumes/sunset/sunset.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
+    { name: "Sunset", templateKey: "sunset", preview: "/templates/resumes/sunset/sunset.png", status: true, tier: "paid", categories: ["premium", "with-image"] },
+    { name: "Cobalt", templateKey: "cobalt", preview: "/templates/resumes/cobalt/cobalt.png", status: true, tier: "paid", categories: ["premium", "modern"] },
+    { name: "Parchment", templateKey: "parchment", preview: "/templates/resumes/parchment/parchment.png", status: true, tier: "paid", categories: ["premium", "modern"] },
 ];
 
 const membershipPlans = [
