@@ -56,9 +56,11 @@ const resumeLimitAddons = [
 ];
 
 const coverLetterTemplates = [
-    { name: "Classic", templateKey: "classic", preview: "/templates/cover-letter/classic/classic.png", status: true },
-    { name: "Modern", templateKey: "modern", preview: "/templates/cover-letter/modern/modern.png", status: true },
-    { name: "Minimal", templateKey: "minimal", preview: "/templates/cover-letter/minimal/minimal.png", status: true },
+    { name: "Quill", templateKey: "quill", preview: "/templates/cover-letter/quill/quill.png", status: true },
+    { name: "Folio", templateKey: "folio", preview: "/templates/cover-letter/folio/folio.png", status: true },
+    { name: "Vellum", templateKey: "vellum", preview: "/templates/cover-letter/vellum/vellum.png", status: true },
+    // { name: "Heather", templateKey: "heather", preview: "/templates/cover-letter/heather/heather.png", status: true },
+    // { name: "Ember", templateKey: "ember", preview: "/templates/cover-letter/ember/ember.png", status: true },
 ];
 
 async function main() {
@@ -118,6 +120,32 @@ async function main() {
         } else {
             await prisma.resume_limit_addon.create({ data: addon });
         }
+    }
+
+    const validCoverKeys = coverLetterTemplates.map((t) => t.templateKey);
+
+    const obsoleteCoverTemplates = await prisma.cover_letter_templates.findMany({
+        where: { templateKey: { notIn: validCoverKeys } },
+        select: { id: true }
+    });
+
+    if (obsoleteCoverTemplates.length > 0) {
+        const obsoleteCoverIds = obsoleteCoverTemplates.map(t => t.id);
+
+        const defaultCoverTemplate = await prisma.cover_letter_templates.findUnique({
+            where: { templateKey: "quill" }
+        });
+
+        if (defaultCoverTemplate && 'cover_letter_builder' in prisma) {
+            await (prisma as any).cover_letter_builder.updateMany({
+                where: { templateId: { in: obsoleteCoverIds } },
+                data: { templateId: defaultCoverTemplate.id }
+            });
+        }
+
+        await prisma.cover_letter_templates.deleteMany({
+            where: { id: { in: obsoleteCoverIds } }
+        });
     }
 
     for (const t of coverLetterTemplates) {

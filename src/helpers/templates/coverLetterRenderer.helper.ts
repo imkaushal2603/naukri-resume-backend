@@ -1,20 +1,26 @@
-import { renderCoverLetterClassic } from "../../../public/templates/cover-letter/classic/renderer";
-import { renderCoverLetterModern } from "../../../public/templates/cover-letter/modern/renderer";
-import { renderCoverLetterMinimal } from "../../../public/templates/cover-letter/minimal/renderer";
+import { renderCoverLetterQuill } from "../../../public/templates/cover-letter/quill/renderer";
+import { renderCoverLetterFolio } from "../../../public/templates/cover-letter/folio/renderer";
+import { renderCoverLetterVellum } from "../../../public/templates/cover-letter/vellum/renderer";
+// import { renderCoverLetterHeather } from "../../../public/templates/cover-letter/heather/renderer";
+// import { renderCoverLetterEmber } from "../../../public/templates/cover-letter/ember/renderer";
 
 const coverLetterTemplateMap: Record<string, (data: any) => string> = {
-    classic: renderCoverLetterClassic,
-    modern: renderCoverLetterModern,
-    minimal: renderCoverLetterMinimal,
+    Quill: renderCoverLetterQuill,
+    folio: renderCoverLetterFolio,
+    vellum: renderCoverLetterVellum,
+    // heather: renderCoverLetterHeather,
+    // ember: renderCoverLetterEmber,
 };
 
 export const COVER_LETTER_TEMPLATES = [
-    { key: "classic", name: "Classic" },
-    { key: "modern", name: "Modern" },
-    { key: "minimal", name: "Minimal" },
+    { key: "quill", name: "Quill" },
+    { key: "folio", name: "Folio" },
+    { key: "vellum", name: "Vellum" },
+    // { key: "heather", name: "Heather" },
+    // { key: "ember", name: "Ember" },
 ];
 
 export const renderCoverLetter = (templateKey: string, data: any): string => {
-    const renderer = coverLetterTemplateMap[templateKey] || renderCoverLetterClassic;
+    const renderer = coverLetterTemplateMap[templateKey] || renderCoverLetterQuill;
     return renderer(data);
 };

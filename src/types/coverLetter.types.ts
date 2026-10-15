@@ -7,4 +7,5 @@ export interface CoverLetterData {
     companyName: string;
     hiringManager?: string;
     summary: string;
+    photoUrl?: string;
 }
