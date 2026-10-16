@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <title>Dossier Cover Letter</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+        }
+
+        .cover_resume {
+            width: 794px;
+            min-height: 800px;
+            margin: 10px auto;
+            background: #EAE9E7;
+            overflow: hidden;
+            border-radius: 8px;
+            padding: 30px 30px 80px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+        .header .header_top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header .header_left {
+            width: 152px;
+            line-height: 0;
+        }
+
+        .header .header_left img {
+            width: 100%;
+            height: 134px;
+            border-radius: 10px;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .header .header_right h1 {
+            font-weight: 700;
+            font-size: 42px;
+            line-height: 100%;
+            color: #000000;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .header .header_right h4 {
+            font-weight: 500;
+            font-size: 22px;
+            line-height: 100%;
+            color: #000000;
+        }
+
+        .header .header_bottom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            border: 1px solid #000000;
+            border-radius: 30px;
+            padding: 14px 25px;
+            row-gap: 10px;
+        }
+
+        .header .header_details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header .header_details a,
+        .header .header_details p {
+            font-weight: 400;
+            font-style: Italic;
+            font-size: 16px;
+            line-height: 100%;
+            display: inline-block;
+            text-decoration: none;
+            color: #000000;
+        }
+
+        .cover_resume_content {
+            margin-top: 40px;
+        }
+
+        .cover_resume_content h2 {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 100%;
+            color: #000000;
+            border: 1px solid #000000;
+            width: fit-content;
+            border-radius: 30px;
+            padding: 10px 25px;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .cover_resume_content .cover_resume_summary {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+        .cover_resume_content .cover_resume_summary p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 26px;
+            color: #000000;
+            display: inline-block;
+        }
+
+        .cover_resume_content .cover_resume_bottom {
+            margin-top: 100px;
+        }
+
+        .cover_resume_content .cover_resume_bottom p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 100%;
+            color: #000000;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .cover_resume_content .cover_resume_bottom h5 {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 26px;
+            color: #000000;
+            text-transform: capitalize;
+        }
+
+        .cover_resume .cover_resume_svg {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            line-height: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cover_resume">
+        <div class="header">
+            <div class="header_top">
+                <div class="header_left">
+                    {{photo}}
+                </div>
+                <div class="header_right">
+                    <h1>{{fullName}}</h1>
+                    {{tagline}}
+                </div>
+            </div>
+            <div class="header_bottom">
+                {{contact}}
+            </div>
+        </div>
+        <div class="cover_resume_content">
+            <h2>{{greeting}}</h2>
+            <div class="cover_resume_summary">
+                {{summary}}
+            </div>
+            <div class="cover_resume_bottom">
+                <p>Sincerely,</p>
+                {{signoff}}
+            </div>
+        </div>
+        <div class="cover_resume_svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="182" height="182" viewBox="0 0 182 182" fill="none">
+                <path
+                    d="M133 16.8643C140.933 32.7397 146.571 44.1709 149.982 53.7041C153.562 63.7068 154.651 71.5134 153.36 80.0381L156.051 81.1523C161.166 74.2119 167.457 69.462 177.062 64.9199C186.217 60.5912 198.287 56.4933 215.122 50.877C209.506 67.7127 205.409 79.7832 201.08 88.9375C196.538 98.5428 191.788 104.834 184.848 109.949L185.962 112.64C194.486 111.349 202.293 112.438 212.296 116.018C221.829 119.429 233.26 125.067 249.135 133C233.26 140.933 221.829 146.571 212.296 149.982C202.293 153.562 194.487 154.651 185.962 153.36L184.848 156.051C191.788 161.166 196.538 167.456 201.08 177.061C205.409 186.214 209.506 198.282 215.122 215.117C198.287 209.501 186.217 205.405 177.062 201.077C167.457 196.536 161.166 191.787 156.051 184.848L153.36 185.962C154.651 194.486 153.562 202.293 149.982 212.296C146.571 221.829 140.933 233.259 133 249.134C125.067 233.259 119.429 221.829 116.018 212.296C112.438 202.293 111.349 194.486 112.64 185.962L109.949 184.848C104.834 191.787 98.5438 196.537 88.9395 201.078C79.786 205.406 67.7166 209.502 50.8818 215.118C56.4976 198.283 60.5942 186.214 64.9219 177.061C69.4628 167.456 74.2121 161.166 81.1523 156.051L80.0381 153.36C71.514 154.651 63.7076 153.562 53.7051 149.982C44.1721 146.571 32.7405 140.933 16.8652 133C32.7405 125.067 44.1721 119.429 53.7051 116.018C63.7076 112.438 71.514 111.349 80.0381 112.64L81.1523 109.949C74.2122 104.834 69.4629 98.5428 64.9219 88.9375C60.594 79.7831 56.497 67.7129 50.8809 50.877C67.7168 56.4935 79.7861 60.5912 88.9395 64.9199C98.5437 69.4619 104.834 74.2121 109.949 81.1523L112.64 80.0381C111.349 71.514 112.438 63.7076 116.018 53.7051C119.429 44.1719 125.067 32.74 133 16.8643ZM133 110.199C120.463 110.199 110.199 120.463 110.199 133C110.199 145.537 120.463 155.801 133 155.801C145.537 155.801 155.801 145.537 155.801 133C155.801 120.463 145.537 110.199 133 110.199ZM133 122.551C138.827 122.551 143.449 127.173 143.449 133C143.449 138.827 138.827 143.449 133 143.449C127.173 143.449 122.551 138.827 122.551 133C122.551 127.173 127.173 122.551 133 122.551Z"
+                    stroke="black" stroke-opacity="0.4" stroke-width="3" />
+            </svg>
+        </div>
+    </div>
+</body>
+
+</html>

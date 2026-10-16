@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <title>Postmark Cover Letter</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+        }
+
+        .cover_resume {
+            width: 794px;
+            min-height: 800px;
+            margin: 10px auto;
+            background: #fff;
+            overflow: hidden;
+            border: 2px solid #008CFF;
+            border-radius: 8px;
+            padding: 50px 0 50px 40px;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .header .header_left h1 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 42px;
+            line-height: 110%;
+            color: #000000;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            word-wrap: break-word;
+        }
+
+        .header .header_left h4 {
+            font-weight: 600;
+            font-style: Italic;
+            font-size: 26px;
+            line-height: 100%;
+            color: #008CFF;
+        }
+
+        .header .header_left {
+            width: calc(45% - 20px);
+        }
+
+        .header .header_right {
+            width: calc(55% - 20px);
+            background: #008CFF;
+            box-shadow: 0px 10px 6px 0px #0000004D;
+            border-radius: 20px 0 0 20px;
+            padding: 20px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: end;
+            row-gap: 15px;
+        }
+
+        .header .header_right p,
+        .header .header_right a {
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 100%;
+            display: inline-block;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .cover_resume_content {
+            margin: 50px 40px 0 0;
+        }
+
+        .cover_resume_content h2 {
+            font-weight: 500;
+            font-size: 28px;
+            line-height: 100%;
+            color: #000000;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .cover_resume_content .cover_resume_summary {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+        .cover_resume_content .cover_resume_summary p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 26px;
+            display: inline-block;
+            color: #000000;
+        }
+
+        .cover_resume_content .cover_resume_bottom {
+            margin-top: 60px;
+        }
+
+        .cover_resume_content .cover_resume_bottom p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 100%;
+            display: inline-block;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .cover_resume_content .cover_resume_bottom h5 {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 26px;
+            color: #000000;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cover_resume">
+        <div class="header">
+            <div class="header_left">
+                <h1>{{fullName}}</h1>
+                {{tagline}}
+            </div>
+            <div class="header_right">
+                {{contact}}
+            </div>
+        </div>
+        <div class="cover_resume_content">
+            <h2>{{greeting}}</h2>
+            <div class="cover_resume_summary">
+                {{summary}}
+            </div>
+            <div class="cover_resume_bottom">
+                <p>Sincerely,</p>
+                {{signoff}}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

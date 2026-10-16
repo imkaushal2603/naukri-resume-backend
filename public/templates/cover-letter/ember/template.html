@@ -9,7 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <title>Heather Cover Letter</title>
+    <title>Ember Cover Letter</title>
     <style>
         @page {
             size: A4;
@@ -125,10 +125,30 @@
             font-size: 52px;
             line-height: 100%;
             color: #000000;
+            padding: 38px 58px;
+            position: relative;
+            text-transform: capitalize;
         }
 
         .header .header_top {
             margin-bottom: 10px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .header .header_top::before {
+            content: "";
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #F47629;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            flex-shrink: 0;
         }
 
         .header .header_content {
@@ -165,6 +185,7 @@
             line-height: 100%;
             color: #000000;
             margin-bottom: 15px;
+            text-transform: capitalize;
         }
 
         .cover_resume_content .cover_resume_summary {
@@ -208,42 +229,23 @@
     <div class="cover_resume">
         <div class="header">
             <div class="header_top">
-                <h1>Reachelle Beaudry</h1>
+                <h1>{{fullName}}</h1>
             </div>
             <div class="header_bottom">
                 <div class="header_content">
-                    <div class="header_details">
-                        <p>121 North New Delhi, India</p>
-                    </div>
-                    <div class="header_details">
-                        <a href="tel:+741556166322">+741556166322</a>
-                    </div>
-                    <div class="header_details">
-                        <a href="mailto:reachellebeaudry@gmail.com">reachellebeaudry@gmail.com</a>
-                    </div>
+                    {{contact}}
                 </div>
-                <h4>Marketing Coordinator</h4>
+                {{tagline}}
             </div>
         </div>
         <div class="cover_resume_content">
-            <h2>Dear Hiring Manager,</h2>
+            <h2>{{greeting}}</h2>
             <div class="cover_resume_summary">
-                <p>I am writing to express my interest in the Marketing Coordinator position at your esteemed
-                    organization. With a strong background in marketing and a passion for creating impactful campaigns,
-                    I am confident in my ability to contribute effectively to your team.</p>
-                <p>In my previous role as a Marketing Assistant at XYZ Company, I successfully managed social media
-                    campaigns, coordinated events, and collaborated with cross-functional teams to drive brand
-                    awareness. My experience has equipped me with the skills necessary to excel in a fast-paced
-                    marketing environment.</p>
-                <p>I am particularly drawn to your company's commitment to innovation and excellence in the marketing
-                    field. I am eager to bring my creativity, strategic thinking, and dedication to achieving results to
-                    your organization.</p>
-                <p>Thank you for considering my application. I look forward to the opportunity to discuss how my skills
-                    and experiences align with your needs for the Marketing Coordinator role.</p>
+                {{summary}}
             </div>
             <div class="cover_resume_bottom">
                 <p>Sincerely,</p>
-                <h5>ABC Creative Studio</h5>
+                {{signoff}}
             </div>
         </div>
     </div>

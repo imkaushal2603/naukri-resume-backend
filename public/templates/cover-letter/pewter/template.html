@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <title>Pewter Cover Letter</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+        }
+
+        .cover_resume {
+            width: 794px;
+            min-height: 800px;
+            margin: 10px auto;
+            background: #C6C6C6;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .cover_resume::before {
+            content: "";
+            position: absolute;
+            left: 40px;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: #000000;
+        }
+
+        .cover_resume::after {
+            content: "";
+            position: absolute;
+            right: 40px;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: #000000;
+        }
+
+        .header::before {
+            content: "";
+            top: 40px;
+            width: 100%;
+            height: 1px;
+            left: 0;
+            position: absolute;
+            background: #000000;
+        }
+
+        .cover_resume_content::after {
+            content: "";
+            bottom: 40px;
+            width: 100%;
+            height: 1px;
+            left: 0;
+            position: absolute;
+            background: #000000;
+        }
+
+        .header .header_bottom::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            background: #000000;
+            width: 100%;
+            height: 1px;
+        }
+
+        .header {
+            padding: 70px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            background: #CDCDCD;
+        }
+
+        .header .header_left {
+            width: calc(100% - 205px);
+        }
+
+        .header .header_right {
+            width: 165px;
+        }
+
+        .header .header_right img {
+            width: 100%;
+            height: 284px;
+            object-fit: cover;
+            border-radius: 120px;
+            object-position: top;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            font-size: 46px;
+            line-height: 100%;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .header h4 {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 100%;
+            color: #000000;
+        }
+
+        .header .header_bottom {
+            border-left: 1px solid #000000;
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+            padding-left: 10px;
+        }
+
+        .header .header_details a,
+        .header .header_details p {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 100%;
+            display: inline-block;
+            text-decoration: none;
+            color: #000000;
+        }
+
+        .cover_resume_content {
+            padding: 30px 70px 100px;
+            position: relative;
+        }
+
+        .cover_resume_content h2 {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 100%;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .cover_resume_content .cover_resume_summary {
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+        }
+
+        .cover_resume_content .cover_resume_summary p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 26px;
+            display: inline-block;
+            color: #000000;
+        }
+
+        .cover_resume_content .cover_resume_bottom {
+            margin-top: 50px;
+        }
+
+        .cover_resume_content .cover_resume_bottom p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 100%;
+            color: #000000;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .cover_resume_content .cover_resume_bottom h5 {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 26px;
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cover_resume">
+        <div class="header">
+            <div class="header_left">
+                <div class="header_top">
+                    <h1>Shawan Garcia</h1>
+                    <h4>Graphic Designer</h4>
+                </div>
+                <div class="header_bottom">
+                    <div class="header_details">
+                        <a href="tel:+91664657481565">+91664657481565</a>
+                    </div>
+                    <div class="header_details">
+                        <a href="mailto:oliviawilson2001@gmail.com">oliviawilson2001@gmail.com</a>
+                    </div>
+                    <div class="header_details">
+                        <p>XYZ Floor 1 North New Delhi, India </p>
+                    </div>
+                </div>
+            </div>
+            <div class="header_right">
+                <img src="./person.jpg" />
+            </div>
+        </div>
+        <div class="cover_resume_content">
+            <h2>Dear Hiring Manager,</h2>
+            <div class="cover_resume_summary">
+                <p>I am writing to express my interest in the Graphic Designer position at your organization. I am a
+                    creative and detail-oriented designer with a passion for developing visually engaging designs that
+                    communicate ideas clearly and create a strong impact.</p>
+                <p>I have experience creating a wide range of digital and print designs, including branding materials,
+                    social media creatives, website graphics, advertisements, presentations, brochures, banners, and
+                    marketing collateral. I enjoy transforming creative concepts and business requirements into polished
+                    visual solutions that align with a brand’s identity and objectives.</p>
+                <p>I am passionate about exploring new creative ideas and design trends while keeping the purpose and
+                    message of each project at the center of my work. I would be excited to bring my creativity,
+                    technical skills, and problem-solving approach to your team.</p>
+                <p>Thank you for considering my application. I look forward to the opportunity to discuss my experience
+                    and how I can contribute to your organization.</p>
+                <p>Thank you for considering my application. I look forward to the opportunity to discuss my experience
+                    and how I can contribute to your organization.</p>
+            </div>
+            <div class="cover_resume_bottom">
+                <p>Sincerely,</p>
+                <h5>Shawan Garcia</h5>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
