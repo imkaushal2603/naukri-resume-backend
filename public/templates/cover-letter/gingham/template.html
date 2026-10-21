@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+    <title>Gingham Cover Letter</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+        }
+
+        .cover_resume {
+            width: 794px;
+            min-height: 800px;
+            margin: 10px auto;
+            background: #fff;
+            overflow: hidden;
+            border-radius: 8px;
+            padding: 30px 25px;
+            position: relative;
+            border: 1px solid #BBE1F499;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+        }
+
+        .header .header_top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .header .header_left {
+            width: calc(100% - 340px);
+        }
+
+        .header .header_left h1 {
+            font-family: "Italianno", cursive;
+            font-weight: 400;
+            font-size: 100px;
+            line-height: 100%;
+            color: #4467B2;
+            word-break: break-word;
+            text-transform: capitalize;
+        }
+
+        .header .header_left h4 {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 100%;
+            color: #4467B2;
+        }
+
+        .header .header_right {
+            line-height: 0;
+            position: relative;
+            z-index: 1;
+            padding-right: 60px;
+        }
+
+        .header .header_right img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .header .header_bottom {
+            width: calc(100% - 210px);
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            row-gap: 15px;
+        }
+
+        .header .header_details a,
+        .header .header_details p {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 100%;
+            color: #4467B2;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .cover_resume_content {
+            margin-top: 30px;
+            width: calc(100% - 210px);
+        }
+
+        .cover_resume_content h2 {
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 26px;
+            color: #4467B2;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+        }
+
+        .cover_resume_content .cover_resume_summary {
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+        }
+
+        .cover_resume_content .cover_resume_summary p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 26px;
+            color: #4467B2;
+            display: inline-block;
+        }
+
+        .cover_resume_content .cover_resume_bottom {
+            margin-top: 35px;
+        }
+
+        .cover_resume_content .cover_resume_bottom p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 100%;
+            color: #4467B2;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .cover_resume_content .cover_resume_bottom h5 {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 26px;
+            color: #4467B2;
+            text-transform: capitalize;
+        }
+
+        .cover_resume_svg {
+            line-height: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+        }
+
+        .cover_resume_svg svg {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cover_resume">
+        <div class="header">
+            <div class="header_top">
+                <div class="header_left">
+                    <h1>{{fullName}}</h1>
+                    {{tagline}}
+                </div>
+                <div class="header_right">
+                    {{photo}}
+                </div>
+            </div>
+            <div class="header_bottom">
+                {{contact}}
+            </div>
+        </div>
+        <div class="cover_resume_content">
+            <h2>{{greeting}}</h2>
+            <div class="cover_resume_summary">
+                {{summary}}
+            </div>
+            <div class="cover_resume_bottom">
+                <p>Sincerely,</p>
+                {{signoff}}
+            </div>
+        </div>
+        <div class="cover_resume_svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="213" viewBox="0 0 213 1123" fill="none"
+                preserveAspectRatio="none">
+                <path d="M0 33.3462H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 76.6924H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 120.039H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 163.385H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 206.731H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 250.077H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 293.423H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 336.769H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 380.115H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 423.461H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 466.808H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 510.154H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 553.5H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 596.846H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 640.192H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 683.539H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 726.885H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 770.231H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 813.577H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 856.923H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 900.269H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 943.615H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 986.961H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 1030.31H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 1073.65H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M0 1117H213" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.6" />
+                <path d="M17 0L17 1123" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.5" />
+                <path d="M62 0L62 1123" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.5" />
+                <path d="M107 0L107 1123" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.5" />
+                <path d="M152 0L152 1123" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.5" />
+                <path d="M197 0L197 1123" stroke-width="20" stroke="#BBE1F4" stroke-opacity="0.5" />
+            </svg>
+        </div>
+    </div>
+</body>
+
+</html>

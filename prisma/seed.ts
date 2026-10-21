@@ -64,7 +64,13 @@ const coverLetterTemplates = [
     { name: "Postmark", templateKey: "postmark", preview: "/templates/cover-letter/postmark/postmark.png", status: true },
     { name: "Saffron", templateKey: "saffron", preview: "/templates/cover-letter/saffron/saffron.png", status: true },
     { name: "Dossier", templateKey: "dossier", preview: "/templates/cover-letter/dossier/dossier.png", status: true },
-    // { name: "Pewter", templateKey: "pewter", preview: "/templates/cover-letter/pewter/pewter.png", status: true },
+    { name: "Margin", templateKey: "margin", preview: "/templates/cover-letter/margin/margin.png", status: true },
+    { name: "Envoy", templateKey: "envoy", preview: "/templates/cover-letter/envoy/envoy.png", status: true },
+    { name: "Regatta", templateKey: "regatta", preview: "/templates/cover-letter/regatta/regatta.png", status: true },
+    { name: "Gingham", templateKey: "gingham", preview: "/templates/cover-letter/gingham/gingham.png", status: true },
+    { name: "Bluebell", templateKey: "bluebell", preview: "/templates/cover-letter/bluebell/bluebell.png", status: true },
+    { name: "Skylark", templateKey: "skylark", preview: "/templates/cover-letter/skylark/skylark.png", status: true },
+    { name: "Pewter", templateKey: "pewter", preview: "/templates/cover-letter/pewter/pewter.png", status: true },
 ];
 
 async function main() {

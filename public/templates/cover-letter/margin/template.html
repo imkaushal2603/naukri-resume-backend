@@ -101,11 +101,123 @@
             width: 794px;
             min-height: 800px;
             margin: 10px auto;
-            background: #EAE9E7;
+            background: #fff;
             overflow: hidden;
             border-radius: 8px;
-            padding: 30px 30px 80px;
+            padding: 40px 20px;
             position: relative;
+            border: 1px solid #F4F1EB;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .resume_left {
+            width: calc(40% - 10px);
+            background: #F4F1EB;
+            padding: 15px;
+            border-radius: 300px 300px 0 0;
+        }
+
+        .resume_right {
+            width: calc(60% - 10px);
+        }
+
+        .resume_left .resume_image {
+            line-height: 0;
+        }
+
+        .resume_left .resume_image img {
+            width: 100%;
+            border-radius: 300px 300px 0 0;
+            height: 267px;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .resume_left h1 {
+            font-weight: 700;
+            font-size: 42px;
+            line-height: 120%;
+            color: #000000;
+            margin: 17px 0 10px;
+            text-transform: capitalize;
+            word-break: break-all;
+        }
+
+        .resume_left h4 {
+            font-weight: 500;
+            font-size: 22px;
+            line-height: 100%;
+            color: #000000;
+        }
+
+        .resume_left .resume_content {
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+            margin-top: 30px;
+        }
+
+        .resume_left .header_details {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .resume_left .header_details a,
+        .resume_left .header_details p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 100%;
+            color: #000000;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .resume_right h2 {
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 100%;
+            color: #000000;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .resume_right .cover_resume_summary {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+        .resume_right .cover_resume_summary p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 26px;
+            display: inline-block;
+            color: #000000;
+        }
+
+        .resume_right .cover_resume_bottom {
+            margin-top: 60px;
+        }
+
+        .resume_right .cover_resume_bottom p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 100%;
+            display: inline-block;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .resume_right .cover_resume_bottom h5 {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 26px;
+            color: #000000;
+            margin-bottom: 30px;
+            text-transform: capitalize;
         }
     </style>
 </head>
@@ -113,10 +225,24 @@
 <body>
     <div class="cover_resume">
         <div class="resume_left">
-
+            <div class="resume_image">
+                {{photo}}
+            </div>
+            <h1>{{fullName}}</h1>
+            {{tagline}}
+            <div class="resume_content">
+                {{contact}}
+            </div>
         </div>
         <div class="resume_right">
-
+            <h2>{{greeting}}</h2>
+            <div class="cover_resume_summary">
+                {{summary}}
+            </div>
+            <div class="cover_resume_bottom">
+                <p>Sincerely,</p>
+                {{signoff}}
+            </div>
         </div>
     </div>
 </body>

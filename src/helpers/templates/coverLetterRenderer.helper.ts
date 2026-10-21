@@ -6,7 +6,13 @@ import { renderCoverLetterEmber } from "../../../public/templates/cover-letter/e
 import { renderCoverLetterPostmark } from "../../../public/templates/cover-letter/postmark/renderer";
 import { renderCoverLetterSaffron } from "../../../public/templates/cover-letter/saffron/renderer";
 import { renderCoverLetterDossier } from "../../../public/templates/cover-letter/dossier/renderer";
-// import { renderCoverLetterPewter } from "../../../public/templates/cover-letter/pewter/renderer";
+import { renderCoverLetterMargin } from "../../../public/templates/cover-letter/margin/renderer";
+import { renderCoverLetterEnvoy } from "../../../public/templates/cover-letter/envoy/renderer";
+import { renderCoverLetterRegatta } from "../../../public/templates/cover-letter/regatta/renderer";
+import { renderCoverLetterGingham } from "../../../public/templates/cover-letter/gingham/renderer";
+import { renderCoverLetterBluebell } from "../../../public/templates/cover-letter/bluebell/renderer";
+import { renderCoverLetterSkylark } from "../../../public/templates/cover-letter/skylark/renderer";
+import { renderCoverLetterPewter } from "../../../public/templates/cover-letter/pewter/renderer";
 
 const coverLetterTemplateMap: Record<string, (data: any) => string> = {
     Quill: renderCoverLetterQuill,
@@ -17,7 +23,13 @@ const coverLetterTemplateMap: Record<string, (data: any) => string> = {
     postmark: renderCoverLetterPostmark,
     saffron: renderCoverLetterSaffron,
     dossier: renderCoverLetterDossier,
-    // pewter: renderCoverLetterPewter,
+    margin: renderCoverLetterMargin,
+    envoy: renderCoverLetterEnvoy,
+    regatta: renderCoverLetterRegatta,
+    gingham: renderCoverLetterGingham,
+    bluebell: renderCoverLetterBluebell,
+    skylark: renderCoverLetterSkylark,
+    pewter: renderCoverLetterPewter,
 };
 
 export const COVER_LETTER_TEMPLATES = [
@@ -29,7 +41,13 @@ export const COVER_LETTER_TEMPLATES = [
     { key: "postmark", name: "Postmark" },
     { key: "saffron", name: "Saffron" },
     { key: "dossier", name: "Dossier" },
-    // { key: "pewter", name: "Pewter" }
+    { key: "margin", name: "Margin" },
+    { key: "envoy", name: "Envoy" },
+    { key: "regatta", name: "Regatta" },
+    { key: "gingham", name: "Gingham" },
+    { key: "bluebell", name: "Bluebell" },
+    { key: "skylark", name: "Skylark" },
+    { key: "pewter", name: "Pewter" }
 ];
 
 export const renderCoverLetter = (templateKey: string, data: any): string => {
