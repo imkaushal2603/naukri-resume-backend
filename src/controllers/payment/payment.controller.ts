@@ -27,38 +27,27 @@ export const createPaymentOrder = async (req: AuthRequest, res: Response) => {
     }
 };
 
-export const getPaymentStatus = async (req: AuthRequest, res: Response) => {
+export const getPaymentStatus: RequestHandler = async (req, res) => {
     try {
-        const userId = req.user?.userId;
-        const { orderId } = req.params;
+        const authReq = req as AuthRequest;
+        const userId = authReq.user?.userId;
+        const { orderId } = authReq.params;
 
         if (!userId) {
-            return res.status(401).json({
-                success: false,
-                message: "Unauthorized",
-            });
+            return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
         if (!orderId) {
-            return res.status(400).json({
-                success: false,
-                message: "Order ID is required",
-            });
+            return res.status(400).json({ success: false, message: "Order ID is required" });
         }
 
-        const status = await getPaymentStatusService(userId, orderId);
+        const status = await getPaymentStatusService(userId, String(orderId));
 
-        return res.status(200).json({
-            success: true,
-            status,
-        });
-
-    } catch (error) {
-        console.error("Payment status error:", error);
-
+        return res.status(200).json({ success: true, status });
+    } catch (error: any) {
         return res.status(500).json({
             success: false,
-            message: "Failed to get payment status",
+            message: error?.message || "Failed to get payment status",
         });
     }
 };

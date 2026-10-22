@@ -1,5 +1,5 @@
 import { prisma } from "../../config/database.config";
-import { createCashfreeOrder } from "./cashfree.service";
+import { createCashfreeOrder, getCashfreePaymentStatus } from "./cashfree.service";
 
 export const createPaymentOrderService = async (
     userId: number,
@@ -82,16 +82,46 @@ export const createPaymentOrderService = async (
     };
 };
 
-export const getPaymentStatusService = async (userId: number, orderId: any) => {
+export const getPaymentStatusService = async (userId: number, orderId: string) => {
     const payment = await prisma.payment.findFirst({
-        where: {
-            userId,
-            orderId,
-        },
+        where: { userId, orderId },
     });
 
     if (!payment) {
         throw new Error("Payment not found");
+    }
+
+    if (payment.status === "SUCCESS") {
+        return payment.status;
+    }
+
+    try {
+        const cashfreePayments = await getCashfreePaymentStatus(orderId);
+
+        const successfulPayment = cashfreePayments?.find(
+            (p: any) => p.payment_status === "SUCCESS"
+        );
+
+        if (successfulPayment) {
+            const updatedPayment = await prisma.payment.update({
+                where: { id: payment.id },
+                data: {
+                    status: "SUCCESS",
+                    cashfreePaymentId: successfulPayment.cf_payment_id?.toString(),
+                    paymentMethod: successfulPayment.payment_group,
+                },
+            });
+
+            if (updatedPayment.type === "RESUME_LIMIT_ADDON") {
+                await activateResumeLimitAddonService(updatedPayment.id);
+            } else {
+                await activateMembershipService(updatedPayment.id);
+            }
+
+            return "SUCCESS";
+        }
+    } catch (error) {
+        console.error("Error fetching Cashfree payment status:", error);
     }
 
     return payment.status;
@@ -168,15 +198,29 @@ const activateResumeLimitAddonService = async (paymentId: number) => {
 };
 
 export const handlePaymentWebhookService = async (req: any) => {
+    console.log("🔔 [DEBUG Webhook] Incoming Body:", JSON.stringify(req.body, null, 2));
+
     const orderId = req.body?.data?.order?.order_id;
     const paymentStatus = req.body?.data?.payment?.payment_status;
 
+    console.log(`🔔 [DEBUG Webhook] Order: ${orderId} | Cashfree Status: ${paymentStatus}`);
+
     if (!orderId) throw new Error("Order ID missing");
-    if (paymentStatus !== "SUCCESS") return;
+    if (paymentStatus !== "SUCCESS") {
+        console.log("⏸️ [DEBUG Webhook] Payment status is not SUCCESS, skipping activation.");
+        return;
+    }
 
     const payment = await prisma.payment.findUnique({ where: { orderId } });
-    if (!payment) throw new Error("Payment not found");
-    if (payment.status === "SUCCESS") return;
+    if (!payment) {
+        console.error("❌ [DEBUG Webhook] Payment record not found in DB for order:", orderId);
+        throw new Error("Payment not found");
+    }
+
+    if (payment.status === "SUCCESS") {
+        console.log("ℹ️ [DEBUG Webhook] Payment already marked SUCCESS in DB.");
+        return;
+    }
 
     const updatedPayment = await prisma.payment.update({
         where: { id: payment.id },
@@ -192,6 +236,8 @@ export const handlePaymentWebhookService = async (req: any) => {
     } else {
         await activateMembershipService(updatedPayment.id);
     }
+
+    console.log("✅ [DEBUG Webhook] Payment processed and fulfilled successfully!");
 };
 
 export const getMembershipPlansService = async (userId: number) => {

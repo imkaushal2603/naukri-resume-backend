@@ -39,8 +39,8 @@ export const createCashfreeOrder = async ({
 
     return response.data;
 };
-// export const getCashfreePaymentStatus = async (orderId: string) => {
-//     const response = await cashfree.PGOrderFetchPayments(orderId);
 
-//     return response.data;
-// };
+export const getCashfreePaymentStatus = async (orderId: string) => {
+    const response = await cashfree.PGOrderFetchPayments(orderId);
+    return response.data; // Cashfree returns an array of payment attempts
+};
