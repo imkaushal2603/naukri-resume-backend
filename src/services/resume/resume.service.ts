@@ -246,10 +246,13 @@ export const downloadResumeService = async (userId: number, publicId: string, fo
         const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
         try {
             const page = await browser.newPage();
-            await page.setContent(html, { waitUntil: "load" });
+            await page.emulateMediaType("print");
+            await page.setContent(html, { waitUntil: ["load", "networkidle0"] as any });
+            await page.evaluateHandle("document.fonts.ready");
             file = await page.pdf({
                 format: "A4",
                 printBackground: true,
+                preferCSSPageSize: true,
                 margin: { top: "0px", right: "0px", bottom: "0px", left: "0px" },
             });
         } finally {

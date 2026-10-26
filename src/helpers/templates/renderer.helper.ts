@@ -66,7 +66,61 @@ const templateMap: Record<string, (userData: any) => string> = {
     parchment: renderParchment,
 };
 
+const PRINT_CSS = `
+<style id="print-pagination">
+@media print {
+    @page { size: A4; margin: 12mm 0; }
+    @page :first { size: A4; margin: 0 0 12mm 0; }
+
+    html, body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body > div,
+    .page, .resume, .resume_page, .first-resume-section, .resume-top-sec {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    .section_title, .main-title {
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .resume-item,
+    [class*="timeline_item"], [class*="timeline-item"],
+    [class*="experience_item"], [class*="education_item"],
+    [class*="experience_details"], [class*="education_details"],
+    li, tr, img, blockquote {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    p, li {
+        orphans: 3;
+        widows: 3;
+    }
+
+    [class*="section"], [class*="card"], .experience-txt, .education, .skills {
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+}
+</style>`;
+
 export const renderResumeTemplate = (templateKey: string, userData: any): string => {
     const renderer = templateMap[templateKey] || renderClassic;
-    return renderer(userData);
+    const html = renderer(userData);
+
+    if (html.includes("</head>")) {
+        return html.replace("</head>", `${PRINT_CSS}</head>`);
+    }
+    return PRINT_CSS + html;
 };
