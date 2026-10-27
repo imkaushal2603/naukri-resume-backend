@@ -69,48 +69,48 @@ const templateMap: Record<string, (userData: any) => string> = {
 const PRINT_CSS = `
 <style id="print-pagination">
 @media print {
-    @page { size: A4; margin: 12mm 0; }
-    @page :first { size: A4; margin: 0 0 12mm 0; }
+    @page { size: A4; margin: 10mm; }
 
     html, body {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        background-color: transparent !important;
+        width: 100% !important;
+        height: auto !important;
     }
 
-    body > div,
-    .page, .resume, .resume_page, .first-resume-section, .resume-top-sec {
+    div, section, article, header, footer, main, aside {
         box-shadow: none !important;
         border-radius: 0 !important;
         overflow: visible !important;
         height: auto !important;
         min-height: 0 !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
+        max-height: none !important;
     }
 
-    h1, h2, h3, h4, h5, h6,
-    .section_title, .main-title {
-        break-after: avoid;
-        page-break-after: avoid;
+    * {
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
     }
 
-    .resume-item,
-    [class*="timeline_item"], [class*="timeline-item"],
-    [class*="experience_item"], [class*="education_item"],
-    [class*="experience_details"], [class*="education_details"],
-    li, tr, img, blockquote {
-        break-inside: avoid;
-        page-break-inside: avoid;
+    h1, h2, h3, h4, h5, h6 {
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+    }
+
+    li, tr, blockquote, img, 
+    [class*="item"], 
+    [class*="entry"], 
+    [class*="card"], 
+    [class*="block"], 
+    [class*="row"] {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
     }
 
     p, li {
         orphans: 3;
         widows: 3;
-    }
-
-    [class*="section"], [class*="card"], .experience-txt, .education, .skills {
-        -webkit-box-decoration-break: clone;
-        box-decoration-break: clone;
     }
 }
 </style>`;
