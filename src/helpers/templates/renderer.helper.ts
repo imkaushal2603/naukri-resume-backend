@@ -69,7 +69,10 @@ const templateMap: Record<string, (userData: any) => string> = {
 const PRINT_CSS = `
 <style id="print-pagination">
 @media print {
-    @page { size: A4; margin: 10mm; }
+    @page {
+        size: A4;
+        margin: 4mm;
+    }
 
     html, body {
         -webkit-print-color-adjust: exact;
@@ -77,15 +80,6 @@ const PRINT_CSS = `
         background-color: transparent !important;
         width: 100% !important;
         height: auto !important;
-    }
-
-    div, section, article, header, footer, main, aside {
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
     }
 
     * {
@@ -96,18 +90,10 @@ const PRINT_CSS = `
     h1, h2, h3, h4, h5, h6 {
         break-after: avoid !important;
         page-break-after: avoid !important;
-    }
-
-    li, tr, blockquote, img, 
-    [class*="item"], 
-    [class*="entry"], 
-    [class*="card"], 
-    [class*="block"], 
-    [class*="row"] {
         break-inside: avoid !important;
         page-break-inside: avoid !important;
     }
-
+        
     p, li {
         orphans: 3;
         widows: 3;

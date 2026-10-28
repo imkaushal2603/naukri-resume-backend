@@ -79,7 +79,7 @@ export const renderMist = (resume: any): string => {
         <div class="position"><h5>${escapeHtml(role)}</h5></div>
     </div>
     ${companyLine ? `<h4>${escapeHtml(companyLine)}</h4>` : ""}
-    ${bullets}
+    <div class="experience_bullets">${bullets}</div>
 </div>`;
         })
         .join("");
@@ -115,7 +115,7 @@ export const renderMist = (resume: any): string => {
         <div class="position"><h5>${escapeHtml(degree)}</h5></div>
     </div>
     ${institute ? `<h4>${escapeHtml(institute)}</h4>` : ""}
-    ${extraLines.join("")}
+    <div class="education_list_content">${extraLines.join("")}</div>
 </div>`;
         })
         .join("");
