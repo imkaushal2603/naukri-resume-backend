@@ -50,7 +50,47 @@ export const COVER_LETTER_TEMPLATES = [
     { key: "pewter", name: "Pewter" }
 ];
 
+const PRINT_CSS = `
+<style id="print-pagination">
+@media print {
+    @page {
+        size: A4;
+        margin: 4mm;
+    }
+
+    html, body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background-color: transparent !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    * {
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+        
+    p, li {
+        orphans: 3;
+        widows: 3;
+    }
+}
+</style>`;
+
 export const renderCoverLetter = (templateKey: string, data: any): string => {
     const renderer = coverLetterTemplateMap[templateKey] || renderCoverLetterQuill;
-    return renderer(data);
+    const html = renderer(data);
+
+    if (html.includes("</head>")) {
+        return html.replace("</head>", `${PRINT_CSS}</head>`);
+    }
+    return PRINT_CSS + html;
 };
