@@ -2,6 +2,7 @@ import { Response } from "express";
 import { AuthRequest } from "../../types/auth.types";
 import { prisma } from "../../config/database.config";
 import { sendSupportTicketEmail, sendSupportTicketConfirmationEmail } from "../../config/nodemailer.config";
+import { createHubspotSupportTicket } from "../../services/hubspot/hubspot.service";
 
 export const submitSupportTicket = async (req: AuthRequest, res: Response) => {
     try {
@@ -19,6 +20,12 @@ export const submitSupportTicket = async (req: AuthRequest, res: Response) => {
         await sendSupportTicketConfirmationEmail(user.email, user.name, subject).catch((err) => {
             console.error("Failed to send confirmation email:", err);
         });
+
+        try {
+            await createHubspotSupportTicket(user.email, user.name, subject, message);
+        } catch (hubspotErr) {
+            console.error("Failed to create ticket in HubSpot:", hubspotErr);
+        }
 
         return res.status(200).json({ success: true, message: "Support ticket submitted successfully." });
     } catch (error: any) {

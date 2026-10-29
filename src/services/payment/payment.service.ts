@@ -1,5 +1,6 @@
 import { prisma } from "../../config/database.config";
 import { createCashfreeOrder, getCashfreePaymentStatus } from "./cashfree.service";
+import { createHubspotDeal } from "../hubspot/hubspot.service";
 
 export const createPaymentOrderService = async (
     userId: number,
@@ -110,12 +111,29 @@ export const getPaymentStatusService = async (userId: number, orderId: string) =
                     cashfreePaymentId: successfulPayment.cf_payment_id?.toString(),
                     paymentMethod: successfulPayment.payment_group,
                 },
+                include: {
+                    membership_plan: true,
+                    resume_limit_addon: true,
+                    user: true,
+                }
             });
 
             if (updatedPayment.type === "RESUME_LIMIT_ADDON") {
                 await activateResumeLimitAddonService(updatedPayment.id);
             } else {
                 await activateMembershipService(updatedPayment.id);
+            }
+
+            try {
+                const planOrAddonName = updatedPayment.membership_plan?.name || updatedPayment.resume_limit_addon?.name || "Plan Purchase";
+                await createHubspotDeal(
+                    updatedPayment.user.email,
+                    updatedPayment.user.name,
+                    planOrAddonName,
+                    Number(updatedPayment.amount)
+                );
+            } catch (hubspotErr) {
+                console.error("Failed to sync deal to HubSpot from status check:", hubspotErr);
             }
 
             return "SUCCESS";
@@ -198,12 +216,8 @@ const activateResumeLimitAddonService = async (paymentId: number) => {
 };
 
 export const handlePaymentWebhookService = async (req: any) => {
-    console.log("🔔 [DEBUG Webhook] Incoming Body:", JSON.stringify(req.body, null, 2));
-
     const orderId = req.body?.data?.order?.order_id;
     const paymentStatus = req.body?.data?.payment?.payment_status;
-
-    console.log(`🔔 [DEBUG Webhook] Order: ${orderId} | Cashfree Status: ${paymentStatus}`);
 
     if (!orderId) throw new Error("Order ID missing");
     if (paymentStatus !== "SUCCESS") {
@@ -229,6 +243,11 @@ export const handlePaymentWebhookService = async (req: any) => {
             cashfreePaymentId: req.body?.data?.payment?.cf_payment_id?.toString(),
             paymentMethod: req.body?.data?.payment?.payment_group,
         },
+        include: {
+            membership_plan: true,
+            resume_limit_addon: true,
+            user: true,
+        }
     });
 
     if (updatedPayment.type === "RESUME_LIMIT_ADDON") {
@@ -237,7 +256,17 @@ export const handlePaymentWebhookService = async (req: any) => {
         await activateMembershipService(updatedPayment.id);
     }
 
-    console.log("✅ [DEBUG Webhook] Payment processed and fulfilled successfully!");
+    try {
+        const planOrAddonName = updatedPayment.membership_plan?.name || updatedPayment.resume_limit_addon?.name || "Plan Purchase";
+        await createHubspotDeal(
+            updatedPayment.user.email,
+            updatedPayment.user.name,
+            planOrAddonName,
+            Number(updatedPayment.amount)
+        );
+    } catch (hubspotErr) {
+        console.error("Failed to sync deal to HubSpot from webhook:", hubspotErr);
+    }
 };
 
 export const getMembershipPlansService = async (userId: number) => {

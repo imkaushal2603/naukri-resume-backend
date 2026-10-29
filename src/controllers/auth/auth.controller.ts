@@ -6,6 +6,7 @@ import { AuthRequest } from "../../types/auth.types";
 import { findUserByEmail, createUser, createSession, deleteSessionByRefreshToken, findSessionByRefreshToken, findUserById, getMeService, createPasswordResetToken, resetPasswordWithToken } from "../../services/auth/auth.service";
 import { JWT_ACCESS_SECRET_KEY, JWT_REFRESH_SECRET_KEY } from "../../config/environment.config";
 import { sendResetPasswordEmail } from "../../config/nodemailer.config";
+import { createHubspotContact } from "../../services/hubspot/hubspot.service";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 const PHONE_REGEX = /^(?:\+91|0)?[6-9]\d{9}$/;
@@ -43,6 +44,12 @@ export const register = async (req: Request, res: Response) => {
             password: hashedPassword,
             phone,
         });
+
+        try {
+            await createHubspotContact(newUser.name, newUser.email, newUser.phone || undefined);
+        } catch (hubspotErr) {
+            console.error("Failed to sync registered user to HubSpot:", hubspotErr);
+        }
 
         return res.status(201).json({
             message: "User registered successfully",

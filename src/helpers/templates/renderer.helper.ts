@@ -75,9 +75,10 @@ const PRINT_CSS = `
     }
 
     html, body {
+        margin: 0 !important;
+        padding: 0 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
-        background-color: transparent !important;
         width: 100% !important;
         height: auto !important;
     }

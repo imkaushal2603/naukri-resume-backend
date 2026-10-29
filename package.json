@@ -16,6 +16,7 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "@hubspot/api-client": "^14.1.1",
     "@prisma/adapter-mariadb": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "bcrypt": "^6.0.0",
