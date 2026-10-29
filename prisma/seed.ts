@@ -46,8 +46,8 @@ const templates = [
 ];
 
 const membershipPlans = [
-    { name: "Weekly", price: 199, durationDays: 7, resumeLimit: 15, status: true },
-    { name: "Annual", price: 1195, durationDays: 365, resumeLimit: 15, status: true },
+    { name: "Weekly", price: 100, durationDays: 7, resumeLimit: 15, status: true },
+    { name: "Annual", price: 1100, durationDays: 365, resumeLimit: 15, status: true },
 ];
 
 const resumeLimitAddons = [
